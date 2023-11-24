@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<!-- layout 관련 namespace 추가 선언 -->
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+
+    <th:block th:replace="fragments/config::headerCss" />
+    <th:block th:replace="fragments/config::menuJs" />
+
+</head>
+
+<body>
+
+<div class="display: flex; flex-direction: row;">
+
+    <script src="https://player.vimeo.com/api/player.js"></script>
+
+    <div id="app">
+
+        <!--비디오 상세보기 {{videoDetail}}
+
+        <br>
+        <br>-->
+
+        <div style="background: lightskyblue;text-align: center">
+
+            <iframe id="video" title="vimeo-player" :src="videoDetail.videoLink" width="100%" height="500" frameborder="0" style="margin: 0 auto;" allowfullscreen></iframe>
+
+        </div>
+
+        <!--<div  class=video-container style="TEXT-ALIGN: center">
+            <object id="video2" type="text/html" width="100%" height="500" data="https://player.vimeo.com/video/879692152" allowFullScreen onclick="test1"></object>
+        </div>-->
+
+        <!--<div id="testbox" onClick="test1">가나다라마바사</div>
+
+        <button @click="checkTime">플레이 시간확인</button>
+
+        <br><br>
+
+        <button @click="checkAndroidCall">안드로이드 호출 확인</button>-->
+
+    </div>
+
+</div>
+
+<script th:inline="javascript">
+
+    const date = new Date();
+
+    let globalPlayer = "";
+
+    const mobileAppProxyObj = Vue.createApp({
+        //el: '#app',
+        data() {
+            return {
+                player:"",
+                canPlay: false,
+                timerId:"",
+                time: 0,
+                lastSeconds: 0.0,
+                videoDetail: JSON.parse([[${videoDetailJson}]]),
+            }
+        },
+        methods: {
+
+            checkTime() {
+                alert("플레이 시간 " + this.time);
+            },
+            startClock() {
+                if(this.canPlay) {
+                    this.time++;
+                    this.stopClock();
+                    this.timerId = setTimeout(this.startClock, 1000);
+                } else {
+                    stopClock();
+                    alert("구성을 준비중입니다.\n다시 플레이버튼을 누르세요.");
+                }
+
+            },
+            stopClock() {
+                if (this.timerId != null) {
+                    clearTimeout(this.timerId);
+                }
+            },
+            sendViewingTime() {
+
+                if(this.time < 5) {
+                    return;
+                }
+
+                axios.post('/appRest/sendViewingTime', null, {
+                    params:{
+                        videoIdx: this.videoDetail.videoIdx,
+                        viewingTime: this.time,
+                        lastSeconds: this.lastSeconds
+                    }
+                }).then(res => {
+
+                    if(res.data.result === "success") {
+                        this.time = 0;
+                    }
+
+                });
+
+            },
+            fromAppReceiveToken(accessToken) {
+
+                axios.post('/appRest/checkAccessToken', null, {
+                    params:{
+                        accessToken: accessToken,
+                        checkAccessTokenForMobile: true
+                    }
+                }).then(res => {
+                    const result = res.data.result;
+                    if(result === "success") {
+                        this.getPlayerInfo();
+                        //globalPlayer.setCurrentTime(500.12);
+                    } else if(result === "expired") {
+                        this.toAppGetNewToken();
+                    } else if(result === "notAuthorized") {
+
+                    }
+                });
+            },
+            toAppGetNewToken() {
+
+                const userAgent = navigator.userAgent.toLowerCase();
+
+                if (userAgent.indexOf('android') !== -1) {
+
+                    WebViewBridge.toAppGetNewToken();
+
+                    //return WebViewBridge.showMessage(message);
+                } else if (userAgent.indexOf('iphone') !== -1 || userAgent.indexOf('ipad') !== -1) {
+                    //return window.webkit.messageHandlers.webViewMessageHandler.postMessage(message);
+                    alert("ios");
+                }
+
+            },
+            getPlayerInfo() {
+
+                axios.post('/appRest/getPlayerInfo', null, {
+                    params:{
+                        videoIdx: this.videoDetail.videoIdx,
+                    }
+                }).then(res => {
+
+                    const result = res.data.result;
+
+                    if(result === "success") {
+                        const playerInfo = JSON.parse(res.data.playerInfoJson);
+                        this.canPlay = true;
+                        globalPlayer.setCurrentTime(playerInfo.lastSeconds);
+                    } else if(result === "empty") {
+                        this.canPlay = true;
+                    }
+
+                    //alert("리저트~~" + result);
+
+                });
+
+            }
+        },
+        created() {
+
+        },
+        mounted() {
+
+            const globalThis = this;
+
+            const video = document.getElementById('video');
+            const player = new Vimeo.Player(video);
+
+            globalPlayer = player;
+
+            //const player = this.player
+
+            player.on('play', function() {
+                globalThis.startClock();
+            });
+
+            player.on('pause', function() {
+
+                globalThis.stopClock();
+
+                player.getCurrentTime().then(function(seconds) {
+                    globalThis.lastSeconds = seconds;
+                    return new Promise((resolve, reject)=>{
+                        globalThis.sendViewingTime()
+                    })
+                });
+
+            });
+
+
+        }
+    }).mount('#app');
+
+</script>
+
+
+</body>
+
+</html>

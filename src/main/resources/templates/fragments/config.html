@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<!-- configFragment -->
+
+<th:block th:fragment="menuJs">
+
+    <script src="//code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!--<script src="//cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>-->
+    <!--<script src="//cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.min.js"></script>-->
+
+    <script src="//unpkg.com/vue@3"></script>
+
+    <script src="//unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+
+    <script>
+
+        $(function() {
+
+            $("#admissionApplication").click(function() {
+                location.href = "/daejeonApply/admissionApplication";
+            });
+
+
+            $("#logo").click(function() {
+                location.href = "/daejeonApply/index";
+            });
+
+
+            $("#login").click(function () {
+                location.href = "/daejeonApply/login";
+            });
+
+
+            $("#logout").click(function () {
+
+                const ok = confirm("로그아웃 하시겠습니까?");
+                if(!ok) {
+                    return;
+                }
+
+                $.ajax({
+                    type : "POST",
+                    url : "/daejeonApplyRest/logout",
+                    dataType : 'json',
+                    data : '',
+                    success(res) {
+                        if(res.result === "success") {
+                            alert("로그아웃 되었습니다.");
+                            location.href = "/daejeonApply/index";
+                        }
+                    },
+                    error(XMLHttpRequest, textStatus, errorThrown){
+                    }
+                });
+
+            });
+
+
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+
+            Vue.createApp({
+                //el: '#app',
+                data() {
+                    return {
+
+                    }
+                },
+                methods: {
+
+                    professorLogout() {
+
+                        if(!confirm("강사 로그아웃을 하시겠습니까?")) {
+                            return;
+                        }
+
+                        axios.post('/professorRest/doLogout', null, null,).then(res => {
+
+                            if(res.data.result === "success") {
+                                alert("강사 로그아웃 되었습니다.");
+                                location.href = "/professor/login";
+                            }
+                        })
+
+
+
+                    }
+
+                },
+                created() {
+                },
+                mounted() {
+                }
+            }).mount('#professorMenuBox');
+
+        });
+
+    </script>
+
+</th:block>
+
+<th:block th:fragment="headerCss">
+
+
+    <style>
+
+        #test {
+
+        }
+
+        .menuList {
+            display: inline-block;
+        }
+
+        #topMenuBox {
+            height:40px;
+            background: #f2f2f2;
+        }
+
+        .innerMenuBox {
+            /*background: rgba(0, 242, 236, 0.35);*/
+            width: 65%;
+            height: 100%;
+            margin: auto;
+            position: relative;
+        }
+
+
+        #menuBox, .menuBox {
+            height:100px;
+            background: lightgray;
+        }
+
+        body {
+            margin: 0px;
+        }
+
+
+    </style>
+
+    <!-- Style 예시 -->
+    <!--<link th:href="@{/css/style.css}" rel="stylesheet">-->
+
+    <!-- Javascript file 예시 -->
+    <!--<script th:src="@{/js/file.js}"></script>-->
+</th:block>
+
+
+<th:block th:fragment="leftEntranceExamMenuCss">
+    <style>
+
+        #title{
+            background: #eeeeee;
+            padding: 30px 30px;
+            text-align: center;
+            font-size:20px;
+        }
+
+        #menuBox, .menuBox {
+            width: 300px;
+        }
+
+        .subTitle {
+            padding: 10px 10px;
+            background: #e1e1e1;
+            font-size:15px;
+
+        }
+
+        .subBox {
+            background: #fafafa;
+            padding-bottom: 10px;
+        }
+
+        .menuList {
+            padding-top: 10px;
+            padding-left: 30px;
+            font-size:14px;
+            cursor: pointer;
+        }
+
+    </style>
+</th:block>
+
+</html>

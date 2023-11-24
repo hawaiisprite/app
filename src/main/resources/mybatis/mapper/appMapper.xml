@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="app">
+
+
+    <select id="checkEmailAndStudentId" parameterType="appVo" resultType="int">
+        <!--app.checkEmailAndStudentId-->
+        SELECT
+            count(*)
+        FROM
+            university_student
+        WHERE
+            student_id = #{studentId}
+        AND
+            email = #{studentEmail}
+        AND
+            is_authed = ''
+    </select>
+
+    <insert id="createAppJoinAuthCode" parameterType="appVo">
+        <!--app.createAppJoinAuthCode-->
+        INSERT INTO
+            app_join_email_auth_code (
+                email,
+                auth_code,
+                reg_dt,
+                mod_dt
+            )
+        VALUES (
+            #{studentEmail},
+            #{authCode},
+            now(),
+            now()
+        )
+        <!--<selectKey keyProperty="emailAuthCodeIdx" resultType="int" >
+            SELECT LAST_INSERT_ID()
+        </selectKey>-->
+
+    </insert>
+
+
+
+    <select id="checkAppJoinAuthCode" parameterType="appVo" resultType="appVo">
+        SELECT
+            a.email as studentEmail,
+            b.auth_code as authCode
+        FROM
+            university_student a
+        JOIN
+            app_join_email_auth_code b
+        ON
+            a.email = b.email
+        WHERE
+            a.email = #{studentEmail}
+        ORDER BY
+            b.idx desc
+        LIMIT
+            1
+    </select>
+
+
+
+    <update id="setStudentPassword" parameterType="appVo">
+        UPDATE
+            university_student
+        SET
+            password = #{password}
+        WHERE
+            student_id = #{studentId}
+        AND
+            email = #{studentEmail}
+
+    </update>
+
+
+    <update id="createPassportFile" parameterType="appVo">
+        <!--app.createPassportFile-->
+        UPDATE
+            university_student
+        SET
+            passport_file_idx = #{passportFileIdx}
+        WHERE
+            email = #{studentEmail}
+    </update>
+
+
+
+    <update id="modifyPersonalInfo" parameterType="appVo">
+        <!--app.modifyPersonalInfo-->
+        UPDATE
+            university_student
+        SET
+            <if test='personalInfoFileIdx != 0'>
+                personal_info_file_idx = #{personalInfoFileIdx},
+            </if>
+            addr = #{addr},
+            phone = #{phone}
+        WHERE
+            email = #{studentEmail}
+    </update>
+
+
+
+    <select id="getInfoPassport" resultType="appVo">
+
+        SELECT
+            a.email as studentEmail,
+            b.uuid as passportFileUuid,
+            b.ext as passportFileExt,
+            b.orig_name as passportFileOrigName,
+            b.year as passportFileYear,
+            b.month as passportFileMonth,
+            b.day as passportFileDay
+        FROM
+            university_student a
+        LEFT JOIN
+            files b
+        ON
+            a.passport_file_idx = b.idx
+        WHERE
+            a.email = #{studentEmail}
+
+    </select>
+
+
+    <select id="getPersonalInfo" parameterType="appVo" resultType="appVo">
+        <!--app.getPersonalInfo-->
+        SELECT
+            a.student_id as studentId,
+            a.email as studentEmail,
+            a.name as studentName,
+            a.addr as addr,
+            a.phone as phone,
+            b.uuid as personalInfoFileUuid,
+            b.ext as personalInfoFileExt,
+            b.orig_name as personalInfoFileOrigName,
+            b.year as personalInfoFileYear,
+            b.month as personalInfoFileMonth,
+            b.day as personalInfoFileDay
+        FROM
+            university_student a
+        LEFT JOIN
+            files b
+        ON
+            a.personal_info_file_idx = b.idx
+        WHERE
+            a.email = #{studentEmail}
+    </select>
+
+    <select id="isAppliedSupportProgram" parameterType="appVo" resultType="int">
+        <!--app.isAppliedSupportProgram-->
+        SELECT
+            COUNT(*)
+        FROM
+            apply_application
+        WHERE
+            application_idx = #{applicationIdx}
+        AND
+            email = #{studentEmail}
+
+    </select>
+
+    <insert id="applicationSupportProgram" parameterType="appVo" >
+        <!--app.applicationSupportProgram-->
+        INSERT INTO
+            apply_application (
+                application_idx,
+                email,
+                reg_dt
+            )
+        VALUES (
+            #{applicationIdx},
+            #{studentEmail},
+            now()
+        )
+    </insert>
+
+
+
+    <select id="getApplicationDetail" parameterType="appVo" resultType="appVo">
+        <!-- app.getApplicationDetail -->
+        SELECT
+            a.idx as applicationIdx,
+            a.type as applicationType,
+            a.name as applicationName,
+            a.count as applicationCount,
+            a.start_day as applicationStartDay,
+            a.end_day as applicationEndDay
+        FROM
+            application a
+        WHERE
+            a.idx = #{applicationIdx}
+    </select>
+
+
+    <select id="getVideoDetail" parameterType="appVo" resultType="appVo">
+        SELECT
+            idx as videoIdx,
+            video_name as videoName,
+            video_link as videoLink,
+            running_minute as runningMinute,
+            running_second as runningSecond,
+            start_day as videoStartDay,
+            end_day as videoEndDay
+        FROM
+            video
+        WHERE
+            idx = #{videoIdx}
+    </select>
+
+
+    <select id="isExistVideoWatched" parameterType="appVo" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            video_watched
+        WHERE
+            video_idx = #{videoIdx}
+        AND
+            email = #{studentEmail}
+    </select>
+
+    <insert id="createVideoWatched">
+        INSERT INTO
+            video_watched(
+                video_idx,
+                email,
+                watched_time,
+                last_time,
+                reg_dt,
+                mod_dt
+            )
+        VALUES (
+            #{videoIdx},
+            #{studentEmail},
+            #{viewingTime},
+            #{lastSeconds},
+            now(),
+            now()
+        )
+    </insert>
+
+
+    <select id="getVideoWatched" parameterType="appVo" resultType="appVo">
+        SELECT
+            video_idx as videoIdx,
+            watched_time as viewingTime,
+            last_time as lastSeconds
+        FROM
+            video_watched
+        WHERE
+            video_idx = #{videoIdx}
+        AND
+            email = #{studentEmail}
+    </select>
+
+    <update id="modifyVideoWatched">
+        UPDATE
+            video_watched
+        SET
+           watched_time = #{viewingTime},
+           last_time = #{lastSeconds}
+       WHERE
+            video_idx = #{videoIdx}
+        AND
+            email = #{studentEmail}
+    </update>
+
+
+
+
+    <select id="getClassSectionList" parameterType="appVo" resultType="appVo">
+        SELECT
+            a.idx as classSectionIdx,
+            a.year as classSectionYear,
+            a.course as classSectionCourse,
+            a.class as classSectionClass
+        FROM
+            class_section a
+        JOIN
+            student_in_class_section b
+        ON
+            a.idx = b.class_section_idx
+        WHERE
+            b.student_idx = (
+                SELECT
+                    idx
+                FROM
+                    university_student
+                WHERE
+                    email = #{studentEmail}
+            )
+    </select>
+
+
+
+    <select id="getTodayAttendance" parameterType="appVo" resultType="int">
+
+        SELECT
+            COUNT(*)
+        FROM
+            attendance
+        WHERE
+            student_idx = (
+                SELECT
+                    idx
+                FROM
+                    university_student
+                WHERE
+                    email = #{studentEmail}
+            )
+        AND
+            class_section_idx = #{classSectionIdx}
+        AND
+            year = #{year}
+        AND
+            month = #{month}
+        AND
+            day = #{day}
+        AND
+            flag != 'deleted'
+
+    </select>
+
+
+    <!--<select id="getPlayerInfo" parameterType="appVo" resultType="appVo">
+        SELECT
+            video_idx as videoIdx,
+            watched_time as viewingTime,
+            last_time as lastSeconds
+        FROM
+            video_watched
+        WHERE
+            video_idx = #{videoIdx}
+        AND
+           email = #{studentEmail}
+    </select>-->
+
+
+    <!--SELECT
+    idx as universityStudentInfoIdx,
+    student_id as studentId,
+    email as studentEamil,
+    name as studentName,
+    phone as studentPhone-->
+
+</mapper>

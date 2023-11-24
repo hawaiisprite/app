@@ -1,0 +1,707 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="applicant">
+
+    <insert id="insertApplicantInformation" parameterType="applicantVo">
+        <!--applicant.insertApplicantInformation-->
+        INSERT INTO
+            applicant_information (
+                nationality,
+                passportNumber,
+                passportIssueDate,
+                passportExpirationDate
+            )
+        VALUES (
+               #{nationality},
+               #{passportNumber},
+               #{passportIssueDate},
+               #{passportExpirationDate}
+            )
+    </insert>
+
+
+    <select id="getApplicantInformation" parameterType="applicantVo" resultType="applicantVo">
+        <!--applicant.getApplicantInformation-->
+        SELECT
+            idx as applicantInformationIdx,
+            apply_member_idx as applyMemberIdx,
+            nationality as nationality,
+            passport_number as passportNumber,
+            passport_issue_date as passportIssueDate,
+            passport_expiration_date as passportExpirationDate,
+            applicant_photo_uuid as applicantPhotoUuid,
+            applicant_photo_ext as applicantPhotoExt,
+            applicant_photo_orig_name as applicantPhotoOrigName,
+            applicant_photo_year_month_day as applicantPhotoYearMonthDay,
+            korean_name as koreanName,
+            english_name as englishName,
+            birth as birth,
+            gender as gender,
+            foreigner_reg_number as foreignerRegNumber,
+            phone as phone,
+            guardian_phone as guardianPhone,
+            high_level_edu as highLevelEdu,
+            major as major,
+            addr as addr,
+            detail_addr as detailAddr,
+            city as city,
+            state as state,
+            country as country,
+            zip as zip
+        FROM
+             applicant_information
+        WHERE
+            apply_member_idx = #{applyMemberIdx}
+    </select>
+
+    <select id="getKoreanGrade" parameterType="applicantVo" resultType="applicantVo">
+        <!--applicant.getKoreanGrade-->
+        SELECT
+            apply_member_idx as applyMemberIdx,
+            korean_grade as koreanGrade,
+            korean_score as koreanScore,
+            other_language as otherLanguage,
+            korean_level_check as koreanLevelCheck,
+            reg_dt as regDt
+        FROM
+            applicant_korean_grade
+        WHERE
+            apply_member_idx = #{applyMemberIdx}
+    </select>
+
+
+    <select id="getAboutMe" parameterType="applicantVo" resultType="applicantVo">
+        <!--applicant.getAboutMe-->
+        SELECT
+            apply_member_idx as applyMemberIdx,
+            motive as motive,
+            introduce_family as introduceFamily,
+            future_plan as futurePlan,
+            etc as etc,
+            reg_dt as reg_dt
+        FROM
+            applicant_about_me
+        WHERE
+            apply_member_idx = #{applyMemberIdx}
+    </select>
+
+
+    <select id="getOtherRequest" parameterType="applicantVo" resultType="applicantVo">
+        <!--applicant.getOtherRequest-->
+        SELECT
+            apply_member_idx as applyMemberIdx,
+            pickup as pickup,
+            dormitory as dormitory,
+            reg_dt as reg_dt
+        FROM
+            applicant_other_request
+        WHERE
+            apply_member_idx = #{applyMemberIdx}
+    </select>
+
+
+    <select id="getSubmitDocuments" parameterType="applicantVo" resultType="applicantVo">
+        <!--applicant.getSubmitDocuments-->
+        SELECT
+            apply_member_idx as applyMemberIdx,
+            copy_passport_photo_uuid as copyPassportPhotoUuid,
+            copy_passport_photo_ext as copyPassportPhotoExt,
+            copy_passport_photo_orig_name as copyPassportPhotoOrigName,
+            copy_passport_photo_year_month_day as copyPassportPhotoYearMonthDay,
+            passport_photo_uuid as passportPhotoUuid,
+            passport_photo_ext as passportPhotoExt,
+            passport_photo_orig_name as passportPhotoOrigName,
+            passport_photo_year_month_day as passportPhotoYearMonthDay,
+            household_register_uuid as householdRegisterUuid,
+            household_register_ext as householdRegisterExt,
+            household_register_orig_name as householdRegisterOrigName,
+            household_register_year_month_day as householdRegisterYearMonthDay,
+            higher_education_student_information_uuid as higherEducationStudentInformationUuid,
+            higher_education_student_information_ext as higherEducationStudentInformationExt,
+            higher_education_student_information_orig_name as higherEducationStudentInformationOrigName,
+            higher_education_student_information_year_month_day as higherEducationStudentInformationYearMonthDay,
+            final_graduate_certificate_uuid as finalGraduateCertificateUuid,
+            final_graduate_certificate_ext as finalGraduateCertificateExt,
+            final_graduate_certificate_orig_name as finalGraduateCertificateOrigName,
+            final_graduate_certificate_year_month_day as finalGraduateCertificateYearMonthDay,
+            balance_certificate_uuid as balanceCertificateUuid,
+            balance_certificate_ext as balanceCertificateExt,
+            balance_certificate_orig_name as balanceCertificateOrigName,
+            balance_certificate_year_month_day as balanceCertificateYearMonthDay,
+            parents_employment_and_income_certificate_uuid as parentsEmploymentAndIncomeCertificateUuid,
+            parents_employment_and_income_certificate_ext as parentsEmploymentAndIncomeCertificateExt,
+            parents_employment_and_income_certificate_orig_name as parentsEmploymentAndIncomeCertificateOrigName,
+            parents_employment_and_income_certificate_year_month_day as parentsEmploymentAndIncomeCertificateYearMonthDay,
+            family_relations_certificate_uuid as familyRelationsCertificateUuid,
+            family_relations_certificate_ext as familyRelationsCertificateExt,
+            family_relations_certificate_orig_name as familyRelationsCertificateOrigName,
+            family_relations_certificate_year_month_day as familyRelationsCertificateYearMonthDay
+        FROM
+            applicant_submit_documents
+        WHERE
+            apply_member_idx = #{applyMemberIdx}
+    </select>
+
+
+
+
+    <insert id="createApplicantInformation" parameterType="applicantVo">
+        <!--applicant.createApplicantInformation-->
+        INSERT INTO
+            applicant_information (
+                apply_member_idx,
+                recruitment_category_idx,
+                nationality,
+                passport_number,
+                <if test='passportIssueDate != "" '>
+                    passport_issue_date,
+                </if>
+                <if test='passportExpirationDate != "" '>
+                    passport_expiration_date,
+                </if>
+                applicant_photo_uuid,
+                applicant_photo_ext,
+                applicant_photo_orig_name,
+                applicant_photo_year_month_day,
+                korean_name,
+                english_name,
+                birth,
+                gender,
+                foreigner_reg_number,
+                phone,
+                guardian_phone,
+                high_level_edu,
+                major,
+                addr,
+                detail_addr,
+                city,
+                state,
+                country,
+                zip,
+                reg_dt,
+                mod_dt
+            )
+        VALUES (
+            #{applyMemberIdx},
+            #{recruitmentCategoryIdx},
+            #{nationality},
+            #{passportNumber},
+            <if test='passportIssueDate != "" '>
+                #{passportIssueDate},
+            </if>
+            <if test='passportExpirationDate != "" '>
+                #{passportExpirationDate},
+            </if>
+            #{applicantPhotoUuid},
+            #{applicantPhotoExt},
+            #{applicantPhotoOrigName},
+            #{applicantPhotoYearMonthDay},
+            #{koreanName},
+            #{englishName},
+            #{birth},
+            #{gender},
+            #{foreignerRegNumber},
+            #{phone},
+            #{guardianPhone},
+            #{highLevelEdu},
+            #{major},
+            #{addr},
+            #{detailAddr},
+            #{city},
+            #{state},
+            #{country},
+            #{zip},
+            now(),
+            now()
+        )
+    </insert>
+
+
+    <update id="modifyApplicantInformation" parameterType="applicantVo">
+        UPDATE
+            applicant_information
+        SET
+            nationality = #{nationality},
+            passport_number = #{passportNumber},
+            <if test='passportIssueDate != "" '>
+                passport_issue_date = #{passportIssueDate},
+            </if>
+            <if test='passportExpirationDate != "" '>
+                passport_expiration_date = #{passportExpirationDate},
+            </if>
+            <if test='isChangeApplicantPhoto == true '>
+                applicant_photo_uuid = #{applicantPhotoUuid},
+                applicant_photo_ext = #{applicantPhotoExt},
+                applicant_photo_orig_name = #{applicantPhotoOrigName},
+                applicant_photo_year_month_day = #{applicantPhotoYearMonthDay},
+            </if>
+            korean_name = #{koreanName},
+            english_name = #{englishName},
+            birth = #{birth},
+            gender = #{gender},
+            foreigner_reg_number = #{foreignerRegNumber},
+            phone = #{foreignerRegNumber},
+            guardian_phone = #{guardianPhone},
+            high_level_edu = #{highLevelEdu},
+            major = #{major},
+            addr = #{addr},
+            detail_addr = #{detailAddr},
+            city = #{city},
+            state = #{state},
+            country = #{country},
+            zip = #{zip},
+            mod_dt = now()
+        WHERE
+            apply_member_idx = #{applyMemberIdx}
+
+    </update>
+
+
+    <insert id="createKoreanGrade" parameterType="applicantVo">
+        <!--applicant.createKoreanGrade-->
+        INSERT INTO
+            applicant_korean_grade (
+                apply_member_idx,
+                recruitment_category_idx,
+                korean_grade,
+                korean_score,
+                other_language,
+                korean_level_check,
+                reg_dt,
+                mod_dt
+            )
+        VALUES (
+               #{applyMemberIdx},
+               #{recruitmentCategoryIdx},
+               #{koreanGrade},
+               #{koreanScore},
+               #{otherLanguage},
+               #{koreanLevelCheck},
+               now(),
+               now()
+           )
+    </insert>
+
+    <update id="modifyKoreanGrade" parameterType="applicantVo">
+        <!--applicant.modifyKoreanGrade-->
+        UPDATE
+            applicant_korean_grade
+        SET
+            korean_grade = #{koreanGrade},
+            korean_score = #{koreanScore},
+            other_language = #{otherLanguage},
+            korean_level_check = #{koreanLevelCheck}
+        WHERE
+            apply_member_idx = #{applyMemberIdx}
+    </update>
+
+
+    <update id="modifyAboutMe" parameterType="applicantVo">
+        <!--applicant.modifyAboutMe-->
+        UPDATE
+            applicant_about_me
+        SET
+            motive = #{motive},
+            introduce_family = #{introduceFamily},
+            future_plan = #{futurePlan},
+            etc = #{etc}
+        WHERE
+            apply_member_idx = #{applyMemberIdx}
+    </update>
+
+
+    <update id="modifyOtherRequest" parameterType="applicantVo">
+        <!--applicant.modifyAboutMe-->
+        UPDATE
+            applicant_other_request
+        SET
+            pickup = #{pickup},
+            dormitory = #{dormitory}
+        WHERE
+            apply_member_idx = #{applyMemberIdx}
+    </update>
+
+
+    <update id="modifySubmitDocuments" parameterType="applicantVo">
+        <!--applicant.modifyAboutMe-->
+        UPDATE
+            applicant_submit_documents
+        <set>
+            <if test='isChangeCopyPassportPhoto == true '>
+                copy_passport_photo_uuid = #{copyPassportPhotoUuid},
+                copy_passport_photo_ext = #{copyPassportPhotoExt},
+                copy_passport_photo_orig_name = #{copyPassportPhotoOrigName},
+                copy_passport_photo_year_month_day = #{copyPassportPhotoYearMonthDay},
+            </if>
+            <if test='isChangePassportPhoto == true '>
+                passport_photo_uuid = #{passportPhotoUuid},
+                passport_photo_ext = #{passportPhotoExt},
+                passport_photo_orig_name = #{passportPhotoOrigName},
+                passport_photo_year_month_day = #{passportPhotoYearMonthDay},
+            </if>
+            <if test='isChangeHouseholdRegister == true '>
+                household_register_uuid = #{householdRegisterUuid},
+                household_register_ext = #{householdRegisterExt},
+                household_register_orig_name = #{householdRegisterOrigName},
+                household_register_year_month_day = #{householdRegisterYearMonthDay},
+            </if>
+            <if test="isChangeHigherEducationStudentInformation == true">
+                higher_education_student_information_uuid = #{higherEducationStudentInformationUuid},
+                higher_education_student_information_ext = #{higherEducationStudentInformationExt},
+                higher_education_student_information_orig_name = #{higherEducationStudentInformationOrigName},
+                higher_education_student_information_year_month_day = #{higherEducationStudentInformationYearMonthDay},
+            </if>
+            <if test="isChangeFinalGraduateCertificate == true">
+                final_graduate_certificate_uuid = #{finalGraduateCertificateUuid},
+                final_graduate_certificate_ext = #{finalGraduateCertificateExt},
+                final_graduate_certificate_orig_name = #{finalGraduateCertificateOrigName},
+                final_graduate_certificate_year_month_day = #{finalGraduateCertificateYearMonthDay},
+            </if>
+            <if test="isChangeBalanceCertificate == true">
+                balance_certificate_uuid = #{balanceCertificateUuid},
+                balance_certificate_ext = #{balanceCertificateExt},
+                balance_certificate_orig_name = #{balanceCertificateOrigName},
+                balance_certificate_year_month_day = #{balanceCertificateYearMonthDay},
+            </if>
+            <if test="isChangeParentsEmploymentAndIncomeCertificate == true">
+                parents_employment_and_income_certificate_uuid = #{parentsEmploymentAndIncomeCertificateUuid},
+                parents_employment_and_income_certificate_ext = #{parentsEmploymentAndIncomeCertificateExt},
+                parents_employment_and_income_certificate_orig_name = #{parentsEmploymentAndIncomeCertificateOrigName},
+                parents_employment_and_income_certificate_year_month_day = #{parentsEmploymentAndIncomeCertificateYearMonthDay},
+            </if>
+            <if test="isChangeFamilyRelationsCertificate == true">
+                family_relations_certificate_uuid = #{familyRelationsCertificateUuid},
+                family_relations_certificate_ext = #{familyRelationsCertificateExt},
+                family_relations_certificate_orig_name = #{familyRelationsCertificateOrigName},
+                family_relations_certificate_year_month_day = #{familyRelationsCertificateYearMonthDay},
+            </if>
+        </set>
+        WHERE
+            apply_member_idx = #{applyMemberIdx}
+    </update>
+
+
+
+    <insert id="createAboutMe" parameterType="applicantVo">
+        <!--applicant.createAboutMe-->
+        INSERT INTO
+            applicant_about_me (
+                apply_member_idx,
+                recruitment_category_idx,
+                motive,
+                introduce_family,
+                future_plan,
+                etc,
+                reg_dt,
+                mod_dt
+            )
+        VALUES (
+               #{applyMemberIdx},
+               #{recruitmentCategoryIdx},
+               #{motive},
+               #{introduceFamily},
+               #{futurePlan},
+               #{etc},
+               now(),
+               now()
+           )
+    </insert>
+
+
+    <insert id="createOtherRequest" parameterType="applicantVo">
+        <!--applicant.createOtherRequest-->
+        INSERT INTO
+            applicant_other_request (
+                apply_member_idx,
+                recruitment_category_idx,
+                pickup,
+                dormitory,
+                reg_dt,
+                mod_dt
+            )
+        VALUES (
+               #{applyMemberIdx},
+               #{recruitmentCategoryIdx},
+               #{pickup},
+               #{dormitory},
+               now(),
+               now()
+           )
+    </insert>
+
+
+    <insert id="createSubmitDocuments" parameterType="applicantVo">
+        <!--applicant.createSubmitDocuments-->
+        INSERT INTO
+            applicant_submit_documents (
+                apply_member_idx,
+                recruitment_category_idx,
+                copy_passport_photo_uuid,
+                copy_passport_photo_ext,
+                copy_passport_photo_orig_name,
+                copy_passport_photo_year_month_day,
+                passport_photo_uuid,
+                passport_photo_ext,
+                passport_photo_orig_name,
+                passport_photo_year_month_day,
+                household_register_uuid,
+                household_register_ext,
+                household_register_orig_name,
+                household_register_year_month_day,
+                higher_education_student_information_uuid,
+                higher_education_student_information_ext,
+                higher_education_student_information_orig_name,
+                higher_education_student_information_year_month_day,
+                final_graduate_certificate_uuid,
+                final_graduate_certificate_ext,
+                final_graduate_certificate_orig_name,
+                final_graduate_certificate_year_month_day,
+                balance_certificate_uuid,
+                balance_certificate_ext,
+                balance_certificate_orig_name,
+                balance_certificate_year_month_day,
+                parents_employment_and_income_certificate_uuid,
+                parents_employment_and_income_certificate_ext,
+                parents_employment_and_income_certificate_orig_name,
+                parents_employment_and_income_certificate_year_month_day,
+                family_relations_certificate_uuid,
+                family_relations_certificate_ext,
+                family_relations_certificate_orig_name,
+                family_relations_certificate_year_month_day,
+                reg_dt,
+                mod_dt
+            )
+        VALUES (
+               #{applyMemberIdx},
+               #{recruitmentCategoryIdx},
+               #{copyPassportPhotoUuid},
+               #{copyPassportPhotoExt},
+               #{copyPassportPhotoOrigName},
+               #{copyPassportPhotoYearMonthDay},
+               #{passportPhotoUuid},
+               #{passportPhotoExt},
+               #{passportPhotoOrigName},
+               #{passportPhotoYearMonthDay},
+               #{householdRegisterUuid},
+               #{householdRegisterExt},
+               #{householdRegisterOrigName},
+               #{householdRegisterYearMonthDay},
+               #{higherEducationStudentInformationUuid},
+               #{higherEducationStudentInformationExt},
+               #{higherEducationStudentInformationOrigName},
+               #{higherEducationStudentInformationYearMonthDay},
+               #{finalGraduateCertificateUuid},
+               #{finalGraduateCertificateExt},
+               #{finalGraduateCertificateOrigName},
+               #{finalGraduateCertificateYearMonthDay},
+               #{balanceCertificateUuid},
+               #{balanceCertificateExt},
+               #{balanceCertificateOrigName},
+               #{balanceCertificateYearMonthDay},
+               #{parentsEmploymentAndIncomeCertificateUuid},
+               #{parentsEmploymentAndIncomeCertificateExt},
+               #{parentsEmploymentAndIncomeCertificateOrigName},
+               #{parentsEmploymentAndIncomeCertificateYearMonthDay},
+               #{familyRelationsCertificateUuid},
+               #{familyRelationsCertificateExt},
+               #{familyRelationsCertificateOrigName},
+               #{familyRelationsCertificateYearMonthDay},
+               now(),
+               now()
+           )
+    </insert>
+
+    <select id="checkNextLevel" parameterType="applicantVo" resultType="applicantVo">
+        <!--applicant.checkNextLevel-->
+        SELECT
+            a.nationality as nationality,
+            a.passport_number as passportNumber,
+            a.passport_issue_date as passportIssueDate,
+            a.passport_expiration_date as passportExpirationDate,
+            a.applicant_photo_path as applicantPhotoPath,
+            a.applicant_photo_uuid as applicantPhotoUuid,
+            a.applicant_photo_ext as applicantPhotoExt,
+            a.applicant_photo_orig_name as applicantPhotoOrigName,
+            a.applicant_photo_year_month_day as applicantPhotoYearMonthDay,
+            a.korean_name as koreanName,
+            a.english_name as englishName,
+            a.birth as birth,
+            a.gender as gender,
+            a.foreigner_reg_number as foreignerRegNumber,
+            a.phone as phone,
+            a.guardian_phone as guardianPhone,
+            a.high_level_edu as highLevelEdu,
+            a.major as major,
+            a.addr as addr,
+            a.detail_addr as detailAddr,
+            a.city as city,
+            a.state as state,
+            a.country as country,
+            a.zip as zip,
+            b.korean_grade as koreanGrade,
+            b.korean_score as koreanScore,
+            b.other_language as otherLanguage,
+            b.korean_level_check as koreanLevelCheck,
+            c.motive as motive,
+            c.introduce_family as introduceFamily,
+            c.future_plan as futurePlan,
+            c.etc as etc,
+            d.pickup as pickup,
+            d.dormitory as dormitory,
+            e.copy_passport_photo_uuid as copyPassportPhotoUuid,
+            e.copy_passport_photo_ext as copyPassportPhotoExt,
+            e.copy_passport_photo_orig_name as copyPassportPhotoOrigName,
+            e.copy_passport_photo_year_month_day as copyPassportPhotoYearMonthDay,
+            e.passport_photo_uuid as passportPhotoUuid,
+            e.passport_photo_ext as passportPhotoExt,
+            e.passport_photo_orig_name as passportPhotoOrigName,
+            e.passport_photo_year_month_day as passportPhotoYearMonthDay,
+            e.household_register_uuid as householdRegisterUuid,
+            e.household_register_ext as householdRegisterExt,
+            e.household_register_orig_name as householdRegisterOrigName,
+            e.household_register_year_month_day as householdRegisterYearMonthDay,
+            e.higher_education_student_information_uuid as higherEducationStudentInformationUuid,
+            e.higher_education_student_information_ext as higherEducationStudentInformationExt,
+            e.higher_education_student_information_orig_name as higherEducationStudentInformationOrigName,
+            e.higher_education_student_information_year_month_day as higherEducationStudentInformationExtYearMonthDay,
+            e.final_graduate_certificate_uuid as finalGraduateCertificateUuid,
+            e.final_graduate_certificate_ext as finalGraduateCertificateExt,
+            e.final_graduate_certificate_orig_name as finalGraduateCertificateOrigName,
+            e.final_graduate_certificate_year_month_day as finalGraduateCertificateYearMonthDay,
+            e.balance_certificate_uuid as finalGraduateCertificateUuid,
+            e.balance_certificate_ext as finalGraduateCertificateExt,
+            e.balance_certificate_orig_name as finalGraduateCertificateOrigName,
+            e.balance_certificate_year_month_day as finalGraduateCertificateYearMonthDay,
+            e.parents_employment_and_income_certificate_uuid as parentsEmploymentAndIncomeCertificateUuid,
+            e.parents_employment_and_income_certificate_ext as parentsEmploymentAndIncomeCertificate_ext,
+            e.parents_employment_and_income_certificate_orig_name as parentsEmploymentAndIncomeCertificateOrigName,
+            e.parents_employment_and_income_certificate_year_month_day as parentsEmploymentAndIncomeCertificateYearMonthDay,
+            e.family_relations_certificate_uuid as familyRelationsCertificateUuid,
+            e.family_relations_certificate_ext as familyRelationsCertificateExt,
+            e.family_relations_certificate_orig_name as familyRelationsCertificateOrigName,
+            e.family_relations_certificate_year_month_day as familyRelationsCertificateYearMonthDay
+        FROM
+            applicant_information a
+        LEFT JOIN
+            applicant_korean_grade b
+        ON
+            a.apply_member_idx = b.apply_member_idx
+        LEFT JOIN
+            applicant_about_me c
+        ON
+            a.apply_member_idx = c.apply_member_idx
+        LEFT JOIN
+            applicant_other_request d
+        ON
+            a.apply_member_idx = d.apply_member_idx
+        LEFT JOIN
+            applicant_submit_documents e
+        ON
+            a.apply_member_idx = e.apply_member_idx
+        WHERE
+            <choose>
+                <when test="levelType == 'koreanGrade'">
+                    a.apply_member_idx = #{applyMemberIdx}
+                AND
+                    a.recruitment_category_idx = #{recruitmentCategoryIdx}
+                </when>
+                <when test="levelType == 'aboutMe'">
+                    b.apply_member_idx = #{applyMemberIdx}
+                AND
+                    b.recruitment_category_idx = #{recruitmentCategoryIdx}
+                </when>
+                <when test="levelType == 'otherRequest'">
+                    c.apply_member_idx = #{applyMemberIdx}
+                AND
+                    c.recruitment_category_idx = #{recruitmentCategoryIdx}
+                </when>
+                <when test="levelType == 'submitDocuments'">
+                    d.apply_member_idx = #{applyMemberIdx}
+                AND
+                    d.recruitment_category_idx = #{recruitmentCategoryIdx}
+                </when>
+                <when test="levelType == 'doSubmit'">
+                    e.apply_member_idx = #{applyMemberIdx}
+                AND
+                    e.recruitment_category_idx = #{recruitmentCategoryIdx}
+                </when>
+            </choose>
+    </select>
+
+
+
+    <select id="isExistApplying" parameterType="applicantVo" resultType="int">
+        <!--applicant.isExistApplying-->
+        SELECT
+            count(*)
+        FROM
+            applying
+        WHERE
+            apply_member_idx = #{applyMemberIdx}
+    </select>
+
+
+    <insert id="createApplying" parameterType="applicantVo">
+        <!--applicant.createApplying-->
+        INSERT INTO
+            applying (
+                apply_member_idx,
+                recruitment_category_idx,
+                status,
+                reg_dt,
+                mod_dt
+            )
+        VALUES (
+            #{applyMemberIdx},
+            #{recruitmentCategoryIdx},
+            'underReview',
+            now(),
+            now()
+        )
+    </insert>
+
+
+    <update id="updateApplying" parameterType="applicantVo">
+        <!--applicant.updateApplying-->
+        UPDATE
+            applying
+        SET
+            status = "underReview",
+            mod_dt = now()
+        WHERE
+            apply_member_idx = #{applyMemberIdx}
+    </update>
+
+    <select id="getApplying" parameterType="applicantVo" resultType="applicantVo">
+        <!--applicant.getApplying-->
+        SELECT
+            apply_member_idx as applyMemberIdx,
+            status as applyingStatus,
+            reject_memo as rejectMemo,
+            reg_dt as regDt
+        FROM
+            applying
+        WHERE
+            apply_member_idx = #{applyMemberIdx}
+    </select>
+
+    <!--    <select id="getSubmitDocuments" parameterType="applicantVo" resultType="applicantVo">
+            SELECT
+                nationality,
+                passport_number,
+                passport_issue_date,
+                passport_expiration_date,
+                applicant_photo_path,
+                applicant_photo_uuid,
+                applicant_photo_ext
+                applicant_photo_orig_name
+            FROM
+                applicant_information
+        </select>-->
+
+
+
+
+
+</mapper>

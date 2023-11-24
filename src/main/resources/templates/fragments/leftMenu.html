@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="leftMenuFragment">
+    <!--header 부분 code -->
+
+    <div id="leftMenuBox" style="margin: 30px 30px 30px 30px;color: white">
+        <h3><a href="/daejeonApply/admissionApplication">지원분야</a></h3>
+        <h3><a href="/daejeonApply/applicantInformation">입학지원서</a></h3>
+
+            <div> - 이용약관 동의</div>
+            <br>
+            <div><a href="/daejeonApply/applicantInformation"> - 지원자인적사항</a></div>
+            <br>
+            <div><a href="/daejeonApply/koreanGrade"> - 한국어수준</a></div>
+            <br>
+            <div><a href="/daejeonApply/aboutMe"> - 자기소개</a></div>
+            <br>
+            <div><a href="/daejeonApply/otherRequest"> - 요청사항</a></div>
+
+        <h3><a href="/daejeonApply/submitDocuments">제출서류등록</a></h3>
+        <h3><a href="/daejeonApply/doSubmit">제출하기</a></h3>
+    </div>
+
+</th:block>
+
+
+<th:block th:fragment="leftAdminMenuFragment">
+    <!--header 부분 code -->
+
+    <div id="leftAdminMenuBox" style="margin: 30px 30px 30px 30px;color: white">
+        <h3><a href="/admin/applyingList">지원자 접수</a></h3>
+    </div>
+
+</th:block>
+
+
+
+
+
+<th:block th:fragment="leftEntranceExamMenuFragment">
+    <!--header 부분 code -->
+
+    <div id="menuBox">
+
+        <th:block th:replace="fragments/leftMenu::topMenu" />
+
+        <div id="title">순수외국인2</div>
+
+        <div class="subTitle">▶ 기초 자료 관리</div>
+        <div class="subBox">
+            <div class="menuList"><a href="commonCode">· 순수외국인공통코드</a></div>
+            <br>
+            <div class="menuList"><a href="/niied/workSchedule">· 입시일정등록</a></div>
+            <br>
+            <div class="menuList"><a href="/niied/personalInfo">· 모집요강관리</a></div>
+            <br>
+            <div class="menuList"><a href="/niied/personalInfo">· 입시스케쥴러</a></div>
+            <br>
+            <div class="menuList"><a href="/niied/personalInfo">· 년도별모집단위관리</a></div>
+            <br>
+            <div class="menuList"><a href="/niied/personalInfo">· (순외)모집인원등록</a></div>
+            <br>
+            <div class="menuList"><a href="/niied/personalInfo">· 전형료관리</a></div>
+            <br>
+            <div class="menuList"><a href="/niied/personalInfo">· (순외)전형요소별점수등록</a></div>
+            <br>
+            <div class="menuList"><a href="/niied/personalInfo">· 제출서류코드</a></div>
+            <br>
+            <div class="menuList"><a href="/niied/personalInfo">· 웹서비스등록</a></div>
+            <br>
+            <div class="menuList"><a href="/niied/personalInfo">· 웹서비스4개국어관리</a></div>
+            <br>
+            <div class="menuList"><a href="/niied/personalInfo">· (순외)합격발표일정등록</a></div>
+            <br>
+            <div class="menuList"><a href="/niied/personalInfo">· (순외)발표안내사항등록</a></div>
+            <br>
+            <div class="menuList"><a href="/niied/personalInfo">· 웹서비스관리자등록</a></div>
+            <br>
+            <div class="menuList"><a href="/niied/personalInfo">· (순외)수험생웹서비스(관리자용)</a></div>
+        </div>
+
+        <div class="subTitle">▶ 원서관리</div>
+        <div class="subBox">
+            <div class="menuList"><a href="/exam/applyingList">· 입학원서접수자등록 ##완료##</a></div>
+            <br>
+            <div class="menuList"><a href="/applying/foreignStudentAcademicChangeCheck">· (순위)원서접수관리</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/rejectList">· 원서오류체크(선발전) ##완료##</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/applyingChange">· 지원자 정보변경 ##완료##</a></div>
+            <br>
+            <div class="menuList"><a href="/applying/counselingManagement">· 서류제출여부 <br>(지원자 정보변경과 통합 할수있을지??)</a></div>
+            <br>
+            <div class="menuList"><a href="/applying/foreignStudentList">· (순외)전형자제외자관리</a></div>
+            <br>
+            <div class="menuList"><a href="/applying/foreignStudentItemManagement">· 원서자료출력<br>(지원자 정보변경과 통합 할수있을지??)</a></div>
+        </div>
+
+        <div class="subTitle">▶ 면접관리</div>
+        <div class="subBox">
+            <div class="menuList"><a href="/exam/interviewCode">· (순외)면접고사장/위원관리 ##완료##</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/interviewGroup">· 면접고사조편성 ##완료##</a></div>
+            <br>
+            <!--<div class="menuList"><a href="/exam/exchangeTrainingStandardManagement"><del>· 평가항목별배점기준</del></a></div>
+            <br>-->
+            <div class="menuList"><a href="/exam/interviewee">· 면접대상자생성 ##완료##</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/interviewManagement">· 전화면접관리???</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/exchangeTrainingPassManagement">· 면접적부입력</a></div>
+            <br>
+            <!--<div class="menuList"><a href="/exam/exchangeTrainingStudentPass">· 면접결시자확정처리</a></div>
+            <br>-->
+            <div class="menuList"><a href="/exam/grantVirtualAccount">· 면접오류자체크</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/storageManagement">· 면접결과 성적산출</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/importRefundDecisionProcessing">· 면접자료출력</a></div>
+        </div>
+
+
+        <div class="subTitle">▶ 사정/합격관리</div>
+        <div class="subBox">
+            <div class="menuList"><a href="/exam/bonusPointsManagement">· 가산점관리 ##완료##</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/recruitmentProcessManagement">· 전형총점계산</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/submitDocumentManagement">· (순외)전형요소별성적조회</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/acceptApplication">· 전형순위생성</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/selectedApplicants">· 최초합격자선발 ##완료##</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/acceptedManagement">· 합격자관리 ##완료##</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/errorAfterAccepted">· 원서오류자체크(합격자선발후) ##완료##</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/assignmentStudentNumberAndTransfer">· 전형/사정자료출력</a></div>
+        </div>
+
+        <div class="subTitle">▶ 장학관리</div>
+        <div class="subBox">
+            <div class="menuList"><a href="/exam/scholarshipCode">· (순외)장학코드관리 ##완료##</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/scholarshipRecipients">· (순외)장학생관리 ##완료##</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/lectureCycleManagement">· (순외)장학자료출력</a></div>
+        </div>
+
+        <div class="subTitle">▶ 등록관리</div>
+        <div class="subBox">
+            <div class="menuList"><a href="/exam/tuitionPaymentAmount">· (순외)등록금액기초관리</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/teacherUnitPriceManagement">· (순외)등록대상자생성(전체)</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/tuitionPaymentAmount">· (순외)등록대상자 (개별)</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/tuitionPaymentManagement">· (순외)등록금수납관리 ##완료##</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/registrationAndRefundApplicantsManagement">· (순외)등록포기및환불신청자관리 ##완료##</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/teacherFeeManagement">· (순외)환불관리</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/teacherFeeManagement">· (순외)고지서출력</a></div>
+            <br>
+            <div class="menuList"><a href="/exam/teacherFeeManagement">· (순외)등록자료출력</a></div>
+        </div>
+
+        <div class="subTitle">▶ 기타관리</div>
+        <div class="subBox">
+            <div class="menuList"><a href="/exam/teacherManagement">· SMS작업</a></div>
+        </div>
+
+    </div>
+
+</th:block>
+
+
+
+
+<th:block th:fragment="topMenu">
+
+    <div class="subTitle" style="background: #a7a2ff;color:white">상위메뉴</div>
+    <div class="subBox" style="background: #bcdeff;color:white">
+        <div class="menuList"><b><a href="/university/index">대학교정보</a></b></div>
+        <br>
+        <div class="menuList"><b><a href="/schedule/index">일정관리</a></b></div>
+        <br>
+        <div class="menuList"><b><a href="/student/index">유학생관리</a></b></div>
+        <br>
+        <div class="menuList"><b><a href="/supportProgram/index">지원프로그램</a></b></div>
+        <br>
+        <div class="menuList"><b><a href="/dormitory/index">기숙사관리</a></b></div>
+        <br>
+        <div class="menuList"><b><a href="/exam/index">지원자관리</a></b></div>
+        <br>
+        <div class="menuList"><b><a href="/config/index">환경설정</a></b></div>
+        <br>
+    </div>
+    <br>
+    <br>
+
+</th:block>
+
+
+
+
+
+<th:block th:fragment="leftScheduleManagementFragment">
+    <!--header 부분 code -->
+
+    <div id="menuBox">
+
+        <th:block th:replace="fragments/leftMenu::topMenu" />
+
+        <div id="title">일정관리</div>
+
+        <div class="subTitle">▶ 일정관리</div>
+        <div class="subBox">
+            <div class="menuList"><a href="/schedule/createSchedule">· 일정등록</a></div>
+            <br>
+            <div class="menuList"><a href="/schedule/scheduleCalendar">· 일정달력</a></div>
+            <br>
+            <div class="menuList"><a href="/schedule/scheduleList">· 일정리스트</a></div>
+            <br>
+        </div>
+
+    </div>
+
+</th:block>
+
+
+
+<th:block th:fragment="leftDormitoryManagementFragment">
+    <!--header 부분 code -->
+
+    <div id="menuBox">
+
+        <th:block th:replace="fragments/leftMenu::topMenu" />
+
+        <div id="title">기숙사관리</div>
+
+        <div class="subTitle">▶ 기숙사관리</div>
+        <div class="subBox">
+            <div class="menuList"><a href="/dormitory/createDormitory">· 기숙사등록</a></div>
+            <br>
+            <div class="menuList"><a href="/dormitory/createRoom">· 호실등록</a></div>
+            <br>
+        </div>
+
+    </div>
+
+</th:block>
+
+
+<th:block th:fragment="leftSudentManagementFragment">
+    <!--header 부분 code -->
+
+    <div id="menuBox">
+
+        <th:block th:replace="fragments/leftMenu::topMenu" />
+        <div id="title">유학생관리</div>
+
+        <div class="subTitle">▶ 유학생관리</div>
+        <div class="subBox">
+            <div class="menuList"><a href="/student/studentList">· 학생정보</a></div>
+            <br>
+            <div class="menuList"><a href="/student/status">· 학생통계</a></div>
+            <br>
+            <div class="menuList"><a href="/student/attendanceManagement">· 출결관리</a></div>
+            <br>
+        </div>
+
+    </div>
+
+</th:block>
+
+
+
+
+
+<th:block th:fragment="leftSupportProgramFragment">
+
+    <div id="menuBox">
+
+        <th:block th:replace="fragments/leftMenu::topMenu" />
+
+        <div id="title">지원프로그램 생성</div>
+
+        <div class="subTitle">▶ 필수동영상</div>
+        <div class="subBox">
+            <div class="menuList"><a href="/supportProgram/createVideo">· 필수동영상 생성</a></div>
+            <div class="menuList"><a href="/supportProgram/videoDetail">· 필수동영상 상세현황 ##작성중##</a></div>
+        </div>
+
+        <div class="subTitle">▶ 신청</div>
+        <div class="subBox">
+            <div class="menuList"><a href="/supportProgram/counselingApplication">· 상담 신청 ##작성중##</a></div>
+            <div class="menuList"><a href="/supportProgram/activityApplication">· 활동 신청 ##작성중##</a></div>
+        </div>
+
+    </div>
+
+</th:block>
+
+
+
+
+
+
+<th:block th:fragment="leftUniversityInfoFragment">
+    <!--header 부분 code -->
+
+    <div id="menuBox">
+
+        <th:block th:replace="fragments/leftMenu::topMenu" />
+
+        <div id="title">대학교정보</div>
+
+        <div class="subTitle">▶ 분반관리</div>
+        <div class="subBox">
+            <div class="menuList"><a href="/university/createClassSection">· 분반생성</a></div>
+            <br>
+            <div class="menuList"><a href="/university/classSectionList">· 분반리스트</a></div>
+            <br>
+        </div>
+
+        <div class="subTitle">▶ 배정관리</div>
+        <div class="subBox">
+            <div class="menuList"><a href="/university/addPersonal">· 배정인원추가</a></div>
+            <br>
+        </div>
+
+        <div class="subTitle">▶ 교육과정 관리</div>
+        <div class="subBox">
+            <div class="menuList"><a href="/university/createCurriculum">· 교육과정생성</a></div>
+            <br>
+            <div class="menuList"><a href="/university/curriculumList">· 교육과정리스트</a></div>
+            <br>
+            <div class="menuList"><a href="/university/addCurriculum">· 분반에 교육과정 추가</a></div>
+            <br>
+        </div>
+        <div class="subTitle">▶ 강사관리</div>
+        <div class="subBox">
+            <div class="menuList"><a href="/university/createProfessor">· 강사등록</a></div>
+            <br>
+            <div class="menuList"><a href="/university/professorList">· 강사리스트</a></div>
+            <br>
+            <div class="menuList"><a href="/university/addStudentList">· 배정학생리스트</a></div>
+            <br>
+        </div>
+        <div class="subTitle">▶ 대외협력문서</div>
+        <div class="subBox">
+            <div class="menuList"><a href="/university/createExternalCollaborationDocument">· 대외협력문서 등록</a></div>
+            <br>
+            <div class="menuList"><a href="/university/externalCollaborationDocumentList">· 대외협력문서 리스트</a></div>
+            <br>
+        </div>
+
+    </div>
+
+</th:block>
+
+
+<th:block th:fragment="leftConfigFragment">
+
+    <div id="menuBox">
+
+        <th:block th:replace="fragments/leftMenu::topMenu" />
+
+        <div id="title">환경설정</div>
+
+        <div class="subTitle">▶ 환경설정</div>
+        <div class="subBox">
+            <div class="menuList"><a href="/config/createAdmin">· 관리자 생성</a></div>
+            <br>
+            <div class="menuList"><a href="/config/permissionAdmin">· 관리자 권한 부여</a></div>
+            <br>
+        </div>
+        <div class="subTitle">▶ 편의시설</div>
+        <div class="subBox">
+            <div class="menuList"><a href="/config/convenienceFacility">· 편의시설 생성</a></div>
+            <br>
+        </div>
+
+    </div>
+
+</th:block>
+
+
+
+
+<th:block th:fragment="professorTopMenu">
+
+    <div class="subTitle" style="background: #a7a2ff;color:white">상위메뉴</div>
+    <div class="subBox" style="background: #bcdeff;color:white">
+        <div class="menuList"><b><a href="/professor/attendanceManagement">출결관리</a></b></div>
+    </div>
+    <br>
+    <br>
+
+</th:block>
+
+
+
+<th:block th:fragment="leftProfessorFragment">
+    <!--header 부분 code -->
+
+    <div id="professorMenuBox" class="menuBox">
+
+        <!--<th:block th:replace="fragments/leftMenu::professorTopMenu" />-->
+
+        <div id="title" style="background: #a7a2ff;color:white">
+            강사페이지
+            <br>
+            강사아이디 [[${professorId}]]
+        </div>
+
+        <div class="subTitle">▶ 출결관리</div>
+        <div class="subBox">
+            <div class="menuList"><a href="/professor/attendanceManagement">· 출결관리</a></div>
+            <br>
+        </div>
+
+
+        <div class="subTitle">▶ 상담관리</div>
+        <div class="subBox">
+            <div class="menuList"><a href="/professor/counselingManagement">· 상담관리</a></div>
+            <br>
+        </div>
+
+        <div class="subTitle">▶ 정보수정</div>
+        <div class="subBox">
+            <div class="menuList"><a href="/professor/modifyInfo">· 정보수정</a></div>
+            <br>
+            <div class="menuList"><a href="javascript:void(0)" @click="professorLogout">· 로그아웃</a></div>
+            <br>
+        </div>
+
+    </div>
+
+</th:block>
+
+
+
+
+</html>

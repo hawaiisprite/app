@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<!-- layout 관련 namespace 추가 선언 -->
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+
+    <th:block th:replace="fragments/config::headerCss" />
+    <th:block th:replace="fragments/config::menuJs" />
+
+</head>
+
+<body>
+
+<div class="display: flex; flex-direction: row;">
+
+    <script src="https://player.vimeo.com/api/player.js"></script>
+
+    <div>
+
+        비디오 테스트입니다
+
+        <br>
+        <br>
+
+        <div style="background: lightskyblue;text-align: center">
+
+            <iframe id="video" title="vimeo-player" src="https://player.vimeo.com/video/879692152" width="100%" height="500" frameborder="0" style="margin: 0 auto;" allowfullscreen></iframe>
+
+        </div>
+
+        <!--<div  class=video-container style="TEXT-ALIGN: center">
+            <object id="video2" type="text/html" width="100%" height="500" data="https://player.vimeo.com/video/879692152" allowFullScreen onclick="test1"></object>
+        </div>-->
+
+        <div id="testbox" onClick="test1">가나다라마바사</div>
+
+        <button id="checkBtn">시간확인</button>
+
+    </div>
+
+</div>
+
+<script>
+
+
+
+    function test1() {
+        alert("뇽안~")
+    }
+
+    function ifClose() {
+        $.ajax({
+            type : "POST",
+            url : "/appRest/test2",
+            dataType : 'json',
+            data : "",
+            contentType : false,
+            processData : false,
+            success(res) {
+                /*alert("통신 성공");
+                alert("가져온것은 " + res);
+                if(res.result === "success") {
+                    alert("통신에 성공하였습니다.");
+                    //location.reload();
+                    //location.href = "/daejeonApply/otherRequest";
+                }*/
+            },
+            error(XMLHttpRequest, textStatus, errorThrown){
+            }
+        });
+
+    }
+
+
+    $(function () {
+        $("#video2").click(function() {
+            alert("클릭하였습니다~~");
+        });
+
+    });
+
+    window.onbeforeunload = function (event) {
+        // 표준에 따라 기본 동작 방지
+        ifClose();
+
+        event.preventDefault();
+
+        // ajax 호출
+    };
+
+
+    //window.addEventListener('beforeunload', ifClose());
+
+    //var iframe = document.querySelector('iframe');
+
+    var video2 = document.getElementById('video');
+
+
+
+
+    var player = new Vimeo.Player(video2);
+
+    player.on('play', function() {
+        alert("플레이요~~");
+        startClock();
+    });
+
+
+    function datatest(data) {
+        alert("데이터 테스트 " + data);
+        alert("데이터 테스트 " + JSON.stringify(data));
+    }
+
+    player.loadVideo(879692152).then(() => {
+        player.ready().then(() => {
+            player.on('pause', (data) => stopEvent()
+            );
+        }).catch((err) => console.log(err));
+    });
+
+    function stopEvent() {
+
+        stopClock();
+        ifClose();
+
+    }
+
+
+    player.on('ended', function(data) {
+        stopClock();
+    });
+
+    player.getVideoTitle().then(function(title) {
+        //console.log('title:', title);
+        //alert("타이틀 " + title);
+    });
+
+
+    player.getLoop().then(function(loop) {
+        // Whether the player is set to loop
+        //var random = Math.random();
+        alert("겟루프");
+        //$("#testbox").text("랜덤 " + random);
+    });
+
+
+    player.getPaused().then(function(paused) {
+        alert("겟퓨즈드 스탑");
+        // `paused` indicates whether the player is paused
+    });
+
+
+    player.getDuration().then(function(duration) {
+
+        alert("듀레이션 " + duration);
+        // `duration` indicates the duration of the video in seconds
+    });
+
+
+    var onPlay = function(data) {
+
+        // `data` is an object containing properties specific to that event
+    };
+
+    player.on('ended', onPlay);
+
+
+    let timerId;
+    let time = 0;
+    // const stopwatch = document.getElementById("stopwatch");
+    let  hour, min, sec;
+
+    $("#checkBtn").click(function () {
+
+        player.getCurrentTime().then(function(seconds) {
+            return new Promise((resolve, reject)=>{
+                timeCheck(seconds)
+            })
+        });
+
+    });
+
+
+
+    function timeCheck(seconds) {
+        alert("시간 체크" + time + " " + seconds);
+    }
+
+    //시계 시작 - 재귀호출로 반복실행
+    function startClock() {
+        time++;
+        stopClock();
+        timerId = setTimeout(startClock, 1000);
+    }
+
+    //시계 중지
+    function stopClock() {
+        if (timerId != null) {
+            clearTimeout(timerId);
+        }
+    }
+
+</script>
+
+
+</body>
+
+</html>

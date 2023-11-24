@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="common">
+
+    <insert id="saveFileInfo" parameterType="commonVo">
+        <!-- common.saveFileInfo -->
+        INSERT INTO
+            files(
+                uuid,
+                ext,
+                orig_name,
+                year,
+                month,
+                day,
+                reg_dt,
+                mod_dt
+            )
+        VALUES (
+            #{fileUuid},
+            #{fileExt},
+            #{fileOrigName},
+            #{fileYear},
+            #{fileMonth},
+            #{fileDay},
+            now(),
+            now()
+       )
+
+        <selectKey keyProperty="filesIdx" resultType="int">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+</mapper>

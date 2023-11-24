@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+    <div th:fragment="headerFragment" class="header navbar-fixed-top">
+        <!--header 부분 code -->
+        <div id="topMenuBox">
+            <div class="innerMenuBox">
+
+                <span style="position:relative; left:0px; top: 10px; vertical-align: middle; cursor: pointer">대학 홈페이지</span>
+
+                <span style="position:absolute; right:300px; top: 10px; vertical-align: middle; cursor: pointer">HOME</span>
+                <span id="login" th:if="${userEmail == null and userIdx == null }" style="position:absolute; right:200px; top: 10px; vertical-align: middle; cursor: pointer">로그인</span>
+
+                <span id="logout" th:if="${userEmail != null and userIdx != null }" style="position:absolute; right:200px; top: 10px; vertical-align: middle; cursor: pointer">로그아웃</span>
+
+
+                <span th:onclick="|location.href='@{/daejeonApply/myPage}'|"
+                      style="position:absolute; right:100px; top: 10px; vertical-align: middle; cursor: pointer">MY PAGE</span>
+                <span style="position:absolute; right:0px; top: 10px; vertical-align: middle; cursor: pointer">사이트맵</span>
+
+            </div>
+        </div>
+
+        <div id="menuBox">
+            <div class="innerMenuBox">
+
+                <img id="logo" src="/img/logo.png"
+                     style="width: 200px; height: 60px; margin-top: 20px;cursor: pointer"/>
+
+                <span style="position:absolute; right:750px; top: 10px; vertical-align: middle; font-size:23px; margin-top: 20px; cursor: pointer">대학소개</span>
+                <span style="position:absolute; right:620px; top: 10px; vertical-align: middle; font-size:23px; margin-top: 20px; cursor: pointer">교육과정</span>
+                <span style="position:absolute; right:490px; top: 10px; vertical-align: middle; font-size:23px; margin-top: 20px; cursor: pointer">학과생활</span>
+                <span style="position:absolute; right:360px; top: 10px; vertical-align: middle; font-size:23px; margin-top: 20px; cursor: pointer">입학정보</span>
+                <span style="position:absolute; right:230px; top: 10px; vertical-align: middle; font-size:23px; margin-top: 20px; cursor: pointer">장학제도</span>
+                <span id="admissionApplication" style="position:absolute; right:100px; top: 10px; vertical-align: middle; font-size:23px; margin-top: 20px; cursor: pointer">입학지원</span>
+
+                <img src="/img/hamburger_icon.png"
+                     style="position:absolute; right:0px;width: 50px; height: 50px; vertical-align: middle; margin-top: 20px"/>
+
+            </div>
+        </div>
+
+    </div>
+
+</html>

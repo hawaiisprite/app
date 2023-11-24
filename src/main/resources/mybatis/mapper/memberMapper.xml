@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+
+
+    <insert id="createEmailAuthCode" parameterType="applyMemberVo">
+        <!--member.createEmailAuthCode-->
+        INSERT INTO
+            email_auth_code (
+                email,
+                auth_code,
+                reg_dt,
+                mod_dt
+            )
+        VALUES (
+            #{email},
+            #{authCode},
+            now(),
+            now()
+        )
+        <selectKey keyProperty="emailAuthCodeIdx" resultType="int" >
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+
+    </insert>
+
+
+    <select id="getEmailAuthCode" parameterType="applyMemberVo" resultType="applyMemberVo">
+        <!--member.getEmailAuthCode-->
+        SELECT
+            idx as emailAuthCodeIdx,
+            email as email,
+            auth_code as authCode
+         FROM
+            email_auth_code
+         WHERE
+            idx = #{emailAuthCodeIdx}
+    </select>
+
+
+    <select id="emailAuthCheck" parameterType="applyMemberVo" resultType="applyMemberVo">
+        <!--member.emailAuthCheck-->
+        SELECT
+            idx as emailAuthCodeIdx,
+            email as email,
+            auth_code as authCode
+         FROM
+            email_auth_code
+         WHERE
+         	email = #{email}
+         ORDER BY emailAuthCodeIdx DESC
+			LIMIT 1
+    </select>
+
+    <insert id="registMember" parameterType="applyMemberVo">
+        <!--member.registMember-->
+        INSERT INTO
+            apply_member(
+                email,
+                nickname,
+                password,
+                reg_dt
+            )
+        VALUES (
+            #{email},
+            #{nickname},
+            #{password},
+            now()
+        )
+    </insert>
+
+    <select id="isExistMember" parameterType="applyMemberVo" resultType="int">
+        <!--member.isExistMember-->
+        SELECT
+            count(*)
+        FROM
+            apply_member
+        WHERE
+            email = #{email}
+
+    </select>
+
+    <select id="loginCheck" parameterType="applyMemberVo" resultType="applyMemberVo">
+        <!--member.loginCheck-->
+        SELECT
+            idx as applyMemberIdx,
+            email as email,
+            password as password
+        FROM
+            apply_member
+        WHERE
+            email = #{email}
+    </select>
+
+</mapper>

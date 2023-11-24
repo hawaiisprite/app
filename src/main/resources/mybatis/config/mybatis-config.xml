@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+    <!--mapper에서 매칭할 parmeter Type 별칭 설정-->
+    <typeAliases>
+
+        <typeAlias type="ac.daejeon.app.vo.AppVo" alias="appVo"/>
+        <typeAlias type="ac.daejeon.app.vo.ConfigVo" alias="configVo"/>
+        <typeAlias type="ac.daejeon.app.vo.SupportProgramVo" alias="supportProgramVo"/>
+        <typeAlias type="ac.daejeon.app.vo.ApplicantVo" alias="applicantVo"/>
+        <typeAlias type="ac.daejeon.app.vo.ApplyMemberVo" alias="applyMemberVo"/>
+        <typeAlias type="ac.daejeon.app.common.CommonVo" alias="commonVo"/>
+
+    </typeAliases>
+
+
+    <!--<environments default="development">
+
+        &lt;!&ndash; environment id를 구분하여 연결할 DB를 여려개 구성할 수 도 있음 &ndash;&gt;
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+                <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+                <property name="username" value="mybatis"/>
+                <property name="password" value="mybatis"/>
+            </dataSource>
+        </environment>
+
+    </environments>-->
+
+    <!--<mappers>
+        <mapper resource="mybatis/mapper/studentInfo/studentInfoMapper.xml"/>
+    </mappers>-->
+
+
+</configuration>

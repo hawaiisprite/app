@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="supportProgram">
+
+
+    <select id="getVideoList" parameterType="supportProgramVo" resultType="supportProgramVo">
+        <!-- supportProgram.getVideoList -->
+        SELECT
+            idx as videoIdx,
+            video_name as videoName,
+            video_link as videoLink,
+            running_minute as runningMinute,
+            running_second as runningSecond,
+            start_day as videoStartDay,
+            end_day as videoEndDay
+        FROM
+            video
+        <if test="videoIdx != null and videoIdx != 0">
+        WHERE
+            idx = #{videoIdx}
+        </if>
+        <if test='isOrderByDescLimit1 == true'>
+            ORDER BY
+                idx desc
+            LIMIT
+                1
+        </if>
+    </select>
+
+    <insert id="createVideo" parameterType="supportProgramVo">
+        <!-- supportProgram.createVideo -->
+        INSERT INTO
+            video (
+                video_name,
+                video_link,
+                running_minute,
+                running_second,
+                all_second,
+                start_day,
+                end_day,
+                reg_dt,
+                mod_dt
+            )
+        VALUES (
+                #{videoName},
+                #{videoLink},
+                #{runningMinute},
+                #{runningSecond},
+                #{allSecond},
+                #{videoStartDay},
+                #{videoEndDay},
+                now(),
+                now()
+        )
+
+    </insert>
+
+
+    <update id="modifyVideo" parameterType="applicantVo">
+        <!-- supportProgram.modifyVideo -->
+        UPDATE
+            video
+        SET
+            video_name = #{videoName},
+            video_link = #{videoLink},
+            running_minute = #{runningMinute},
+            running_second = #{runningSecond},
+            all_second = #{allSecond},
+            start_day = #{videoStartDay},
+            end_day = #{videoEndDay},
+            mod_dt = now()
+        WHERE
+            idx = #{videoIdx}
+    </update>
+
+
+
+    <select id="getApplicationList" parameterType="supportProgramVo" resultType="supportProgramVo">
+        <!-- supportProgram.getApplicationList -->
+        SELECT
+            idx as applicationIdx,
+            type as applicationType,
+            name as applicationName,
+            count as applicationCount,
+            start_day as applicationStartDay,
+            end_day as applicationEndDay
+        FROM
+            application
+        WHERE
+            1=1
+        <if test="applicationType != null and applicationType != ''">
+            AND
+                type = #{applicationType}
+        </if>
+        <if test="applicationIdx != null and applicationIdx != 0">
+            AND
+                idx = #{applicationIdx}
+        </if>
+        <if test='isOrderByDescLimit1 == true'>
+            ORDER BY
+                idx desc
+                LIMIT
+                1
+        </if>
+    </select>
+
+    <insert id="createApplication" parameterType="supportProgramVo">
+        <!-- supportProgram.createApplication -->
+        INSERT INTO
+        application (
+            type,
+            name,
+            count,
+            start_day,
+            end_day,
+            reg_dt,
+            mod_dt
+        )
+        VALUES (
+            #{applicationType},
+            #{applicationName},
+            #{applicationCount},
+            #{applicationStartDay},
+            #{applicationEndDay},
+            now(),
+            now()
+        )
+
+    </insert>
+
+    <update id="modifyApplication" parameterType="applicantVo">
+        <!-- supportProgram.modifyApplication -->
+        UPDATE
+            application
+        SET
+            name = #{applicationName},
+            count = #{applicationCount},
+            start_day = #{applicationStartDay},
+            end_day = #{applicationEndDay},
+            mod_dt = now()
+        WHERE
+            idx = #{applicationIdx}
+        AND
+            type = #{applicationType}
+    </update>
+
+
+</mapper>

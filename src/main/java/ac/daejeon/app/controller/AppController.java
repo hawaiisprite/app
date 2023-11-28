@@ -1,6 +1,7 @@
 package ac.daejeon.app.controller;
 
 import ac.daejeon.app.service.AppService;
+import ac.daejeon.app.service.FCMNotificationService;
 import ac.daejeon.app.service.SupportProgramService;
 import ac.daejeon.app.vo.AppVo;
 import ac.daejeon.app.vo.SupportProgramVo;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,6 +23,10 @@ public class AppController {
 
     private final AppService appService;
     private final SupportProgramService supportProgramService;
+
+
+
+    private final FCMNotificationService fcmNotificationService;
 
     //동영상 테스트
     @RequestMapping(method = {RequestMethod.GET}, path = "/videoTest")
@@ -50,6 +57,20 @@ public class AppController {
         //SupportProgramVo videoInfo = supportProgramService.getVideoList(supportProgramVo).get(0);
 
         return "app/videoDetail";
+    }
+
+
+
+
+    //문자열 리턴
+    @ResponseBody
+    @RequestMapping(method = {RequestMethod.GET}, path = "/test1")
+    public String test1(Model model) {
+
+
+        fcmNotificationService.sendNotificationByToken();
+
+        return "테스트중";
     }
 
 }

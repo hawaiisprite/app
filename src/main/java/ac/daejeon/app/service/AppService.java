@@ -142,6 +142,40 @@ public class AppService {
     }
 
 
+    //토큰 생성
+    public int setFcmToken(AppVo appVo) {
+
+        AppVo studentInfo = appDao.getStudentInfo(appVo);
+
+        if(studentInfo != null) {
+            appVo.setStudentIdx(studentInfo.getStudentIdx());
+            appVo.setStudentId(studentInfo.getStudentId());
+            AppVo isExistFcmToken = appDao.isExistFcmToken(appVo);
+
+            if (isExistFcmToken == null) {
+                appDao.setFcmToken(appVo);
+            } else {
+                appDao.modifyFcmToken(appVo);
+            }
+
+        }
+
+        /*AppVo studentInfo = appDao.getStudentInfo(appVo);
+
+        if(studentInfo != null) {
+
+            appVo.setStudentIdx(studentInfo.getStudentIdx());
+            appVo.setStudentId(studentInfo.getStudentId());
+
+            appDao.isExistFcmToken(appVo);
+
+
+        }*/
+
+        return 1;
+    }
+
+
     public AppVo getPersonalInfo(AppVo appVo) throws IOException {
 
         AppVo personalInfo = appDao.getPersonalInfo(appVo);
@@ -182,7 +216,6 @@ public class AppService {
 
     public AppVo getApplicationDetail(AppVo appVo) {
         return appDao.getApplicationDetail(appVo);
-
     }
 
 

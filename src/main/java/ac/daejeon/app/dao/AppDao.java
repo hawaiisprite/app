@@ -117,9 +117,14 @@ public class AppDao {
         return 1;
     }
 
+    //학생정보 가져오기
+    public AppVo getStudentInfo(AppVo appVo) {
+        return sqlSession.selectOne("app.getStudentInfo", appVo);
+    }
+
     public List<AppVo> getClassSectionList(AppVo appVo) {
 
-        System.out.println("확인 " + appVo.getStudentEmail());
+        //System.out.println("확인 " + appVo.getStudentEmail());
 
         return sqlSession.selectList("app.getClassSectionList", appVo);
     }
@@ -129,10 +134,21 @@ public class AppDao {
         return sqlSession.selectOne("app.getTodayAttendance", appVo);
     }
 
+    //fcm 토큰 있는지 확인
+    public AppVo isExistFcmToken(AppVo appVo) {
+        return sqlSession.selectOne("app.isExistFcmToken", appVo);
+    }
 
 
+    //fcm 토큰 설정
+    public int setFcmToken(AppVo appVo) {
+        return sqlSession.insert("app.setFcmToken", appVo);
+    }
 
-
+    //fcm 토큰 수정
+    public int modifyFcmToken(AppVo appVo) {
+        return sqlSession.update("app.modifyFcmToken", appVo);
+    }
 
 
 

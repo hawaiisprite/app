@@ -42,6 +42,7 @@
 
 
     <select id="checkAppJoinAuthCode" parameterType="appVo" resultType="appVo">
+        <!--app.checkAppJoinAuthCode-->
         SELECT
             a.email as studentEmail,
             b.auth_code as authCode
@@ -62,6 +63,7 @@
 
 
     <update id="setStudentPassword" parameterType="appVo">
+        <!--app.setStudentPassword-->
         UPDATE
             university_student
         SET
@@ -103,7 +105,7 @@
 
 
     <select id="getInfoPassport" resultType="appVo">
-
+        <!--app.getInfoPassport-->
         SELECT
             a.email as studentEmail,
             b.uuid as passportFileUuid,
@@ -195,6 +197,7 @@
 
 
     <select id="getVideoDetail" parameterType="appVo" resultType="appVo">
+        <!--app.getVideoDetail-->
         SELECT
             idx as videoIdx,
             video_name as videoName,
@@ -211,6 +214,7 @@
 
 
     <select id="isExistVideoWatched" parameterType="appVo" resultType="int">
+        <!--app.isExistVideoWatched-->
         SELECT
             COUNT(*)
         FROM
@@ -222,6 +226,7 @@
     </select>
 
     <insert id="createVideoWatched">
+        <!--app.createVideoWatched-->
         INSERT INTO
             video_watched(
                 video_idx,
@@ -243,6 +248,7 @@
 
 
     <select id="getVideoWatched" parameterType="appVo" resultType="appVo">
+        <!--app.getVideoWatched-->
         SELECT
             video_idx as videoIdx,
             watched_time as viewingTime,
@@ -256,6 +262,7 @@
     </select>
 
     <update id="modifyVideoWatched">
+        <!--app.modifyVideoWatched-->
         UPDATE
             video_watched
         SET
@@ -271,6 +278,7 @@
 
 
     <select id="getClassSectionList" parameterType="appVo" resultType="appVo">
+        <!--app.getClassSectionList-->
         SELECT
             a.idx as classSectionIdx,
             a.year as classSectionYear,
@@ -296,7 +304,7 @@
 
 
     <select id="getTodayAttendance" parameterType="appVo" resultType="int">
-
+        <!--app.getTodayAttendance-->
         SELECT
             COUNT(*)
         FROM
@@ -322,6 +330,68 @@
             flag != 'deleted'
 
     </select>
+
+
+
+    <select id="getStudentInfo" parameterType="appVo" resultType="appVo">
+        SELECT
+            idx as studentIdx,
+            student_id as studentId
+        FROM
+            university_student
+        WHERE
+            email = #{studentEmail}
+
+    </select>
+
+
+    <select id="isExistFcmToken" parameterType="appVo" resultType="appVo">
+
+        SELECT
+            idx as fcmTokenIdx
+        FROM
+            fcm_token
+        WHERE
+            token = #{fcmToken}
+
+    </select>
+
+
+    <select id="setFcmToken" parameterType="appVo" resultType="int">
+        INSERT INTO
+            fcm_token (
+                student_idx,
+                student_id,
+                token,
+                is_used,
+                os,
+                reg_dt,
+                mod_dt
+            )
+        values (
+            #{studentIdx},
+            #{studentId},
+            #{fcmToken},
+            '',
+            #{mobileOsType},
+            now(),
+            now()
+        )
+    </select>
+
+    <update id="modifyFcmToken" parameterType="appVo" >
+        UPDATE
+            fcm_token
+        SET
+            student_idx = #{studentIdx},
+            student_id = #{studentId},
+            os = #{mobileOsType},
+            mod_dt = now()
+        WHERE
+            token = #{fcmToken}
+
+
+    </update>
 
 
     <!--<select id="getPlayerInfo" parameterType="appVo" resultType="appVo">

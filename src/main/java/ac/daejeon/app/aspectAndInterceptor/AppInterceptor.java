@@ -25,7 +25,8 @@ public class AppInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         String requestURI = request.getRequestURI();
 
-        CharSequence[] onlyLoginMemberAccessList =  {"sendInfoPassport", "getInfoPassport", "modifyPersonalInfo", "getPersonalInfo", "applicationSupportProgram", "getSupportProgramDetail", "getVideoList", "getClassSectionList", "getTodayAttendance"};
+        CharSequence[] onlyLoginMemberAccessList =  {"sendInfoPassport", "getInfoPassport", "modifyPersonalInfo", "getPersonalInfo", "applicationSupportProgram",
+                                                        "getSupportProgramDetail", "getVideoList", "getClassSectionList", "getTodayAttendance", "setFcmToken"};
         boolean isOnlyLoginMemberAccessList = StringUtils.containsAny(requestURI, onlyLoginMemberAccessList);
 
         if(isOnlyLoginMemberAccessList) {
@@ -44,9 +45,10 @@ public class AppInterceptor implements HandlerInterceptor {
                         return false;
                     }
 
+                    session.setAttribute("M_STUDENT_EMAIL", firebaseUser.getEmail());
+
                     request.setAttribute("firebase_user_email", firebaseUser.getEmail());
                 } catch (FirebaseAuthException e) {
-
 
                     //https://firebase.google.com/docs/reference/admin/error-handling error code list
                     if(e.getAuthErrorCode() == AuthErrorCode.EXPIRED_ID_TOKEN) {

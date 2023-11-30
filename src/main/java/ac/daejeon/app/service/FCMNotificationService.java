@@ -1,9 +1,6 @@
 package ac.daejeon.app.service;
 
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingException;
-import com.google.firebase.messaging.Message;
-import com.google.firebase.messaging.Notification;
+import com.google.firebase.messaging.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +12,9 @@ public class FCMNotificationService {
     //private final UsersRepository usersRepository;
 
     public String sendNotificationByToken() {
+
+
+        System.out.println("노티피케이션 메시지 나옴");
 
         //Optional<Users> user = usersRepository.findById(requestDto.getTargetUserId());
 
@@ -42,9 +42,12 @@ public class FCMNotificationService {
                     return "알림을 성공적으로 전송했습니다. targetUserId=";
                 } catch (FirebaseMessagingException e) {
 
-                    System.out.println("실패~~");
+                    //System.out.println("실패~~");
+                    if(e.getMessagingErrorCode().equals(MessagingErrorCode.UNREGISTERED)) {
+                        //토큰 삭제 deleted
+                    }
 
-                    e.printStackTrace();
+                    //e.printStackTrace();
                     return "알림 보내기를 실패하였습니다. targetUserId=";
                 }
             /*} else {

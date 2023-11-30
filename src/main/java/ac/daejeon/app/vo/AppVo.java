@@ -8,9 +8,8 @@ public class AppVo {
 
     //이메일
     private String studentEmail;
-    //학사번호
+    //학생번호
     private String studentId;
-
 
     //학생 번호
     private int studentIdx;
@@ -23,6 +22,16 @@ public class AppVo {
 
     //파이어베이스 accessToken
     private String accessToken;
+
+
+    //파이어베이스 fcmToken
+    private String fcmToken;
+
+    //파이어베이스 fcmToken 테이블 idx
+    private int fcmTokenIdx;
+
+    //모바일 os type
+    private String mobileOsType;
 
     //학생이름
     private String studentName;

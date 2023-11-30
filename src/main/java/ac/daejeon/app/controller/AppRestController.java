@@ -140,6 +140,20 @@ public class AppRestController {
         return jsonObj.toString();
     }
 
+    //fcm 토큰 받기
+    @RequestMapping(value = "/setFcmToken", method = {RequestMethod.GET, RequestMethod.POST})
+    public String setFcmToken(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, AppVo appVo) {
+
+        String studentEmail = httpServletRequest.getSession().getAttribute("M_STUDENT_EMAIL").toString();
+        appVo.setStudentEmail(studentEmail);
+
+        appService.setFcmToken(appVo);
+
+        jsonObj.addProperty("result", "성공?");
+
+        return jsonObj.toString();
+    }
+
 
 
     //파이어베이스

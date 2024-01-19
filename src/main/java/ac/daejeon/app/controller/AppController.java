@@ -62,15 +62,6 @@ public class AppController {
 
 
 
-    //문자열 리턴
-    @ResponseBody
-    @RequestMapping(method = {RequestMethod.GET}, path = "/test1")
-    public String test1(Model model) {
 
-
-        fcmNotificationService.sendNotificationByToken();
-
-        return "테스트중";
-    }
 
 }

@@ -18,18 +18,18 @@ import java.io.IOException;
 
 
 @Configuration
-public class MybatisErpConfig {
+public class MybatisAppConfig {
 
-    @Value("${spring.erp.datasource.driver-class-name}")
+    @Value("${spring.app.datasource.driver-class-name}")
     private String driverClassName;
 
-    @Value("${spring.erp.datasource.url}")
+    @Value("${spring.app.datasource.url}")
     private String url;
 
-    @Value("${spring.erp.datasource.username}")
+    @Value("${spring.app.datasource.username}")
     private String username;
 
-    @Value("${spring.erp.datasource.password}")
+    @Value("${spring.app.datasource.password}")
     private String password;
 
     @Autowired

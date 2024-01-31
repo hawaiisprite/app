@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @RequiredArgsConstructor
 @RequestMapping(path = "/app")
@@ -34,6 +35,13 @@ public class AppController {
 
 
         return "app/videoTest";
+    }
+
+
+    //동영상 리스트
+    @RequestMapping(method = {RequestMethod.GET}, path = "/videoList")
+    public String videoList(Model model) {
+        return "app/videoList";
     }
 
 

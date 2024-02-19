@@ -1,5 +1,93 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700;800;900&display=swap");
 @import url("/css/reset.css");
+
+/* noto sans kr */
+
+/* 레귤러 (Regular) */
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url('font/notoSans/NotoSansKR-Regular.woff') format('woff');
+  font-weight: normal;
+}
+
+/* 라이트 (light) */
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url('font/notoSans/NotoSansKR-Light.woff') format('woff');
+  font-weight: 300;
+}
+
+/* 미디움 (Medium) */
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url('font/notoSans/NotoSansKR-Medium.woff') format('woff');
+  font-weight: 500;
+}
+
+/* 세미볼드 (Semibold) */
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url('font/notoSans/NotoSansKR-SemiBold.woff') format('woff');
+  font-weight: 600;
+}
+
+/* 볼드 (Bold) */
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url('font/notoSans/NotoSansKR-Bold.woff') format('woff');
+  font-weight: bold;
+}
+
+/* 익스트라볼드 (Extrabold) */
+@font-face {
+  font-family: 'Noto Sans KR';
+  src: url('font/notoSans/NotoSansKR-ExtraBold.woff') format('woff');
+  font-weight: 700;
+}
+
+/* noto sans */
+
+/* 레귤러 (Regular) */
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('font/notoSans/NotoSans-Regular.woff') format('woff');
+  font-weight: normal;
+}
+
+/* 라이트 (light) */
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('font/notoSans/NotoSans-Light.woff') format('woff');
+  font-weight: 300;
+}
+
+/* 미디움 (Medium) */
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('font/notoSans/NotoSans-Medium.woff') format('woff');
+  font-weight: 500;
+}
+
+/* 세미볼드 (Semibold) */
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('font/notoSans/NotoSans-SemiBold.woff') format('woff');
+  font-weight: 600;
+}
+
+/* 볼드 (Bold) */
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('font/notoSans/NotoSans-Bold.woff') format('woff');
+  font-weight: bold;
+}
+
+/* 익스트라볼드 (Extrabold) */
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('font/notoSans/NotoSans-ExtraBold.woff') format('woff');
+  font-weight: 700;
+}
+
 
 :root {
   --default-font-color: #333333;
@@ -23,12 +111,12 @@
 }
 
 * {
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: "Noto Sans KR", "Noto Sans", sans-serif;
   letter-spacing: -0.5px;
 }
 
 html {
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: "Noto Sans KR", "Noto Sans", sans-serif;
 }
 
 body {

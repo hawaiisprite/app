@@ -166,6 +166,20 @@ public class AppController {
     }
 
 
+    //편의시설 상세
+    @RequestMapping(method = {RequestMethod.GET}, path = "/campusDetail1")
+    public String campusDetail1(Model model, Gson gson, SupportProgramVo supportProgramVo) {
+
+        //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
+        //System.out.println("비디오 리스트 " + videoListData);
+        //model.addAttribute("abc", "abcd다");\
+        //model.addAttribute("videoListJson", gson.toJson(videoListData));
+
+        return "app/campusDetail1";
+    }
+
+
+
     //디자인 :: 긴급상황지원
     @RequestMapping(method = {RequestMethod.GET}, path = "/designEmergencySupport")
     public String designEmergencySupport(Model model) {

@@ -1,15 +1,11 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>대전대학교 어학원</title>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
 
-    <link rel="stylesheet" href="/css/main.css">
-    <script src="/css/js/ui.js"></script>
-</head>
+<th:block th:replace="fragments/head:: head"/>
+
 <body>
-<div class="app">
+<div class="app" id="app">
     <header class="header">
         <div class="header-wrap">
             <div class="logo">
@@ -31,7 +27,7 @@
 
         <div class="content-list add-icon">
             <ul>
-                <li>
+                <li @click="toDetail($event, '/app/campusDetail1')">
                     <span>찾아오시는 길</span>
                     <i class="icon-camp-go"></i>
                 </li>
@@ -59,5 +55,38 @@
         </div>
     </div>
 </div>
+
+    <script th:inline="javascript">
+
+        Vue.createApp({
+            //el: '#app',
+            data() {
+                return {
+
+                }
+            },
+            methods: {
+
+                toDetail(e, url) {
+
+                    if (e.ctrlKey) {
+                        window.open(url, "_blank");
+                    } else {
+                        location.href = url;
+                    }
+
+                }
+
+            },
+            created() {
+
+            },
+            mounted() {
+                //alert("마운티드");
+            }
+        }).mount('#app');
+
+    </script>
+
 </body>
 </html>

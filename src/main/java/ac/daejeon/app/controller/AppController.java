@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping(path = "/app")
@@ -40,7 +41,17 @@ public class AppController {
 
     //동영상 리스트
     @RequestMapping(method = {RequestMethod.GET}, path = "/videoList")
-    public String videoList(Model model) {
+    public String videoList(Model model, Gson gson, SupportProgramVo supportProgramVo) {
+
+        List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
+
+        System.out.println("비디오 리스트 " + videoListData);
+
+
+        model.addAttribute("abc", "abcd다");
+
+        model.addAttribute("videoListJson", gson.toJson(videoListData));
+
         return "app/videoList";
     }
 
@@ -67,6 +78,37 @@ public class AppController {
         return "app/videoDetail";
     }
 
+
+    @RequestMapping(method = {RequestMethod.GET}, path = "/videoDetail")
+    public String videoDetail2(HttpServletRequest httpServletRequest, Model model, Gson gson, AppVo appVo, SupportProgramVo supportProgramVo) {
+
+        //String accessToken = httpServletRequest.getHeader("accessToken");
+        //System.out.println("억세스 토큰입니당~" + appVo.getAccessToken());
+        /*String res = Statics.checkFirebaseToken(appVo.getAccessToken());
+
+        if(!res.equals("")) {
+            httpServletRequest.getSession().setAttribute("M_STUDENT_EMAIL", res);
+        }*/
+
+        //System.out.println("억세스 토큰 " + res);
+
+        AppVo videoDetail = appService.getVideoDetail(appVo);
+
+        model.addAttribute("videoDetailJson", gson.toJson(videoDetail));
+        //SupportProgramVo videoInfo = supportProgramService.getVideoList(supportProgramVo).get(0);
+
+        return "app/videoDetail";
+    }
+
+
+
+
+    @RequestMapping(method = {RequestMethod.GET}, path = "/main")
+    public String main(Model model) {
+
+
+        return "app/main";
+    }
 
 
 

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+  <th:block th:replace="fragments/head:: head"/>
+
+  <body>
+    <div class="app" id="app">
+      <header class="header">
+        <div class="header-wrap">
+          <div class="logo">
+            <i class="icon-logo"></i>
+          </div>
+          <div class="btns">
+            <div class="btn-mypage">
+              <i class="icon-mypage"></i>
+            </div>
+            <button class="btn-login">로그인</button>
+          </div>
+        </div>
+      </header>
+      <div class="content-body">
+        <div class="check-btns-language">
+          <div class="icon-globe"></div>
+          <label>
+            <input type="radio" name="language" value="option1" checked>
+            <span class="btn-name">KOREAN</span>
+          </label>
+          <label>
+            <input type="radio" name="language" value="option2">
+            <span class="btn-name">ENGLISH</span>
+          </label>
+          <label>
+            <input type="radio" name="language" value="option3">
+            <span class="btn-name">CHINESE</span>
+          </label>
+          <label>
+            <input type="radio" name="language" value="option4">
+            <span class="btn-name">VIETNAMESE</span>
+          </label>
+        </div>
+        <div class="banner">
+          <div class="banner-text">
+            <div class="sub top">대전대학교</div>
+            <div class="title">대전대학교 어학원 입학을 환영합니다.</div>
+            <div class="sub bottom">대표전화: 042-280-2114 (평일 9시~18시)</div>
+          </div>
+          <div class="filler"></div>
+          <div class="banner-img">
+            <img src="/css/images/banner_img.png" alt="대전대학교 전경">
+          </div>
+        </div>
+        <div class="menus">
+          <div class="item" @click="toDetail($event, '/app/VideoList')">
+            <div class="icon"><i class="icon-menu-1"></i></div>
+            <div class="menu-name">교육동영상</div>
+          </div>
+          <div class="item">
+            <div class="icon"><i class="icon-menu-2"></i></div>
+            <div class="menu-name">학교시설안내</div>
+          </div>
+          <div class="item">
+            <div class="icon"><i class="icon-menu-3"></i></div>
+            <div class="menu-name">편의시설</div>
+          </div>
+          <div class="item">
+            <div class="icon"><i class="icon-menu-4"></i></div>
+            <div class="menu-name">개인정보관리</div>
+          </div>
+          <div class="item">
+            <div class="icon"><i class="icon-menu-5"></i></div>
+            <div class="menu-name">지원프로그램</div>
+          </div>
+          <div class="item">
+            <div class="icon"><i class="icon-menu-6"></i></div>
+            <div class="menu-name">긴급상황지원</div>
+          </div>
+          <div class="item">
+            <div class="icon"><i class="icon-menu-7"></i></div>
+            <div class="menu-name">신청서 관리</div>
+          </div>
+          <div class="item">
+            <div class="icon"><i class="icon-menu-8"></i></div>
+            <div class="menu-name">정보자료실</div>
+          </div>
+        </div>
+        <div class="notice">
+          <div class="notice-title">공지사항</div>
+          <div class="item">
+            <div class="item-top">
+              <span class="date">2023-06-11</span>
+              <span class="time">1hr ago</span>
+            </div>
+            <div class="item-bottom">
+              <div class="item-bottom-wrap">
+                <div class="item-text">
+                  학생상담센터에서는 대전대 신입생 및 재학생의 개인적인 특성 및
+                  대학생활 전반적인 실태와 마음건강 프로그램 요구사항, 실태와...
+                </div>
+                <button class="more">more</button>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="item-top">
+              <span class="date">2023-06-11</span>
+              <span class="time">2mo ago</span>
+            </div>
+            <div class="item-bottom">
+              <div class="item-bottom-wrap">
+                <div class="item-text">
+                  학생상담센터에서는 대전대 신입생 및 재학생의 개인적인 특성 및
+                  대학생활 전반적인 실태와 마음건강 프로그램 요구사항,
+                  마음건강...
+                </div>
+                <button class="more">more</button>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="item-top">
+              <span class="date">2023-06-11</span>
+              <span class="time">3mo ago</span>
+            </div>
+            <div class="item-bottom">
+              <div class="item-bottom-wrap">
+                <div class="item-text">
+                  학생상담센터에서는 대전대 신입생 및 재학생의 개인적인 특성 및
+                  대학생활 전반적인 실태와 마음건강 프로그램 요구사항,
+                  마음건강...
+                </div>
+                <button class="more">more</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script th:inline="javascript">
+
+      Vue.createApp({
+        //el: '#app',
+        data() {
+          return {
+
+          }
+        },
+        methods: {
+
+          toDetail(e, url) {
+
+            if (e.ctrlKey) {
+              window.open(url, "_blank");
+            } else {
+              location.href = url;
+            }
+
+          }
+
+        },
+        created() {
+
+        },
+        mounted() {
+          alert("마운티드");
+        }
+      }).mount('#app');
+
+    </script>
+
+  </body>
+</html>

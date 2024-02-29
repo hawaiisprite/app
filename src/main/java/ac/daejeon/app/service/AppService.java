@@ -261,9 +261,8 @@ public class AppService {
     }
 
 
+    public List<AppVo> getVideoList(AppVo appVo) {
 
-
-
-
-
+        return appDao.getVideoList(appVo);
+    }
 }

@@ -151,6 +151,9 @@ public class AppDao {
     }
 
 
+    public List<AppVo> getVideoList(AppVo appVo) {
 
+        return sqlSession.selectList("app.videoList", appVo);
+    }
 
 }

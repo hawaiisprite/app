@@ -59,7 +59,7 @@
             <div class="icon"><i class="icon-menu-2"></i></div>
             <div class="menu-name">학교시설안내</div>
           </div>
-          <div class="item">
+          <div class="item" @click="toDetail($event, '/app/facilities')">
             <div class="icon"><i class="icon-menu-3"></i></div>
             <div class="menu-name">편의시설</div>
           </div>
@@ -71,7 +71,7 @@
             <div class="icon"><i class="icon-menu-5"></i></div>
             <div class="menu-name">지원프로그램</div>
           </div>
-          <div class="item">
+          <div class="item" @click="toDetail($event, '/app/emergencyList')">
             <div class="icon"><i class="icon-menu-6"></i></div>
             <div class="menu-name">긴급상황지원</div>
           </div>

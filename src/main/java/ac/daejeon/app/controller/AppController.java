@@ -114,8 +114,30 @@ public class AppController {
     }
 
 
+    //편의시설 상세
+    @RequestMapping(method = {RequestMethod.GET}, path = "/facilities")
+    public String facilities(Model model, Gson gson, SupportProgramVo supportProgramVo) {
+
+        //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
+        //System.out.println("비디오 리스트 " + videoListData);
+        //model.addAttribute("abc", "abcd다");\
+        //model.addAttribute("videoListJson", gson.toJson(videoListData));
+
+        return "app/facilities";
+    }
 
 
+    //디자인 :: 긴급상황지원
+    @RequestMapping(method = {RequestMethod.GET}, path = "/designEmergencySupport")
+    public String designEmergencySupport(Model model) {
+
+
+        return "design/emergency_support_list";
+    }
+
+
+
+    //메인
     @RequestMapping(method = {RequestMethod.GET}, path = "/main")
     public String main(Model model) {
 
@@ -150,11 +172,11 @@ public class AppController {
     }
 
     //디자인 :: 긴급상황지원
-    @RequestMapping(method = {RequestMethod.GET}, path = "/designEmergencySupport")
-    public String designEmergencySupport(Model model) {
+    @RequestMapping(method = {RequestMethod.GET}, path = "/emergencyList")
+    public String emergencyList(Model model) {
 
 
-        return "design/emergency_support_list";
+        return "app/emergencyList";
     }
 
     //디자인 :: 편의시설

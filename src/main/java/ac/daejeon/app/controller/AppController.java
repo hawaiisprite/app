@@ -127,6 +127,45 @@ public class AppController {
     }
 
 
+    //편의시설 상세
+    @RequestMapping(method = {RequestMethod.GET}, path = "/applicationList")
+    public String applicationList(Model model, Gson gson, SupportProgramVo supportProgramVo) {
+
+        //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
+        //System.out.println("비디오 리스트 " + videoListData);
+        //model.addAttribute("abc", "abcd다");\
+        //model.addAttribute("videoListJson", gson.toJson(videoListData));
+
+        return "app/applicationList";
+    }
+
+
+    //편의시설 상세
+    @RequestMapping(method = {RequestMethod.GET}, path = "/myData")
+    public String myData(Model model, Gson gson, SupportProgramVo supportProgramVo) {
+
+        //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
+        //System.out.println("비디오 리스트 " + videoListData);
+        //model.addAttribute("abc", "abcd다");\
+        //model.addAttribute("videoListJson", gson.toJson(videoListData));
+
+        return "app/myData";
+    }
+
+
+    //편의시설 상세
+    @RequestMapping(method = {RequestMethod.GET}, path = "/supportProgramList")
+    public String supportProgramList(Model model, Gson gson, SupportProgramVo supportProgramVo) {
+
+        //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
+        //System.out.println("비디오 리스트 " + videoListData);
+        //model.addAttribute("abc", "abcd다");\
+        //model.addAttribute("videoListJson", gson.toJson(videoListData));
+
+        return "app/supportProgramList";
+    }
+
+
     //디자인 :: 긴급상황지원
     @RequestMapping(method = {RequestMethod.GET}, path = "/designEmergencySupport")
     public String designEmergencySupport(Model model) {

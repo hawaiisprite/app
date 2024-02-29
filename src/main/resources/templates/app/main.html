@@ -51,7 +51,7 @@
           </div>
         </div>
         <div class="menus">
-          <div class="item" @click="toDetail($event, '/app/VideoList')">
+          <div class="item" @click="toDetail($event, '/app/videoList')">
             <div class="icon"><i class="icon-menu-1"></i></div>
             <div class="menu-name">교육동영상</div>
           </div>
@@ -63,11 +63,11 @@
             <div class="icon"><i class="icon-menu-3"></i></div>
             <div class="menu-name">편의시설</div>
           </div>
-          <div class="item">
+          <div class="item" @click="toDetail($event, '/app/myData')">
             <div class="icon"><i class="icon-menu-4"></i></div>
             <div class="menu-name">개인정보관리</div>
           </div>
-          <div class="item">
+          <div class="item" @click="toDetail($event, '/app/supportProgramList')">
             <div class="icon"><i class="icon-menu-5"></i></div>
             <div class="menu-name">지원프로그램</div>
           </div>
@@ -75,7 +75,7 @@
             <div class="icon"><i class="icon-menu-6"></i></div>
             <div class="menu-name">긴급상황지원</div>
           </div>
-          <div class="item">
+          <div class="item" @click="toDetail($event, '/app/applicationList')">
             <div class="icon"><i class="icon-menu-7"></i></div>
             <div class="menu-name">신청서 관리</div>
           </div>

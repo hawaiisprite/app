@@ -55,7 +55,7 @@
             <div class="icon"><i class="icon-menu-1"></i></div>
             <div class="menu-name">교육동영상</div>
           </div>
-          <div class="item">
+          <div class="item" @click="toDetail($event, '/app/campusList')">
             <div class="icon"><i class="icon-menu-2"></i></div>
             <div class="menu-name">학교시설안내</div>
           </div>
@@ -163,7 +163,7 @@
 
         },
         mounted() {
-          alert("마운티드");
+          //alert("마운티드");
         }
       }).mount('#app');
 

@@ -111,6 +111,9 @@ public class AppVo {
     //시청 종료일
     private String videoEndDay;
 
+    //시청 정보
+    private String videoInfo;
+
     //시청 시간
     private int viewingTime;
 

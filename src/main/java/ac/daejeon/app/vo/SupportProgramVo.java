@@ -14,6 +14,9 @@ public class SupportProgramVo {
     private String videoName;
     //영상링크
     private String videoLink;
+
+    //영상정보
+    private String videoInfo;
     //영상 분
     private int runningMinute;
     //영상 나머지 초 0~ 59까지

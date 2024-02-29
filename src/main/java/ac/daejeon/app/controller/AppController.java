@@ -70,9 +70,9 @@ public class AppController {
 
         //System.out.println("억세스 토큰 " + res);
 
-        AppVo videoDetail = appService.getVideoDetail(appVo);
+        AppVo videoInfo = appService.getVideoDetail(appVo);
 
-        model.addAttribute("videoDetailJson", gson.toJson(videoDetail));
+        model.addAttribute("videoInfo", videoInfo);
         //SupportProgramVo videoInfo = supportProgramService.getVideoList(supportProgramVo).get(0);
 
         return "app/videoDetail";
@@ -98,6 +98,19 @@ public class AppController {
         //SupportProgramVo videoInfo = supportProgramService.getVideoList(supportProgramVo).get(0);
 
         return "app/videoDetail";
+    }
+
+
+    //동영상 리스트
+    @RequestMapping(method = {RequestMethod.GET}, path = "/campusList")
+    public String campusList(Model model, Gson gson, SupportProgramVo supportProgramVo) {
+
+        //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
+        //System.out.println("비디오 리스트 " + videoListData);
+        //model.addAttribute("abc", "abcd다");\
+        //model.addAttribute("videoListJson", gson.toJson(videoListData));
+
+        return "app/campusList";
     }
 
 

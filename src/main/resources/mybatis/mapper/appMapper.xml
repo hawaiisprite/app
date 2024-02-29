@@ -202,6 +202,7 @@
             idx as videoIdx,
             video_name as videoName,
             video_link as videoLink,
+            info as videoInfo,
             running_minute as runningMinute,
             running_second as runningSecond,
             start_day as videoStartDay,

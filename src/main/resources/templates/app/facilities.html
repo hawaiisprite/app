@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>대전대학교 어학원</title>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
 
-    <link rel="stylesheet" href="/css/main.css">
-    <script src="/css/js/ui.js"></script>
-</head>
+    <th:block th:replace="fragments/head:: head"/>
+
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=szda36u67e"></script>
+
 <body>
-<div class="app">
+<div class="app" id="app">
     <header class="header">
         <div class="header-wrap">
             <div class="logo">
@@ -36,7 +34,10 @@
         </div>
         <div class="map-wrap">
             <div class="map">
-                <img src="/css/images/img_map.png" alt="맵 오는 자리" />
+                <!--<img src="/css/images/img_map.png" alt="맵 오는 자리" />-->
+
+                <div id="map" style="width: 700px; height: 500px;"></div>
+
             </div>
         </div>
     </div>
@@ -75,5 +76,148 @@
         </div>
     </div>
 </div>
+
+<script th:inline="javascript">
+
+    const mapOptions = {
+        center: new naver.maps.LatLng(36.3343597, 127.4606466),
+        zoom: 15
+    };
+
+    Vue.createApp({
+        //el: '#app',
+        data() {
+            return {
+                type: "",
+                convenienceFacilityList: JSON.parse([[${convenienceFacilityListJson}]]),
+                //convenienceFacilityList: JSON.parse([[${convenienceFacilityListJson}]]),
+                //convenienceFacilityTypeListJson: JSON.parse([[${convenienceFacilityTypeListJson}]]),
+            }
+        },
+        methods: {
+            modifyConvenienceFacility(idx, index) {
+
+                //alert("클릭한 idx " + idx);
+
+
+                location.href = "/config/modifyConvenienceFacility/" + idx;
+
+            },
+            changeEvent(e) {
+                this.type = e.target.value;
+                //alert("디스타입 " + this.type);
+
+                axios.post('/configRest/getConvenienceFacilityList', null, {
+                    params:{
+                        convenienceFacilityType: this.type,
+                    }
+                }).then(res => {
+                    if(res.data.result === "success") {
+                    this.convenienceFacilityList = JSON.parse(res.data.data);
+                    this.setMapMarker();
+                }
+
+            })
+
+            },
+            test1() {
+                alert("타입은 " + this.type);
+            },
+            changeVideoType() {
+                this.videoType = "create";
+                this.resetVideoInfo();
+            },
+            toPlaceSearch() {
+                window.open("/config/searchConvenienceFacility", "_blank");
+            },
+            toWritePlace() {
+                window.open("/config/createConvenienceFacility", "_blank");
+            },
+            setMapMarker() {
+
+                var infoWindows = [];
+                var markers = [];
+
+                //alert("테스트~~");
+                const map = new naver.maps.Map('map', mapOptions);
+
+                for (var i = 0; i < this.convenienceFacilityList.length; i++) {
+                    var marker = new naver.maps.Marker({
+                        map: map,
+                        //title: areaArr[i].location, // 지역구 이름
+                        position: new naver.maps.LatLng(this.convenienceFacilityList[i].convenienceFacilityLatitude, this.convenienceFacilityList[i].convenienceFacilityLongitude) // 지역구의 위도 경도 넣기
+                    });
+
+                    /* 정보창 */
+                    var infoWindow = new naver.maps.InfoWindow({
+                        content: '<div style="text-align:center;padding:10px;"><b>' + this.convenienceFacilityList[i].convenienceFacilityTitle + '</b></div>'
+                    }); // 클릭했을 때 띄워줄 정보 HTML 작성
+
+                    markers.push(marker); // 생성한 마커를 배열에 담는다.
+                    infoWindows.push(infoWindow); // 생성한 정보창을 배열에 담는다.
+
+                    naver.maps.Event.addListener(markers[i], 'click', getClickHandler(i));
+                }
+
+
+                function getClickHandler(seq) {
+                    return function(e) {  // 마커를 클릭하는 부분
+                        var marker = markers[seq]; // 클릭한 마커의 시퀀스로 찾는다.
+                        var infoWindow = infoWindows[seq]; // 클릭한 마커의 시퀀스로 찾는다
+
+                        if (infoWindow.getMap()) {
+                            infoWindow.close();
+                        } else {
+                            infoWindow.open(map, marker); // 표출
+                        }
+                    }
+                }
+
+            }
+
+        },
+        created() {
+
+        },
+        mounted() {
+            /*if(this.convenienceFacilityTypeListJson.length !== 0) {
+                this.type = this.convenienceFacilityTypeListJson[0].convenienceFacilityType;
+            }*/
+
+            /*var infowindows = [];
+
+            const mapOptions = {
+                center: new naver.maps.LatLng(36.3343597, 127.4606466),
+                zoom: 14
+            };
+
+            const map = new naver.maps.Map('map', mapOptions);
+
+            var marker = new naver.maps.Marker({
+                position: new naver.maps.LatLng(36.3280345, 127.4610105),
+                map: map,
+            });
+
+            var marker2 = new naver.maps.Marker({
+                position: new naver.maps.LatLng(36.3280886, 127.4602288),
+                map: map,
+            });
+
+
+            infowindows.push(new naver.maps.InfoWindow({
+                content: [
+                    '<div>',
+                    '   <span>두번째 테스트</span>',
+                    '</div>'
+                ].join('')
+            }));*/
+
+            this.setMapMarker();
+
+        }
+    }).mount('#app');
+
+</script>
+
 </body>
 </html>

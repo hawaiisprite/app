@@ -4,6 +4,7 @@
     <!--mapper에서 매칭할 parmeter Type 별칭 설정-->
     <typeAliases>
 
+        <typeAlias type="ac.daejeon.app.vo.FacilityVo" alias="facilityVo"/>
         <typeAlias type="ac.daejeon.app.vo.AppVo" alias="appVo"/>
         <typeAlias type="ac.daejeon.app.vo.ConfigVo" alias="configVo"/>
         <typeAlias type="ac.daejeon.app.vo.SupportProgramVo" alias="supportProgramVo"/>

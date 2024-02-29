@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="facility">
+
+
+    <select id="getConvenienceFacilityList" parameterType="facilityVo" resultType="facilityVo">
+        <!-- config.getConvenienceFacilityList -->
+
+        SELECT
+            idx as convenienceFacilityIdx,
+            type as convenienceFacilityType,
+            title as convenienceFacilityTitle,
+            flag as convenienceFacilityFlag,
+            latitude as convenienceFacilityLatitude,
+            longitude as convenienceFacilityLongitude
+        FROM
+            convenience_facility
+        <if test='isWhereType == true'>
+            WHERE
+            type = #{convenienceFacilityType}
+        </if>
+        <if test='isWhereIdx == true'>
+            WHERE
+            idx = #{convenienceFacilityIdx}
+        </if>
+        <if test='isGroupBy == true'>
+            GROUP BY
+            type
+        </if>
+    </select>
+
+</mapper>

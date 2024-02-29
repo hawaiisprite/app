@@ -2,8 +2,10 @@ package ac.daejeon.app.controller;
 
 import ac.daejeon.app.service.AppService;
 import ac.daejeon.app.service.FCMNotificationService;
+import ac.daejeon.app.service.FacilityService;
 import ac.daejeon.app.service.SupportProgramService;
 import ac.daejeon.app.vo.AppVo;
+import ac.daejeon.app.vo.FacilityVo;
 import ac.daejeon.app.vo.SupportProgramVo;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,8 @@ public class AppController {
 
     private final AppService appService;
     private final SupportProgramService supportProgramService;
+
+    private final FacilityService facilityService;
 
 
 
@@ -116,7 +120,14 @@ public class AppController {
 
     //편의시설 상세
     @RequestMapping(method = {RequestMethod.GET}, path = "/facilities")
-    public String facilities(Model model, Gson gson, SupportProgramVo supportProgramVo) {
+    public String facilities(Model model, Gson gson, FacilityVo facilityVo) {
+
+
+        List<FacilityVo> convenienceFacilityList = facilityService.getConvenienceFacilityList(facilityVo);
+        model.addAttribute("convenienceFacilityListJson", gson.toJson(convenienceFacilityList));
+
+        //jsonObj.addProperty("data", gson.toJson(convenienceFacilityList));
+        //jsonObj.addProperty("result", "success");
 
         //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
         //System.out.println("비디오 리스트 " + videoListData);

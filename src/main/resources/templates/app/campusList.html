@@ -4,89 +4,79 @@
 
 <th:block th:replace="fragments/head:: head"/>
 
-<body>
-<div class="app" id="app">
-    <header class="header">
-        <div class="header-wrap">
-            <div class="logo">
-                <i class="icon-logo"></i>
-            </div>
-            <div class="btns">
-                <div class="btn-mypage">
-                    <i class="icon-mypage"></i>
-                </div>
-                <button class="btn-login">로그인</button>
-            </div>
-        </div>
-    </header>
-    <div class="content-body">
-        <div class="content-title">
-            <i class="icon-title-camp"></i>
-            <h1>캠퍼스 안내</h1>
-        </div>
+    <body>
+    <div class="app" id="app">
 
-        <div class="content-list add-icon">
-            <ul>
-                <li @click="toDetail($event, '/app/campusDetail1')">
-                    <span>찾아오시는 길</span>
-                    <i class="icon-camp-go"></i>
-                </li>
-                <li>
-                    <span>캠퍼스 배치도</span>
-                    <i class="icon-camp-go"></i>
-                </li>
-                <li>
-                    <span>학교버스 안내</span>
-                    <i class="icon-camp-go"></i>
-                </li>
-                <li>
-                    <span>교내버스 출발안내</span>
-                    <i class="icon-camp-go"></i>
-                </li>
-                <li>
-                    <span>학습관</span>
-                    <i class="icon-camp-go"></i>
-                </li>
-                <li>
-                    <span>학생편의시설</span>
-                    <i class="icon-camp-go"></i>
-                </li>
-            </ul>
+        <th:block th:replace="fragments/header:: headerFragment"/>
+
+        <div class="content-body">
+            <div class="content-title">
+                <i class="icon-title-camp"></i>
+                <h1>캠퍼스 안내</h1>
+            </div>
+
+            <div class="content-list add-icon">
+                <ul>
+                    <li @click="toDetail($event, '/app/campusDetail1')">
+                        <span>찾아오시는 길</span>
+                        <i class="icon-camp-go"></i>
+                    </li>
+                    <li>
+                        <span>캠퍼스 배치도</span>
+                        <i class="icon-camp-go"></i>
+                    </li>
+                    <li>
+                        <span>학교버스 안내</span>
+                        <i class="icon-camp-go"></i>
+                    </li>
+                    <li>
+                        <span>교내버스 출발안내</span>
+                        <i class="icon-camp-go"></i>
+                    </li>
+                    <li>
+                        <span>학습관</span>
+                        <i class="icon-camp-go"></i>
+                    </li>
+                    <li>
+                        <span>학생편의시설</span>
+                        <i class="icon-camp-go"></i>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 
-    <script th:inline="javascript">
+        <script th:inline="javascript">
 
-        Vue.createApp({
-            //el: '#app',
-            data() {
-                return {
+            Vue.createApp({
+                //el: '#app',
+                data() {
+                    return {
 
-                }
-            },
-            methods: {
+                    }
+                },
+                methods: {
 
-                toDetail(e, url) {
+                    toDetail(e, url) {
 
-                    if (e.ctrlKey) {
-                        window.open(url, "_blank");
-                    } else {
-                        location.href = url;
+                        if (e.ctrlKey) {
+                            window.open(url, "_blank");
+                        } else {
+                            location.href = url;
+                        }
+
                     }
 
+                },
+                created() {
+
+                },
+                mounted() {
+                    //alert("마운티드");
                 }
+            }).mount('#app');
 
-            },
-            created() {
+        </script>
 
-            },
-            mounted() {
-                //alert("마운티드");
-            }
-        }).mount('#app');
-
-    </script>
-
-</body>
+    </body>
 </html>

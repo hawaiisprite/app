@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="fragments/head:: head"/>
+
+<body>
+<div class="app" id="app">
+
+  <th:block th:replace="fragments/header:: headerFragment"/>
+
+  <div class="content-body">
+
+      <div>아이디</div>
+      <input type="text" ref="id" placeholder="아이디" style="height:30px; border: 1px solid black" @input="inputEvent($event, 'id')">
+
+      <div>비밀번호</div>
+      <input type="password" ref="password" placeholder="비밀번호" style="height:30px; border: 1px solid black" @input="inputEvent($event, 'password')">
+
+      <br>
+      <br>
+      <br>
+
+      <button @click="doLogin" style="background: lightseagreen;color:white;padding: 10px">로그인</button>
+
+  </div>
+
+</div>
+
+<script th:inline="javascript">
+
+    Vue.createApp({
+        //el: '#app',
+        data() {
+            return {
+                //videoInfo: [[${videoInfo}]]
+                id:"",
+                password:""
+
+            }
+        },
+        methods: {
+
+            inputEvent(e, type) {
+
+                if(type === 'id') {
+                    this.id = e.target.value;
+                } else if(type === 'password') {
+                    this.password = e.target.value;
+                }
+
+            },
+            doLogin() {
+
+                //alert("두로그인");
+
+                if(!this.id) {
+                    alert("아이디를 작성해주세요.")
+                    this.$refs.id.focus();
+                    return;
+                }
+
+                if(!this.password) {
+                    alert("비밀번호를 작성해주세요.")
+                    this.$refs.password.focus();
+                    return;
+                }
+
+
+                axios.post('/appRest/doLogin', null, {
+                    params:{
+                        id: this.id,
+                        password: this.password
+                    }
+                }).then(res => {
+
+                    if(res.data.result === "success") {
+                        alert("로그인 되었습니다.");
+                    }
+
+                });
+
+
+
+            }
+
+        },
+        created() {
+
+            //console.log("비디오 인포 " + this.videoInfo);
+
+        },
+        mounted() {
+            //alert("마운티드");
+        }
+    }).mount('#app');
+
+</script>
+
+</body>
+</html>

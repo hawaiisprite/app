@@ -73,7 +73,9 @@
             toVideoDetail(e, data) {
 
                 //window.open();
-                window.open("/app/videoDetail/" + data.videoIdx, "_blank");
+                //window.open("/app/videoDetail/" + data.videoIdx, "_blank");
+
+                location.href = "/app/videoDetail/" + data.videoIdx;
             }
 
 

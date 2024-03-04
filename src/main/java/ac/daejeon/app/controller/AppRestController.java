@@ -30,7 +30,7 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(path = "/appRest")
+@RequestMapping(path = "/appRest/")
 public class AppRestController {
 
     private final AppService appService;
@@ -39,7 +39,16 @@ public class AppRestController {
 
     private final CommonCrypto commonCrypto;
 
-    @RequestMapping(value = "/checkEmailAndStudentId", method = {RequestMethod.GET, RequestMethod.POST})
+
+    @RequestMapping(value = "doLogin", method = { RequestMethod.POST})
+    public String doLogin(HttpServletRequest httpServletRequest, JsonObject jsonObj, AppVo appVo) {
+
+        jsonObj.addProperty("result", "success");
+        return jsonObj.toString();
+    }
+
+
+    @RequestMapping(value = "checkEmailAndStudentId", method = {RequestMethod.GET, RequestMethod.POST})
     public String checkEmailAndStudentId(HttpServletRequest httpServletRequest, JsonObject jsonObj, AppVo appVo) throws Exception {
 
         System.out.println("앱에서 통신되는지 확인 " + appVo);
@@ -71,7 +80,7 @@ public class AppRestController {
 
 
     //이메일 조인 인증
-    @RequestMapping(value = "/test2", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "test2", method = {RequestMethod.GET, RequestMethod.POST})
     public String test2(HttpServletRequest httpServletRequest, JsonObject jsonObj, AppVo appVo) {
 
 
@@ -85,7 +94,7 @@ public class AppRestController {
 
 
     //이메일 조인 인증
-    @RequestMapping(value = "/checkAuthCode", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "checkAuthCode", method = {RequestMethod.GET, RequestMethod.POST})
     public String checkAuthCode(HttpServletRequest httpServletRequest, JsonObject jsonObj, AppVo appVo) {
 
 
@@ -97,7 +106,7 @@ public class AppRestController {
 
 
     //시청시간 보내기
-    @RequestMapping(value = "/sendViewingTime", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "sendViewingTime", method = {RequestMethod.GET, RequestMethod.POST})
     public String sendViewingTime(HttpServletRequest httpServletRequest, JsonObject jsonObj, AppVo appVo) {
 
 
@@ -121,7 +130,7 @@ public class AppRestController {
 
 
     //시청시간 보내기
-    @RequestMapping(value = "/getPlayerInfo", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "getPlayerInfo", method = {RequestMethod.GET, RequestMethod.POST})
     public String getPlayerInfo(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, AppVo appVo) {
 
         String studentEmail = httpServletRequest.getSession().getAttribute("M_STUDENT_EMAIL").toString();
@@ -141,7 +150,7 @@ public class AppRestController {
     }
 
     //fcm 토큰 받기
-    @RequestMapping(value = "/setFcmToken", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "setFcmToken", method = {RequestMethod.GET, RequestMethod.POST})
     public String setFcmToken(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, AppVo appVo) {
 
         String studentEmail = httpServletRequest.getSession().getAttribute("M_STUDENT_EMAIL").toString();
@@ -157,7 +166,7 @@ public class AppRestController {
 
 
     //파이어베이스
-    @RequestMapping(value = "/checkAccessToken", method = { RequestMethod.POST})
+    @RequestMapping(value = "checkAccessToken", method = { RequestMethod.POST})
     public String checkAccessToken(HttpServletRequest httpServletRequest, JsonObject jsonObj, AppVo appVo) {
 
         String accessToken = appVo.getAccessToken();
@@ -199,7 +208,7 @@ public class AppRestController {
 
 
     //파이어베이스 인증 테스트
-    @RequestMapping(value = "/test1", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "test1", method = {RequestMethod.GET, RequestMethod.POST})
     public String test1(HttpServletRequest httpServletRequest, JsonObject jsonObj, AppVo appVo) throws FirebaseAuthException {
 
 
@@ -273,7 +282,7 @@ public class AppRestController {
     }
 
     //여권사진 저장 혹은 수정
-    @RequestMapping(value = "/sendInfoPassport", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "sendInfoPassport", method = {RequestMethod.GET, RequestMethod.POST})
     public String sendInfoPassport(HttpServletRequest httpServletRequest, JsonObject jsonObj, AppVo appVo, CommonVo commonVo) throws FirebaseAuthException, IOException {
 
         String firebaseUserEmail = httpServletRequest.getAttribute("firebase_user_email").toString();
@@ -292,7 +301,7 @@ public class AppRestController {
 
 
     //여권사진 가져오기
-    @RequestMapping(value = "/getInfoPassport", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "getInfoPassport", method = {RequestMethod.GET, RequestMethod.POST})
     public String getInfoPassport(HttpServletRequest httpServletRequest, JsonObject jsonObj, AppVo appVo, CommonVo commonVo) throws FirebaseAuthException, IOException {
 
         String firebaseUserEmail = httpServletRequest.getAttribute("firebase_user_email").toString();
@@ -321,7 +330,7 @@ public class AppRestController {
 
 
     //개인정보 수정
-    @RequestMapping(value = "/modifyPersonalInfo", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "modifyPersonalInfo", method = {RequestMethod.GET, RequestMethod.POST})
     public String modifyPersonalInfo(HttpServletRequest httpServletRequest, JsonObject jsonObj, AppVo appVo, CommonVo commonVo) throws FirebaseAuthException, IOException {
 
         System.out.println("수정퍼스날인포");
@@ -342,7 +351,7 @@ public class AppRestController {
 
 
     //개인정보 수정
-    @RequestMapping(value = "/getPersonalInfo", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "getPersonalInfo", method = {RequestMethod.GET, RequestMethod.POST})
     public String getPersonalInfo(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, AppVo appVo, CommonVo commonVo) throws FirebaseAuthException, IOException {
 
         String firebaseUserEmail = httpServletRequest.getAttribute("firebase_user_email").toString();
@@ -367,7 +376,7 @@ public class AppRestController {
 
 
     //지원프로그램 가져오기
-    @RequestMapping(value = "/getSupportProgram", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "getSupportProgram", method = {RequestMethod.GET, RequestMethod.POST})
     public String getSupportProgram(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, AppVo appVo, SupportProgramVo supportProgramVo, CommonVo commonVo) throws FirebaseAuthException, IOException {
 
         supportProgramVo.setApplicationType("counseling");
@@ -386,7 +395,7 @@ public class AppRestController {
 
 
     //지원프로그램 상세 가져오기
-    @RequestMapping(value = "/getSupportProgramDetail", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "getSupportProgramDetail", method = {RequestMethod.GET, RequestMethod.POST})
     public String getSupportProgramDetail(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, AppVo appVo, SupportProgramVo supportProgramVo, CommonVo commonVo) throws FirebaseAuthException, IOException {
 
         String firebaseUserEmail = httpServletRequest.getAttribute("firebase_user_email").toString();
@@ -413,7 +422,7 @@ public class AppRestController {
 
 
     //지원프로그램 지원신청
-    @RequestMapping(value = "/applicationSupportProgram", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "applicationSupportProgram", method = {RequestMethod.GET, RequestMethod.POST})
     public String applicationSupportProgram(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, AppVo appVo, SupportProgramVo supportProgramVo, CommonVo commonVo) throws FirebaseAuthException, IOException {
 
 
@@ -449,7 +458,7 @@ public class AppRestController {
 
 
     //파이어베이스 인증 테스트
-    @RequestMapping(value = "/maptest", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "maptest", method = {RequestMethod.GET, RequestMethod.POST})
     public String maptest(HttpServletRequest httpServletRequest, JsonObject jsonObj, AppVo appVo) throws FirebaseAuthException {
 
         String clientId = "FJeKXqzKKG7HLw0qOG1A"; //애플리케이션 클라이언트 아이디
@@ -487,7 +496,7 @@ public class AppRestController {
 
 
     //강의 가져오기
-    @RequestMapping(value = "/getClassSectionList", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "getClassSectionList", method = {RequestMethod.GET, RequestMethod.POST})
     public String getClassSectionList(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, AppVo appVo, SupportProgramVo supportProgramVo, CommonVo commonVo) throws FirebaseAuthException, IOException {
 
         String firebaseUserEmail = httpServletRequest.getAttribute("firebase_user_email").toString();
@@ -513,7 +522,7 @@ public class AppRestController {
 
 
     //출석여부 가져오기
-    @RequestMapping(value = "/getTodayAttendance", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "getTodayAttendance", method = {RequestMethod.GET, RequestMethod.POST})
     public String getTodayAttendance(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, AppVo appVo, SupportProgramVo supportProgramVo, CommonVo commonVo) throws FirebaseAuthException, IOException {
 
         String firebaseUserEmail = httpServletRequest.getAttribute("firebase_user_email").toString();
@@ -537,7 +546,7 @@ public class AppRestController {
     }
 
 
-    @RequestMapping(value = "/getVideoList", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "getVideoList", method = {RequestMethod.GET, RequestMethod.POST})
     public String getVideoList(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, AppVo appVo, SupportProgramVo supportProgramVo) throws FirebaseAuthException {
 
         List<SupportProgramVo> videoList = supportProgramService.getVideoList(supportProgramVo);
@@ -550,7 +559,7 @@ public class AppRestController {
 
 
 
-    @RequestMapping(value = "/getConvenienceFacilityList", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "getConvenienceFacilityList", method = {RequestMethod.GET, RequestMethod.POST})
     public String getConvenienceFacilityList(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, AppVo appVo, ConfigVo configVo) {
 
 

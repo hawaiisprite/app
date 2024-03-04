@@ -1,28 +1,14 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>대전대학교 어학원</title>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
 
-    <link rel="stylesheet" href="/css/main.css">
-    <script src="/css/js/ui.js"></script>
-</head>
+<th:block th:replace="fragments/head:: head"/>
+
 <body>
 <div class="app">
-    <header class="header">
-        <div class="header-wrap">
-            <div class="logo">
-                <i class="icon-logo"></i>
-            </div>
-            <div class="btns">
-                <div class="btn-mypage">
-                    <i class="icon-mypage"></i>
-                </div>
-                <button class="btn-login">로그인</button>
-            </div>
-        </div>
-    </header>
+
+    <th:block th:replace="fragments/header:: headerFragment"/>
+
     <div class="content-body">
         <div class="content-title">
             <i class="icon-title-emergency-support"></i>

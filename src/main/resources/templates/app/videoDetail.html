@@ -6,19 +6,9 @@
 
 <body>
 <div class="app" id="app">
-    <header class="header">
-        <div class="header-wrap">
-            <div class="logo">
-                <i class="icon-logo"></i>
-            </div>
-            <div class="btns">
-                <div class="btn-mypage">
-                    <i class="icon-mypage"></i>
-                </div>
-                <button class="btn-login">로그인</button>
-            </div>
-        </div>
-    </header>
+
+    <th:block th:replace="fragments/header:: headerFragment"/>
+
     <div class="content-body">
         <div class="content-title">
             <i class="icon-title-video"></i>

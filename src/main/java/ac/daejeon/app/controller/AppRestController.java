@@ -199,8 +199,11 @@ public class AppRestController {
     @RequestMapping(value = "getPlayerInfo", method = {RequestMethod.GET, RequestMethod.POST})
     public String getPlayerInfo(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, AppVo appVo) {
 
-        String studentEmail = httpServletRequest.getSession().getAttribute("M_STUDENT_EMAIL").toString();
-        appVo.setStudentEmail(studentEmail);
+        int studentIdx = (int) httpServletRequest.getSession().getAttribute("STUDENT_IDX");
+        String studentId = httpServletRequest.getSession().getAttribute("STUDENT_ID").toString();
+
+        appVo.setStudentIdx(studentIdx);
+        appVo.setStudentId(studentId);
 
         AppVo playerInfo = appService.getVideoWatched(appVo);
 

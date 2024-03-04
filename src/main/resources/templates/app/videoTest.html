@@ -96,16 +96,11 @@
 
     var video2 = document.getElementById('video');
 
-
-
-
     var player = new Vimeo.Player(video2);
 
     player.on('play', function() {
-        alert("플레이요~~");
         startClock();
     });
-
 
     function datatest(data) {
         alert("데이터 테스트 " + data);

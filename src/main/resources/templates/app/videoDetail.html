@@ -30,10 +30,16 @@
                 {{videoInfo.videoInfo}}
             </div>
         </div>
+
+        <div>시청시간</div>
+        <div>{{watchedPercentage}}%</div>
+
     </div>
 </div>
 
     <script th:inline="javascript">
+
+        let globalPlayer = "";
 
         Vue.createApp({
             //el: '#app',
@@ -45,6 +51,8 @@
                     timerId:"",
                     time: 0,
                     lastSeconds: 0.0,
+
+                    watchedPercentage: 0,
 
                     videoInfo: [[${videoInfo}]]
                 }
@@ -98,6 +106,29 @@
                     });
 
                 },
+                getPlayerInfo() {
+
+                    axios.post('/appRest/getPlayerInfo', null, {
+                        params:{
+                            videoIdx: this.videoInfo.videoIdx,
+                        }
+                    }).then(res => {
+
+                        const result = res.data.result;
+
+                        if(result === "success") {
+                            const playerInfo = JSON.parse(res.data.playerInfoJson);
+                            this.canPlay = true;
+                            globalPlayer.setCurrentTime(playerInfo.lastSeconds);
+                        } else if(result === "empty") {
+                            this.canPlay = true;
+                        }
+
+                        //alert("리저트~~" + result);
+
+                    });
+
+                }
 
             },
             created() {
@@ -116,11 +147,11 @@
 
                 globalPlayer = player;
 
+                this.getPlayerInfo();
+
                 //const player = this.player
 
                 player.on('play', function() {
-                    alert("플레이??");
-
                     globalThis.startClock();
                 });
 

@@ -264,6 +264,30 @@
             student_idx = #{studentIdx}
     </select>
 
+
+<!--    SELECT
+    c.videoIdx,
+    c.viewingTime,
+    c.lastSeconds,
+    if(c.watchedPercentage >= 100, 100, watchedPercentage) AS watchedPercentage
+    FROM (
+
+    SELECT
+    a.video_idx as videoIdx,
+    a.watched_time as viewingTime,
+    a.last_time as lastSeconds,
+    #((a.watched_time/b.all_second) * 100) AS watchedPercentage
+    99.9992 AS watchedPercentage
+    FROM
+    video_watched a
+    JOIN
+    video b
+    ON
+    a.video_idx = b.idx
+
+    ) AS c
+    -->
+
     <update id="modifyVideoWatched">
         <!--app.modifyVideoWatched-->
         UPDATE

@@ -1,6 +1,7 @@
 package ac.daejeon.app.dao;
 
 import ac.daejeon.app.vo.AppVo;
+import ac.daejeon.app.vo.LoginVo;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -156,4 +157,8 @@ public class AppDao {
         return sqlSession.selectList("app.videoList", appVo);
     }
 
+    public LoginVo doLogin(LoginVo loginVo) {
+
+        return sqlSession.selectOne("login.getMemberInfo", loginVo);
+    }
 }

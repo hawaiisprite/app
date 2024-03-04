@@ -66,16 +66,18 @@
                     return;
                 }
 
-
                 axios.post('/appRest/doLogin', null, {
                     params:{
-                        id: this.id,
-                        password: this.password
+                        studentId: this.id,
+                        studentPassword: this.password
                     }
                 }).then(res => {
 
                     if(res.data.result === "success") {
                         alert("로그인 되었습니다.");
+                        location.href = "/app/main";
+                    } else if(res.data.result === "notAuthorized") {
+                        alert("아이디 혹은 비밀번호가 맞지 않습니다.");
                     }
 
                 });

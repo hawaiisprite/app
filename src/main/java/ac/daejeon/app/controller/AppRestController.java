@@ -7,6 +7,7 @@ import ac.daejeon.app.service.ConfigService;
 import ac.daejeon.app.service.SupportProgramService;
 import ac.daejeon.app.vo.AppVo;
 import ac.daejeon.app.vo.ConfigVo;
+import ac.daejeon.app.vo.LoginVo;
 import ac.daejeon.app.vo.SupportProgramVo;
 import com.google.firebase.auth.*;
 import com.google.gson.Gson;
@@ -24,6 +25,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,9 +43,60 @@ public class AppRestController {
 
 
     @RequestMapping(value = "doLogin", method = { RequestMethod.POST})
-    public String doLogin(HttpServletRequest httpServletRequest, JsonObject jsonObj, AppVo appVo) {
+    public String doLogin(HttpServletRequest httpServletRequest, JsonObject jsonObj, AppVo appVo, LoginVo loginVo) {
 
-        jsonObj.addProperty("result", "success");
+        LoginVo loginInfo = appService.doLogin(loginVo);
+
+        if(loginInfo != null) {
+
+            /*int loginFailedCount = loginInfo.getLoginFailedCount();
+            String lockDt = loginInfo.getLockDt();
+
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedDateTime = currentDateTime.minusHours(1).format(formatter);
+
+            if(loginFailedCount >= 5) {
+
+                int comparison = formattedDateTime.compareTo(lockDt);
+
+                if(comparison < 0) {
+                    jsonObj.addProperty("result", "overFailed");
+                    return jsonObj.toString();
+                } else {
+
+                }
+            } else {
+
+            }*/
+
+            if(loginInfo.getIsSamePassword()) {
+                HttpSession session = httpServletRequest.getSession();
+
+                session.setAttribute("STUDENT_ID", loginInfo.getStudentId());
+                jsonObj.addProperty("result", "success");
+
+                /*loginVo.setLoginStatus("success");
+                loginService.saveLoginLog(loginVo, httpServletRequest);
+
+                loginVo.setLoginFailedCount(0);
+                loginService.setLoginFailedCount(loginVo);*/
+
+            } else {
+                /*loginVo.setLoginStatus("notAuthorized");
+                loginService.saveLoginLog(loginVo, httpServletRequest);
+
+                loginVo.setLoginFailedCount(loginFailedCount + 1);
+                loginService.setLoginFailedCount(loginVo);*/
+
+                jsonObj.addProperty("result", "notAuthorized");
+            }
+        } else {
+            /*loginVo.setLoginStatus("notAuthorized");
+            loginService.saveLoginLog(loginVo, httpServletRequest);*/
+            jsonObj.addProperty("result", "notAuthorized");
+        }
+
         return jsonObj.toString();
     }
 

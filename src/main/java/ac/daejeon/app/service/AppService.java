@@ -7,6 +7,7 @@ import ac.daejeon.app.common.Statics;
 
 import ac.daejeon.app.dao.AppDao;
 import ac.daejeon.app.vo.AppVo;
+import ac.daejeon.app.vo.LoginVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -265,4 +266,30 @@ public class AppService {
 
         return appDao.getVideoList(appVo);
     }
+
+    //로그인
+    public LoginVo doLogin(LoginVo loginVo) {
+
+        LoginVo loginInfos = appDao.doLogin(loginVo);
+
+        if(loginInfos != null) {
+            boolean isSamePassword = passwordEncoder.matches(loginVo.getStudentPassword(), loginInfos.getStudentPassword());
+
+            loginInfos.setIsSamePassword(isSamePassword);
+        } else {
+
+        }
+
+        return loginInfos;
+    }
+
+
+
+/*    //관리자 로그인
+    public LoginVo doLogin(LoginVo loginVo) {
+
+
+
+        return loginInfos;
+    }*/
 }

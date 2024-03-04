@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<layout:html lang="ko"
+             xmlns:th="http://www.thymeleaf.org"
+             xmlns:layout="http://www.w3.org/1999/xhtml">
+
 
     <div th:fragment="headerFragment" class="header navbar-fixed-top">
 
@@ -13,28 +16,62 @@
                     <div class="btn-mypage">
                         <i class="icon-mypage"></i>
                     </div>
-                    <button class="btn-login">로그인</button>
+
+                    <button th:if="${studentId == null and studentIdx == null and studentEmail == null}" class="btn-login"  id="loginBtn">로그인</button>
+                    <button th:if="${studentId != null and studentIdx != null and studentEmail != null}" class="btn-login"  id="logoutBtn">로그아웃</button>
+
+                    <!--<button class="btn-login" th:if="${studentId != null} and ${studentIdx != null} and ${studentEmail != null}" id="logoutBtn">로그아웃</button>-->
                 </div>
             </div>
+
+            <script th:inline="javascript">
+
+                document.addEventListener('DOMContentLoaded', function() {
+
+                    const logoBtn = document.getElementById('logo');
+                    if (logoBtn) {
+                        logoBtn.addEventListener('click', function() {
+                            window.location.href = '/app/main';
+                        });
+                    }
+
+                    const headerBackBtn = document.getElementById('headerBackBtn');
+                    if (headerBackBtn) {
+                        headerBackBtn.addEventListener('click', function() {
+                            window.history.back();
+                        });
+                    }
+
+
+                    const loginBtn = document.getElementById('loginBtn');
+                    if (loginBtn) {
+                        loginBtn.addEventListener('click', function() {
+                            location.href = "/app/login";
+                        });
+                    }
+
+                    /*document.getElementById('loginBtn').addEventListener('click', function() {
+                        //window.history.back();
+                        location.href = "/app/login";
+                    });*/
+
+
+                    $("#loginBtn").click(function() {
+
+                        alert("로그인 비티엔~");
+
+                    });
+
+
+                });
+
+
+            </script>
+
         </header>
 
-        <script>
 
-            document.addEventListener('DOMContentLoaded', function() {
-
-                document.getElementById('logo').addEventListener('click', function() {
-                    window.location.href = '/app/main';
-                });
-
-                document.getElementById('headerBackBtn').addEventListener('click', function() {
-                    window.history.back();
-                });
-
-            });
-
-
-        </script>
 
     </div>
 
-</html>
+</layout:html>

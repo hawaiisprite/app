@@ -11,6 +11,7 @@
         <typeAlias type="ac.daejeon.app.vo.ApplicantVo" alias="applicantVo"/>
         <typeAlias type="ac.daejeon.app.vo.ApplyMemberVo" alias="applyMemberVo"/>
         <typeAlias type="ac.daejeon.app.common.CommonVo" alias="commonVo"/>
+        <typeAlias type="ac.daejeon.app.vo.LoginVo" alias="loginVo"/>
 
     </typeAliases>
 

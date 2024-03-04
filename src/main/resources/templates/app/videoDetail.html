@@ -4,6 +4,8 @@
 
     <th:block th:replace="fragments/head:: head"/>
 
+    <script src="https://player.vimeo.com/api/player.js"></script>
+
 <body>
 <div class="app" id="app">
 
@@ -18,13 +20,7 @@
 
         <div class="video-play">
             <div class="iframe-wrap">
-                <iframe
-                        :src="videoInfo.videoLink"
-                        title="YouTube video player"
-                        style="border: 0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen
-                ></iframe>
+                <iframe id="video" :src="videoInfo.videoLink" title="vimeo-player" allowfullscreen></iframe>
             </div>
         </div>
 
@@ -43,19 +39,104 @@
             //el: '#app',
             data() {
                 return {
+
+                    player:"",
+                    canPlay: false,
+                    timerId:"",
+                    time: 0,
+                    lastSeconds: 0.0,
+
                     videoInfo: [[${videoInfo}]]
                 }
             },
             methods: {
 
+                startClock() {
+                    if(this.canPlay) {
+                        this.time++;
+                        this.stopClock();
+                        this.timerId = setTimeout(this.startClock, 1000);
+
+                        console.log("확인 " + this.time);
+
+                    } else {
+                        stopClock();
+                        alert("구성을 준비중입니다.\n다시 플레이버튼을 누르세요.");
+                    }
+
+                },
+                stopClock() {
+                    if (this.timerId != null) {
+                        clearTimeout(this.timerId);
+                    }
+                },
+
+
+                sendViewingTime() {
+
+                    if(this.time < 5) {
+                        return;
+                    }
+
+
+
+
+                    console.log("로그 확인 ");
+
+                    axios.post('/appRest/sendViewingTime', null, {
+                        params:{
+                            videoIdx: this.videoInfo.videoIdx,
+                            viewingTime: this.time,
+                            lastSeconds: this.lastSeconds
+                        }
+                    }).then(res => {
+
+                        if(res.data.result === "success") {
+                            this.time = 0;
+                        }
+
+                    });
+
+                },
+
             },
             created() {
 
-                console.log("비디오 인포 " + this.videoInfo);
+                //console.log("비디오 인포 " + this.videoInfo);
 
             },
             mounted() {
-            //alert("마운티드");
+
+                this.canPlay = true;
+
+                const globalThis = this;
+
+                const video = document.getElementById('video');
+                const player = new Vimeo.Player(video);
+
+                globalPlayer = player;
+
+                //const player = this.player
+
+                player.on('play', function() {
+                    alert("플레이??");
+
+                    globalThis.startClock();
+                });
+
+                player.on('pause', function() {
+
+                    globalThis.stopClock();
+
+                    player.getCurrentTime().then(function(seconds) {
+                        globalThis.lastSeconds = seconds;
+                        return new Promise((resolve, reject)=>{
+                            globalThis.sendViewingTime()
+                        })
+                    });
+
+                });
+
             }
         }).mount('#app');
 

@@ -45,7 +45,6 @@ public class AppAspect {
         for (Object arg : args) {
 
 
-            System.out.println("확인해봅니다~~");
 
             if (arg instanceof HttpServletRequest) {
 
@@ -62,8 +61,6 @@ public class AppAspect {
             }
 
             if (arg instanceof Model) {
-
-                System.out.println("모델 어트리뷰트~~");
 
                 if (!session_studentId.equals("") && !session_studentEmail.equals("") && session_studentIdx != 0) {
                     ((Model) arg).addAttribute("studentIdx", session_studentIdx);

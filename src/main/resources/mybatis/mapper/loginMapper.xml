@@ -4,9 +4,11 @@
 <mapper namespace="login">
 
     <select id="getMemberInfo" parameterType="loginVo" resultType="loginVo">
-        <!--app.checkEmailAndStudentId-->
+        <!--app.getMemberInfo-->
         SELECT
+            idx as studentIdx,
             student_id as studentId,
+            email as studentEmail,
             password as studentPassword
         FROM
             student

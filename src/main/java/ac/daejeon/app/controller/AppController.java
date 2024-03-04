@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RequestMapping(path = "/app")
+@RequestMapping(path = "/app/")
 @Controller
 public class AppController {
 
@@ -35,8 +35,8 @@ public class AppController {
     private final FCMNotificationService fcmNotificationService;
 
     //동영상 테스트
-    @RequestMapping(method = {RequestMethod.GET}, path = "/videoTest")
-    public String videoTest(Model model) {
+    @RequestMapping(method = {RequestMethod.GET}, path = "videoTest")
+    public String videoTest(HttpServletRequest httpServletRequest, Model model) {
 
 
         return "app/videoTest";
@@ -44,8 +44,8 @@ public class AppController {
 
 
     //동영상 리스트
-    @RequestMapping(method = {RequestMethod.GET}, path = "/videoList")
-    public String videoList(Model model, Gson gson, SupportProgramVo supportProgramVo) {
+    @RequestMapping(method = {RequestMethod.GET}, path = "videoList")
+    public String videoList(HttpServletRequest httpServletRequest, Model model, Gson gson, SupportProgramVo supportProgramVo) {
 
         List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
 
@@ -61,7 +61,7 @@ public class AppController {
 
 
     //동영상 상세
-    @RequestMapping(method = {RequestMethod.GET}, path = "/videoDetail/{videoIdx}")
+    @RequestMapping(method = {RequestMethod.GET}, path = "videoDetail/{videoIdx}")
     public String videoDetail(HttpServletRequest httpServletRequest, Model model, Gson gson, AppVo appVo, SupportProgramVo supportProgramVo) {
 
         //String accessToken = httpServletRequest.getHeader("accessToken");
@@ -83,7 +83,7 @@ public class AppController {
     }
 
 
-    @RequestMapping(method = {RequestMethod.GET}, path = "/videoDetail")
+    @RequestMapping(method = {RequestMethod.GET}, path = "videoDetail")
     public String videoDetail2(HttpServletRequest httpServletRequest, Model model, Gson gson, AppVo appVo, SupportProgramVo supportProgramVo) {
 
         //String accessToken = httpServletRequest.getHeader("accessToken");
@@ -106,8 +106,8 @@ public class AppController {
 
 
     //동영상 리스트
-    @RequestMapping(method = {RequestMethod.GET}, path = "/campusList")
-    public String campusList(Model model, Gson gson, SupportProgramVo supportProgramVo) {
+    @RequestMapping(method = {RequestMethod.GET}, path = "campusList")
+    public String campusList(HttpServletRequest httpServletRequest, Model model, Gson gson, SupportProgramVo supportProgramVo) {
 
         //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
         //System.out.println("비디오 리스트 " + videoListData);
@@ -119,8 +119,8 @@ public class AppController {
 
 
     //편의시설 상세
-    @RequestMapping(method = {RequestMethod.GET}, path = "/facilities")
-    public String facilities(Model model, Gson gson, FacilityVo facilityVo) {
+    @RequestMapping(method = {RequestMethod.GET}, path = "facilities")
+    public String facilities(HttpServletRequest httpServletRequest, Model model, Gson gson, FacilityVo facilityVo) {
 
 
         List<FacilityVo> convenienceFacilityList = facilityService.getConvenienceFacilityList(facilityVo);
@@ -139,8 +139,8 @@ public class AppController {
 
 
     //편의시설 상세
-    @RequestMapping(method = {RequestMethod.GET}, path = "/applicationList")
-    public String applicationList(Model model, Gson gson, SupportProgramVo supportProgramVo) {
+    @RequestMapping(method = {RequestMethod.GET}, path = "applicationList")
+    public String applicationList(HttpServletRequest httpServletRequest, Model model, Gson gson, SupportProgramVo supportProgramVo) {
 
         //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
         //System.out.println("비디오 리스트 " + videoListData);
@@ -152,8 +152,8 @@ public class AppController {
 
 
     //편의시설 상세
-    @RequestMapping(method = {RequestMethod.GET}, path = "/myData")
-    public String myData(Model model, Gson gson, SupportProgramVo supportProgramVo) {
+    @RequestMapping(method = {RequestMethod.GET}, path = "myData")
+    public String myData(HttpServletRequest httpServletRequest, Model model, Gson gson, SupportProgramVo supportProgramVo) {
 
         //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
         //System.out.println("비디오 리스트 " + videoListData);
@@ -165,8 +165,8 @@ public class AppController {
 
 
     //편의시설 상세
-    @RequestMapping(method = {RequestMethod.GET}, path = "/supportProgramList")
-    public String supportProgramList(Model model, Gson gson, SupportProgramVo supportProgramVo) {
+    @RequestMapping(method = {RequestMethod.GET}, path = "supportProgramList")
+    public String supportProgramList(HttpServletRequest httpServletRequest, Model model, Gson gson, SupportProgramVo supportProgramVo) {
 
         //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
         //System.out.println("비디오 리스트 " + videoListData);
@@ -178,8 +178,8 @@ public class AppController {
 
 
     //편의시설 상세
-    @RequestMapping(method = {RequestMethod.GET}, path = "/login")
-    public String login(Model model, Gson gson, SupportProgramVo supportProgramVo) {
+    @RequestMapping(method = {RequestMethod.GET}, path = "login")
+    public String login(HttpServletRequest httpServletRequest, Model model, Gson gson, SupportProgramVo supportProgramVo) {
 
         //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
         //System.out.println("비디오 리스트 " + videoListData);
@@ -191,8 +191,8 @@ public class AppController {
 
 
     //편의시설 상세
-    @RequestMapping(method = {RequestMethod.GET}, path = "/campusDetail1")
-    public String campusDetail1(Model model, Gson gson, SupportProgramVo supportProgramVo) {
+    @RequestMapping(method = {RequestMethod.GET}, path = "campusDetail1")
+    public String campusDetail1(HttpServletRequest httpServletRequest, Model model, Gson gson, SupportProgramVo supportProgramVo) {
 
         //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
         //System.out.println("비디오 리스트 " + videoListData);
@@ -205,8 +205,8 @@ public class AppController {
 
 
     //디자인 :: 긴급상황지원
-    @RequestMapping(method = {RequestMethod.GET}, path = "/designEmergencySupport")
-    public String designEmergencySupport(Model model) {
+    @RequestMapping(method = {RequestMethod.GET}, path = "designEmergencySupport")
+    public String designEmergencySupport(HttpServletRequest httpServletRequest, Model model) {
 
 
         return "design/emergency_support_list";
@@ -215,8 +215,8 @@ public class AppController {
 
 
     //메인
-    @RequestMapping(method = {RequestMethod.GET}, path = "/main")
-    public String main(Model model) {
+    @RequestMapping(method = {RequestMethod.GET}, path = "main")
+    public String main(HttpServletRequest httpServletRequest, Model model) {
 
 
         return "app/main";
@@ -225,39 +225,39 @@ public class AppController {
 
 
     //디자인 :: 메인화면
-    @RequestMapping(method = {RequestMethod.GET}, path = "/home")
-    public String home(Model model) {
+    @RequestMapping(method = {RequestMethod.GET}, path = "home")
+    public String home(HttpServletRequest httpServletRequest, Model model) {
 
 
         return "design/main";
     }
 
     //디자인 :: 캠퍼스 안내
-    @RequestMapping(method = {RequestMethod.GET}, path = "/designCampus")
-    public String designCampus(Model model) {
+    @RequestMapping(method = {RequestMethod.GET}, path = "designCampus")
+    public String designCampus(HttpServletRequest httpServletRequest, Model model) {
 
 
         return "design/camp_info_list";
     }
 
     //디자인 :: 캠퍼스 안내->상세
-    @RequestMapping(method = {RequestMethod.GET}, path = "/designCampusDetail")
-    public String designCampusDetail(Model model) {
+    @RequestMapping(method = {RequestMethod.GET}, path = "designCampusDetail")
+    public String designCampusDetail(HttpServletRequest httpServletRequest, Model model) {
 
 
         return "design/camp_info_detail";
     }
 
     //디자인 :: 긴급상황지원
-    @RequestMapping(method = {RequestMethod.GET}, path = "/emergencyList")
-    public String emergencyList(Model model) {
+    @RequestMapping(method = {RequestMethod.GET}, path = "emergencyList")
+    public String emergencyList(HttpServletRequest httpServletRequest, Model model) {
 
 
         return "app/emergencyList";
     }
 
     //디자인 :: 편의시설
-    @RequestMapping(method = {RequestMethod.GET}, path = "/designFacilities")
+    @RequestMapping(method = {RequestMethod.GET}, path = "designFacilities")
     public String designFacilities(Model model) {
 
 
@@ -265,7 +265,7 @@ public class AppController {
     }
 
     //디자인 :: 내 자료실
-    @RequestMapping(method = {RequestMethod.GET}, path = "/designMyData")
+    @RequestMapping(method = {RequestMethod.GET}, path = "designMyData")
     public String designMyData(Model model) {
 
 
@@ -273,7 +273,7 @@ public class AppController {
     }
 
     //디자인 :: 내 자료실->상세
-    @RequestMapping(method = {RequestMethod.GET}, path = "/designMyDataDetail")
+    @RequestMapping(method = {RequestMethod.GET}, path = "designMyDataDetail")
     public String designMyDataDetail(Model model) {
 
 
@@ -281,7 +281,7 @@ public class AppController {
     }
 
     //디자인 :: 내정보(수정)
-    @RequestMapping(method = {RequestMethod.GET}, path = "/designPersonalInfo")
+    @RequestMapping(method = {RequestMethod.GET}, path = "designPersonalInfo")
     public String designPersonalInfo(Model model) {
 
 
@@ -289,7 +289,7 @@ public class AppController {
     }
 
     //디자인 :: 지원프로그램
-    @RequestMapping(method = {RequestMethod.GET}, path = "/designSupplyProgram")
+    @RequestMapping(method = {RequestMethod.GET}, path = "designSupplyProgram")
     public String designSupplyProgram(Model model) {
 
 
@@ -297,7 +297,7 @@ public class AppController {
     }
 
     //디자인 :: 지원프로그램->상세
-    @RequestMapping(method = {RequestMethod.GET}, path = "/designSupplyProgramDetail")
+    @RequestMapping(method = {RequestMethod.GET}, path = "designSupplyProgramDetail")
     public String designSupplyProgramDetail(Model model) {
 
 
@@ -305,7 +305,7 @@ public class AppController {
     }
 
     //디자인 :: 동영상보기
-    @RequestMapping(method = {RequestMethod.GET}, path = "/designVideo")
+    @RequestMapping(method = {RequestMethod.GET}, path = "designVideo")
     public String designVideo(Model model) {
 
 
@@ -313,7 +313,7 @@ public class AppController {
     }
 
     //디자인 :: 동영상보기->상세
-    @RequestMapping(method = {RequestMethod.GET}, path = "/designVideoDetail")
+    @RequestMapping(method = {RequestMethod.GET}, path = "designVideoDetail")
     public String designVideoDetail(Model model) {
 
 
@@ -322,7 +322,7 @@ public class AppController {
 
 
     //디자인 :: 신청서 관리
-    @RequestMapping(method = {RequestMethod.GET}, path = "/designApplicationList")
+    @RequestMapping(method = {RequestMethod.GET}, path = "designApplicationList")
     public String designApplicationList(Model model) {
 
 
@@ -330,7 +330,7 @@ public class AppController {
     }
 
     //디자인 :: 신청서 관리->상세보기(비자연장신청)
-    @RequestMapping(method = {RequestMethod.GET}, path = "/designApplicationDetail")
+    @RequestMapping(method = {RequestMethod.GET}, path = "designApplicationDetail")
     public String designApplicationDetail(Model model) {
 
 
@@ -338,7 +338,7 @@ public class AppController {
     }
 
     //디자인 :: 신청서 관리->상세보기(비자연장신청)->step1
-    @RequestMapping(method = {RequestMethod.GET}, path = "/designApplicationDetailStep1")
+    @RequestMapping(method = {RequestMethod.GET}, path = "designApplicationDetailStep1")
     public String designApplicationDetailStep1(Model model) {
 
 
@@ -346,7 +346,7 @@ public class AppController {
     }
 
     //디자인 :: 신청서 관리->상세보기(비자연장신청)->step2
-    @RequestMapping(method = {RequestMethod.GET}, path = "/designApplicationDetailStep2")
+    @RequestMapping(method = {RequestMethod.GET}, path = "designApplicationDetailStep2")
     public String designApplicationDetailStep2(Model model) {
 
 
@@ -354,7 +354,7 @@ public class AppController {
     }
 
     //디자인 :: 신청서 관리->상세보기(비자연장신청)->step3
-    @RequestMapping(method = {RequestMethod.GET}, path = "/designApplicationDetailStep3")
+    @RequestMapping(method = {RequestMethod.GET}, path = "designApplicationDetailStep3")
     public String designApplicationDetailStep3(Model model) {
 
 

@@ -22,49 +22,29 @@ public class AppInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)  {
 
+
+
+
         HttpSession session = request.getSession();
         String requestURI = request.getRequestURI();
 
-        CharSequence[] onlyLoginMemberAccessList =  {"sendInfoPassport", "getInfoPassport", "modifyPersonalInfo", "getPersonalInfo", "applicationSupportProgram",
-                                                        "getSupportProgramDetail", "getVideoList", "getClassSectionList", "getTodayAttendance", "setFcmToken"};
+
+        System.out.println("앱 인터셉터 " + requestURI);
+        //관리자 부분
+        String studentId = (String) session.getAttribute("STUDENT_ID");
+
+        System.out.println("studentId" + studentId);
+
+        //로그인 된 학생만
+        CharSequence[] onlyLoginMemberAccessList =  {"/videoList", "/videoDetail", "/campusList", "/facilities", "/myData", "/supportProgramList", "/emergencyList", "/applicationList"};
         boolean isOnlyLoginMemberAccessList = StringUtils.containsAny(requestURI, onlyLoginMemberAccessList);
 
         if(isOnlyLoginMemberAccessList) {
 
-            String accessToken = request.getHeader("accessToken");
-            System.out.println("엑세스 토큰 " + accessToken);
-
-            if (accessToken != null && !accessToken.equals("")) {
-
-                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-                FirebaseToken firebaseUser = null;
-                try {
-                    firebaseUser = firebaseAuth.verifyIdToken(accessToken);
-                    if(firebaseUser == null) {
-                        responseGetWriter(response, "notAuthorized");
-                        return false;
-                    }
-
-                    session.setAttribute("M_STUDENT_EMAIL", firebaseUser.getEmail());
-
-                    request.setAttribute("firebase_user_email", firebaseUser.getEmail());
-                } catch (FirebaseAuthException e) {
-
-                    //https://firebase.google.com/docs/reference/admin/error-handling error code list
-                    if(e.getAuthErrorCode() == AuthErrorCode.EXPIRED_ID_TOKEN) {
-                        responseGetWriter(response, "expired");
-                    } else {
-                        responseGetWriter(response, "notAuthorized");
-                    }
-                    return false;
-                }
-
-            } else {
-                responseGetWriter(response, "notAuthorized");
+            if(studentId == null) {
+                response.sendRedirect("/app/main");
                 return false;
-                //responseGetWriter(response);
             }
-
         }
 
         return true;

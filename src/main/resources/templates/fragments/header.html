@@ -42,7 +42,6 @@
                         });
                     }
 
-
                     const loginBtn = document.getElementById('loginBtn');
                     if (loginBtn) {
                         loginBtn.addEventListener('click', function() {
@@ -50,17 +49,38 @@
                         });
                     }
 
+
+                    const logoutBtn = document.getElementById('logoutBtn');
+                    if (logoutBtn) {
+                        logoutBtn.addEventListener('click', function() {
+
+                            if(!confirm("로그아웃 하시겠습니까?")) {
+                                return;
+                            }
+
+                            axios.post('/appRest/doLogout', null, null).then(res => {
+
+                                if(res.data.result === "success") {
+                                    alert("로그아웃 되었습니다.");
+                                    location.href = "/app/main";
+                                }
+
+                            });
+
+
+
+                            //location.href = "/app/login";
+                        });
+                    }
+
                     /*document.getElementById('loginBtn').addEventListener('click', function() {
                         //window.history.back();
                         location.href = "/app/login";
-                    });*/
-
+                    });
 
                     $("#loginBtn").click(function() {
-
                         alert("로그인 비티엔~");
-
-                    });
+                    });*/
 
 
                 });

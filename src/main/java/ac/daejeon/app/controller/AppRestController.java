@@ -73,14 +73,12 @@ public class AppRestController {
             if(loginInfo.getIsSamePassword()) {
                 HttpSession session = httpServletRequest.getSession();
 
+                //로그인 성공
                 session.setAttribute("STUDENT_ID", loginInfo.getStudentId());
+                session.setAttribute("STUDENT_IDX", loginInfo.getStudentIdx());
+                session.setAttribute("STUDENT_EMAIL", loginInfo.getStudentEmail());
+
                 jsonObj.addProperty("result", "success");
-
-                /*loginVo.setLoginStatus("success");
-                loginService.saveLoginLog(loginVo, httpServletRequest);
-
-                loginVo.setLoginFailedCount(0);
-                loginService.setLoginFailedCount(loginVo);*/
 
             } else {
                 /*loginVo.setLoginStatus("notAuthorized");
@@ -99,6 +97,22 @@ public class AppRestController {
 
         return jsonObj.toString();
     }
+
+
+    @RequestMapping(value = "doLogout", method = { RequestMethod.POST})
+    public String doLogout(HttpServletRequest httpServletRequest, JsonObject jsonObj, AppVo appVo, LoginVo loginVo) {
+
+        HttpSession session = httpServletRequest.getSession();
+        session.removeAttribute("STUDENT_ID");
+        session.removeAttribute("STUDENT_IDX");
+        session.removeAttribute("STUDENT_EMAIL");
+
+        jsonObj.addProperty("result", "success");
+
+        return jsonObj.toString();
+
+
+    };
 
 
     @RequestMapping(value = "checkEmailAndStudentId", method = {RequestMethod.GET, RequestMethod.POST})
@@ -163,12 +177,11 @@ public class AppRestController {
     public String sendViewingTime(HttpServletRequest httpServletRequest, JsonObject jsonObj, AppVo appVo) {
 
 
-        System.out.println("뷰잉타임 " + appVo.getViewingTime());
-        System.out.println("마지막 시청 포인트 " + appVo.getLastSeconds());
+        int studentIdx = (int) httpServletRequest.getSession().getAttribute("STUDENT_IDX");
+        String studentId = httpServletRequest.getSession().getAttribute("STUDENT_ID").toString();
 
-
-        String studentEmail = httpServletRequest.getSession().getAttribute("M_STUDENT_EMAIL").toString();
-        appVo.setStudentEmail(studentEmail);
+        appVo.setStudentIdx(studentIdx);
+        appVo.setStudentId(studentId);
 
         appService.sendViewingTime(appVo);
 
@@ -609,6 +622,9 @@ public class AppRestController {
 
         return jsonObj.toString();
     }
+
+
+
 
 
 

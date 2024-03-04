@@ -223,7 +223,7 @@
         WHERE
             video_idx = #{videoIdx}
         AND
-            email = #{studentEmail}
+            student_idx = #{studentIdx}
     </select>
 
     <insert id="createVideoWatched">
@@ -231,7 +231,8 @@
         INSERT INTO
             video_watched(
                 video_idx,
-                email,
+                student_idx,
+                student_id,
                 watched_time,
                 last_time,
                 reg_dt,
@@ -239,7 +240,8 @@
             )
         VALUES (
             #{videoIdx},
-            #{studentEmail},
+            #{studentIdx},
+            #{studentId},
             #{viewingTime},
             #{lastSeconds},
             now(),
@@ -259,7 +261,7 @@
         WHERE
             video_idx = #{videoIdx}
         AND
-            email = #{studentEmail}
+            student_idx = #{studentIdx}
     </select>
 
     <update id="modifyVideoWatched">
@@ -268,11 +270,12 @@
             video_watched
         SET
            watched_time = #{viewingTime},
-           last_time = #{lastSeconds}
+           last_time = #{lastSeconds},
+           mod_dt = now()
        WHERE
             video_idx = #{videoIdx}
         AND
-            email = #{studentEmail}
+            student_idx = #{studentIdx}
     </update>
 
 

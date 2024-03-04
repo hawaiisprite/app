@@ -6,19 +6,9 @@
 
 <body>
 <div class="app" id="app">
-    <header class="header">
-        <div class="header-wrap">
-            <div class="logo">
-                <i class="icon-logo"></i>
-            </div>
-            <div class="btns">
-                <div class="btn-mypage">
-                    <i class="icon-mypage"></i>
-                </div>
-                <button class="btn-login">로그인</button>
-            </div>
-        </div>
-    </header>
+
+    <th:block th:replace="fragments/header:: headerFragment"/>
+
     <div class="content-body">
         <div class="content-title">
             <i class="icon-title-video"></i>
@@ -64,65 +54,7 @@
             </div>
 
         </template>
-<!--        <div class="video-list-sum">
-            <div class="list-item">
-                <div class="sumnail">
-                    <div class="img-wrap">
-                        <img
-                                src="https://img.youtube.com/vi/HJU2606zw8M/mqdefault.jpg"
-                                alt="유튜브 섬네일 이미지 가져오기"
-                        >
-                    </div>
-                </div>
-                <div class="list-item-container">
-                    <div class="tag">성폭력 예방교육</div>
-                    <div class="title">성폭력에 대한 전반적인 이해와 사례</div>
-                    <div class="sub-text">대표적인 사례를 통한 교육과 예방</div>
-                    <div class="btns">
-                        <button class="more">more</button>
-                        <span class="time">59 min</span>
-                    </div>
-                </div>
-            </div>
-            <div class="list-item">
-                <div class="sumnail">
-                    <div class="img-wrap">
-                        <img
-                                src="https://img.youtube.com/vi/HJU2606zw8M/mqdefault.jpg"
-                                alt="유튜브 섬네일 이미지 가져오기"
-                        >
-                    </div>
-                </div>
-                <div class="list-item-container">
-                    <div class="tag">성폭력 예방교육</div>
-                    <div class="title">성폭력에 대한 전반적인 이해와 사례</div>
-                    <div class="sub-text">대표적인 사례를 통한 교육과 예방</div>
-                    <div class="btns">
-                        <button class="more">more</button>
-                        <span class="time">59 min</span>
-                    </div>
-                </div>
-            </div>
-            <div class="list-item">
-                <div class="sumnail">
-                    <div class="img-wrap">
-                        <img
-                                src="https://img.youtube.com/vi/HJU2606zw8M/mqdefault.jpg"
-                                alt="유튜브 섬네일 이미지 가져오기"
-                        >
-                    </div>
-                </div>
-                <div class="list-item-container">
-                    <div class="tag">성폭력 예방교육</div>
-                    <div class="title">성폭력에 대한 전반적인 이해와 사례</div>
-                    <div class="sub-text">대표적인 사례를 통한 교육과 예방</div>
-                    <div class="btns">
-                        <button class="more">more</button>
-                        <span class="time">59 min</span>
-                    </div>
-                </div>
-            </div>
-        </div>-->
+
     </div>
 </div>
 

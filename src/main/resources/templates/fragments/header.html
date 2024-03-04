@@ -5,6 +5,7 @@
 
         <header class="header">
             <div class="header-wrap">
+                <span id="headerBackBtn">←</span>
                 <div class="logo" id="logo">
                     <i class="icon-logo"></i>
                 </div>
@@ -23,6 +24,10 @@
 
                 document.getElementById('logo').addEventListener('click', function() {
                     window.location.href = '/app/main';
+                });
+
+                document.getElementById('headerBackBtn').addEventListener('click', function() {
+                    window.history.back();
                 });
 
             });

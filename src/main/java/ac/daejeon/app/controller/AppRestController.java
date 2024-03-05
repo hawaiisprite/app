@@ -635,6 +635,20 @@ public class AppRestController {
     }
 
 
+    @RequestMapping(value = "getVideoPercentageList", method = { RequestMethod.POST})
+    public String getVideoPercentageList(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, AppVo appVo, SupportProgramVo supportProgramVo) throws FirebaseAuthException {
+
+        //List<SupportProgramVo> videoList = supportProgramService.getVideoList(supportProgramVo);
+
+        List<AppVo> videoList = appService.getVideoPercentageList(appVo);
+
+        jsonObj.addProperty("data", gson.toJson(videoList));
+        jsonObj.addProperty("result", "success");
+
+        return jsonObj.toString();
+    }
+
+
 
 
 

@@ -48,19 +48,23 @@ public class AppController {
     @RequestMapping(method = {RequestMethod.GET}, path = "videoList")
     public String videoList(HttpServletRequest httpServletRequest, Model model, Gson gson, AppVo appVo, SupportProgramVo supportProgramVo) {
 
+        HttpSession session = httpServletRequest.getSession();
+
+        int studentIdx = (int) session.getAttribute("STUDENT_IDX");
+
         LocalDate today = LocalDate.now();
         int nowYear = today.getYear();
 
+        appVo.setStudentIdx(studentIdx);
         appVo.setStandardYear(nowYear);
 
-        List<AppVo> videoListData = appService.getVideoList(appVo);
+        //List<AppVo> videoListData = appService.getVideoList(appVo);
+
+        List<AppVo> videoListData = appService.getVideoPercentageList(appVo);
 
         //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
 
         //System.out.println("비디오 리스트 " + videoListData);
-
-
-
         model.addAttribute("nowYear", nowYear);
         model.addAttribute("videoListJson", gson.toJson(videoListData));
 

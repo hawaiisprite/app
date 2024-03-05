@@ -161,4 +161,9 @@ public class AppDao {
 
         return sqlSession.selectOne("login.getMemberInfo", loginVo);
     }
+
+    public List<AppVo> getVideoPercentageList(AppVo appVo) {
+
+        return sqlSession.selectList("app.getVideoPercentageList", appVo);
+    }
 }

@@ -54,7 +54,7 @@
 
             <template v-for="data, index in videoList" :key="index">
                 <div class="list-item" @click="toVideoDetail($event, data)">
-                    <span>{{data.videoName}}</span>
+                    <span>{{data.videoName}}</span> <div>{{data.watchedPercentage}} %</div>
                     <i class="icon-arrow"></i>
                 </div>
             </template>
@@ -83,7 +83,7 @@
             changeVideoList(e) {
 
                 //alert("확인 " + e.target.value);
-                const _ = axios.post('/appRest/getVideoList', null, {
+                const _ = axios.post('/appRest/getVideoPercentageList', null, {
                     params:{
                         standardYear: e.target.value,
                     }

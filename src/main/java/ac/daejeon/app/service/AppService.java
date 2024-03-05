@@ -283,6 +283,10 @@ public class AppService {
         return loginInfos;
     }
 
+    public List<AppVo> getVideoPercentageList(AppVo appVo) {
+        return appDao.getVideoPercentageList(appVo);
+    }
+
 
 
 /*    //관리자 로그인

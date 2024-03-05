@@ -269,12 +269,6 @@
             WHERE
                 idx = #{videoIdx}
         </if>
-
-        <if test="videoIdx != null and videoIdx != 0">
-            WHERE
-            idx = #{videoIdx}
-        </if>
-
         <if test='isOrderByDescLimit1 == true'>
             ORDER BY
                 idx desc
@@ -285,6 +279,58 @@
         <if test="standardYear != null and standardYear != 0">
             AND
                 (DATE_FORMAT(start_day , '%Y')  = #{standardYear} OR DATE_FORMAT(end_day , '%Y')  = #{standardYear})
+        </if>
+
+    </select>
+
+
+    <select id="getVideoPercentageList" parameterType="appVo" resultType="appVo">
+        <!-- app.getVideoPercentageList -->
+        SELECT
+            d.videoIdx,
+            d.videoName,
+            d.videoLink,
+            d.videoInfo,
+            d.runningMinute,
+            d.runningSecond,
+            d.videoStartDay,
+            d.videoEndDay,
+            if(d.watchedPercentage IS NULL, 0, d.watchedPercentage) AS watchedPercentage
+        FROM (
+            SELECT
+                c.*,
+                if (((c.watchedTime/c.allSecond) * 100) >= 100, 100, ((c.watchedTime/c.allSecond) * 100))  AS watchedPercentage
+            FROM (
+                SELECT
+                    a.idx as videoIdx,
+                    a.video_name as videoName,
+                    a.video_link as videoLink,
+                    a.info as videoInfo,
+                    a.running_minute as runningMinute,
+                    a.running_second as runningSecond,
+                    a.start_day as videoStartDay,
+                    a.end_day as videoEndDay,
+                    a.all_second as allSecond,
+                    if(b.watched_time IS NULL, 0, b.watched_time) AS watchedTime
+                FROM
+                    video a
+                LEFT JOIN
+                    video_watched b
+                on
+                    a.idx = b.video_idx
+                WHERE
+                    (student_idx = #{studentIdx} OR student_idx IS NULL)
+                AND
+                    a.flag != 'deleted'
+                GROUP BY
+                    a.idx
+            ) AS c
+        ) AS d
+        WHERE
+            1=1
+        <if test="standardYear != null and standardYear != 0">
+            AND
+                (DATE_FORMAT(d.videoStartDay , '%Y')  = #{standardYear} OR DATE_FORMAT(d.videoEndDay , '%Y')  = #{standardYear})
         </if>
 
     </select>
@@ -310,6 +356,11 @@
                 video b
             ON
                 a.video_idx = b.idx
+            WHERE
+                a.student_idx = #{studentIdx}
+            AND
+                a.video_idx =  #{videoIdx}
+
         ) AS c
     </select>
 

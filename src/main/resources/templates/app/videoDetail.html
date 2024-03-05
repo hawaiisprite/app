@@ -116,6 +116,7 @@
                         const result = res.data.result;
 
                         if(result === "success") {
+
                             const playerInfo = JSON.parse(res.data.playerInfoJson);
 
                             this.watchedPercentage = playerInfo.watchedPercentage;

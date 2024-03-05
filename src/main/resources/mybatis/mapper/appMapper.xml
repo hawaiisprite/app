@@ -253,15 +253,24 @@
     <select id="getVideoWatched" parameterType="appVo" resultType="appVo">
         <!--app.getVideoWatched-->
         SELECT
-            video_idx as videoIdx,
-            watched_time as viewingTime,
-            last_time as lastSeconds
-        FROM
-            video_watched
-        WHERE
-            video_idx = #{videoIdx}
-        AND
-            student_idx = #{studentIdx}
+            c.videoIdx,
+            c.viewingTime,
+            c.lastSeconds,
+            if(c.watchedPercentage >= 100, 100, watchedPercentage) AS watchedPercentage
+        FROM (
+
+            SELECT
+                a.video_idx as videoIdx,
+                a.watched_time as viewingTime,
+                a.last_time as lastSeconds,
+                ((a.watched_time/b.all_second) * 100) AS watchedPercentage
+            FROM
+                video_watched a
+            JOIN
+                video b
+            ON
+                a.video_idx = b.idx
+        ) AS c
     </select>
 
 

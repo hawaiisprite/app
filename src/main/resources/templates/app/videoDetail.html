@@ -86,10 +86,7 @@
                         return;
                     }
 
-
-
-
-                    console.log("로그 확인 ");
+                    //console.log("로그 확인 ");
 
                     axios.post('/appRest/sendViewingTime', null, {
                         params:{
@@ -101,6 +98,8 @@
 
                         if(res.data.result === "success") {
                             this.time = 0;
+
+                            this.getReloadPercentage();
                         }
 
                     });
@@ -118,6 +117,9 @@
 
                         if(result === "success") {
                             const playerInfo = JSON.parse(res.data.playerInfoJson);
+
+                            this.watchedPercentage = playerInfo.watchedPercentage;
+
                             this.canPlay = true;
                             globalPlayer.setCurrentTime(playerInfo.lastSeconds);
                         } else if(result === "empty") {
@@ -127,6 +129,26 @@
                         //alert("리저트~~" + result);
 
                     });
+
+                },
+                getReloadPercentage() {
+
+                    axios.post('/appRest/getPlayerInfo', null, {
+                        params:{
+                            videoIdx: this.videoInfo.videoIdx,
+                        }
+                    }).then(res => {
+
+                        const result = res.data.result;
+
+                    if(result === "success") {
+                        const playerInfo = JSON.parse(res.data.playerInfoJson);
+                        this.watchedPercentage = playerInfo.watchedPercentage;
+                    }
+
+                    //alert("리저트~~" + result);
+
+                });
 
                 }
 

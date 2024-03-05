@@ -120,6 +120,9 @@ public class AppVo {
     //마지막 시청 커서포인트
     private float lastSeconds;
 
+    //시청 퍼센테이지
+    private float watchedPercentage;
+
     //마지막 시청 커서포인트
     private boolean isCheckAccessTokenForMobile = false;
 

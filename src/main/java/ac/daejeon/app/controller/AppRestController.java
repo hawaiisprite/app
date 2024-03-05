@@ -207,6 +207,8 @@ public class AppRestController {
 
         AppVo playerInfo = appService.getVideoWatched(appVo);
 
+        //System.out.println("플레이어 인포 " + playerInfo);
+
         if(playerInfo != null) {
             jsonObj.addProperty("playerInfoJson", gson.toJson(playerInfo));
             jsonObj.addProperty("result", "success");

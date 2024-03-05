@@ -14,11 +14,19 @@
             <i class="icon-title-video"></i>
             <h1>교육동영상</h1>
         </div>
-        <div class="search-bar">
+        <!--<div class="search-bar">
             <div class="input-wrap">
                 <i class="icon-search"></i>
                 <input type="text" placeholder="교육명을 입력하세요.">
             </div>
+        </div>-->
+
+        <div class="select-wrap">
+            <label for="year">
+                <select name="year" id="year"  ref="year" @change="changeVideoList">
+                    <option v-for="year in years" :key="year" :value="year" :selected="year == nowYear">{{year}}</option>
+                </select>
+            </label>
         </div>
 
         <template v-if="videoList != null && videoList.length != 0">
@@ -65,11 +73,38 @@
         data() {
             return {
                 videoList: JSON.parse([[${videoListJson}]]),
-                abc: [[${abc}]]
+                abc: [[${abc}]],
+                years: this.generateYearRange(2023, 2025),
+                nowYear: [[${nowYear}]]
             }
         },
         methods: {
 
+            changeVideoList(e) {
+
+                //alert("확인 " + e.target.value);
+                const _ = axios.post('/appRest/getVideoList', null, {
+                    params:{
+                        standardYear: e.target.value,
+                    }
+                }).then(res => {
+
+                    if(res.data.result === "success") {
+
+                        this.videoList = JSON.parse(res.data.data);
+
+                    }
+
+                });
+
+            },
+            generateYearRange(start, end) {
+                const years = [];
+                for (let year = start; year <= end; year++) {
+                    years.push(year);
+                }
+                return years;
+            },
             toVideoDetail(e, data) {
 
                 //window.open();

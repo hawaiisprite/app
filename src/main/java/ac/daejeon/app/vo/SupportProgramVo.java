@@ -55,4 +55,8 @@ public class SupportProgramVo {
     private String applicationEndDay;
 
 
+    private int standardYear;
+
+    private int standardSemester;
+
 }

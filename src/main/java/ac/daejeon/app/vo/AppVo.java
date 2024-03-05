@@ -132,13 +132,15 @@ public class AppVo {
     private String classSectionClass;
     private int classSectionIdx;
 
-
     private int year;
     private int month;
     private int day;
 
+    private int standardYear;
 
 
+    //마지막 하나만 들고오기
+    boolean isOrderByDescLimit1 = false;
 
 
 

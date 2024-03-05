@@ -250,6 +250,46 @@
     </insert>
 
 
+    <select id="getVideoList" parameterType="appVo" resultType="appVo">
+        <!-- app.getVideoList -->
+        SELECT
+            idx as videoIdx,
+            video_name as videoName,
+            video_link as videoLink,
+            info as videoInfo,
+            running_minute as runningMinute,
+            running_second as runningSecond,
+            start_day as videoStartDay,
+            end_day as videoEndDay
+        FROM
+            video
+        WHERE
+            1=1
+        <if test="videoIdx != null and videoIdx != 0">
+            WHERE
+                idx = #{videoIdx}
+        </if>
+
+        <if test="videoIdx != null and videoIdx != 0">
+            WHERE
+            idx = #{videoIdx}
+        </if>
+
+        <if test='isOrderByDescLimit1 == true'>
+            ORDER BY
+                idx desc
+            LIMIT
+                1
+        </if>
+
+        <if test="standardYear != null and standardYear != 0">
+            AND
+                (DATE_FORMAT(start_day , '%Y')  = #{standardYear} OR DATE_FORMAT(end_day , '%Y')  = #{standardYear})
+        </if>
+
+    </select>
+
+
     <select id="getVideoWatched" parameterType="appVo" resultType="appVo">
         <!--app.getVideoWatched-->
         SELECT

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -45,15 +46,22 @@ public class AppController {
 
     //동영상 리스트
     @RequestMapping(method = {RequestMethod.GET}, path = "videoList")
-    public String videoList(HttpServletRequest httpServletRequest, Model model, Gson gson, SupportProgramVo supportProgramVo) {
+    public String videoList(HttpServletRequest httpServletRequest, Model model, Gson gson, AppVo appVo, SupportProgramVo supportProgramVo) {
 
-        List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
+        LocalDate today = LocalDate.now();
+        int nowYear = today.getYear();
 
-        System.out.println("비디오 리스트 " + videoListData);
+        appVo.setStandardYear(nowYear);
+
+        List<AppVo> videoListData = appService.getVideoList(appVo);
+
+        //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
+
+        //System.out.println("비디오 리스트 " + videoListData);
 
 
-        model.addAttribute("abc", "abcd다");
 
+        model.addAttribute("nowYear", nowYear);
         model.addAttribute("videoListJson", gson.toJson(videoListData));
 
         return "app/videoList";

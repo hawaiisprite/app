@@ -501,8 +501,23 @@
     </update>
 
 
-
     <select id="getNoticeList" parameterType="appVo" resultType="appVo">
+
+        SELECT
+            idx as noticeIdx,
+            title as noticeTitle,
+            content as noticeContent,
+            DATE_FORMAT(reg_dt, '%Y-%m-%d') as noticeRegDt
+        FROM
+            notice
+        <if test="noticeIdx != null and noticeIdx != 0">
+            WHERE
+                idx = #{noticeIdx}
+        </if>
+    </select>
+
+
+    <select id="getNoticeListForMain" parameterType="appVo" resultType="appVo">
 
         SELECT
             idx as noticeIdx,

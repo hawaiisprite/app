@@ -81,18 +81,20 @@
 
             <template v-for="data, index in noticeList" :key="index">
 
-              <div class="item">
-                <div class="item-top">
-                  <span class="date">{{data.noticeRegDt}}</span>
-                  <span class="time"></span>
-                </div>
+              <div @click="toNoticeDetail($event, data.noticeIdx)">
+                <div class="item">
+                  <div class="item-top">
+                    <span class="date">{{data.noticeRegDt}}</span>
+                    <span class="time"></span>
+                  </div>
 
-                <div class="item-bottom">
-                  <div class="item-bottom-wrap">
-                    <div class="item-text">
-                      {{data.noticeContent}}
+                  <div class="item-bottom">
+                    <div class="item-bottom-wrap">
+                      <div class="item-text">
+                        {{data.noticeContent}}
+                      </div>
+                      <button class="more">more</button>
                     </div>
-                    <button class="more">more</button>
                   </div>
                 </div>
               </div>
@@ -116,6 +118,10 @@
         },
         methods: {
 
+          toNoticeDetail(e, noticeIdx) {
+            //alert("공지사항 인덱스 " + noticeIdx);
+            location.href = "/app/noticeDetail/" + noticeIdx;
+          },
           toDetail(e, url) {
 
             if (e.ctrlKey) {

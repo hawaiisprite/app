@@ -172,4 +172,9 @@ public class AppDao {
 
         return sqlSession.selectList("app.getNoticeList", appVo);
     }
+
+    public List<AppVo> getNoticeListForMain(AppVo appVo) {
+
+        return sqlSession.selectList("app.getNoticeListForMain", appVo);
+    }
 }

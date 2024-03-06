@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="fragments/head:: head"/>
+
+<script src="https://player.vimeo.com/api/player.js"></script>
+
+<body>
+<div class="app" id="app">
+
+    <th:block th:replace="fragments/header:: headerFragment"/>
+
+    <div class="content-body">
+        <div class="content-title">
+            <i class="icon-title-video"></i>
+            <h1>공지사항</h1>
+            <!--<div>가나다라마바사 {{videoInfo}}</div>-->
+        </div>
+
+        <div class="video-explain">
+            <div class="title">{{noticeInfo.noticeTitle}}</div>
+            <div class="sub-text">
+                {{noticeInfo.noticeContent}}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script th:inline="javascript">
+
+    let globalPlayer = "";
+
+    Vue.createApp({
+        //el: '#app',
+        data() {
+            return {
+                noticeInfo: [[${noticeInfo}]]
+            }
+        },
+        methods: {
+
+        },
+        created() {
+            //console.log("비디오 인포 " + this.videoInfo);
+        },
+        mounted() {
+
+        }
+    }).mount('#app');
+
+</script>
+
+</body>
+</html>

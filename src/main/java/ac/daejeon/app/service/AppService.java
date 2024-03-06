@@ -292,6 +292,11 @@ public class AppService {
         return appDao.getNoticeList(appVo);
     }
 
+    public List<AppVo> getNoticeListForMain(AppVo appVo) {
+
+        return appDao.getNoticeListForMain(appVo);
+    }
+
 
 
 /*    //관리자 로그인

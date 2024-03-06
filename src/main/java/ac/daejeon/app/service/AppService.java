@@ -288,6 +288,11 @@ public class AppService {
     }
 
 
+    public List<AppVo> getNoticeList(AppVo appVo) {
+        return appDao.getNoticeList(appVo);
+    }
+
+
 
 /*    //관리자 로그인
     public LoginVo doLogin(LoginVo loginVo) {

@@ -501,10 +501,25 @@
     </update>
 
 
+
+    <select id="getNoticeList" parameterType="appVo" resultType="appVo">
+
+        SELECT
+            idx as noticeIdx,
+            title as noticeTitle,
+            content as noticeContent,
+            DATE_FORMAT(reg_dt, '%Y-%m-%d') as noticeRegDt
+        FROM
+            notice
+        LIMIT
+            5
+    </select>
+
+
     <!--<select id="getPlayerInfo" parameterType="appVo" resultType="appVo">
         SELECT
             video_idx as videoIdx,
-            watched_time as viewingTime,
+            watched_time as viewingTime,d
             last_time as lastSeconds
         FROM
             video_watched

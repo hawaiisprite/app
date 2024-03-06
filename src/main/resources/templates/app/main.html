@@ -76,53 +76,31 @@
         </div>
         <div class="notice">
           <div class="notice-title">공지사항</div>
-          <div class="item">
-            <div class="item-top">
-              <span class="date">2023-06-11</span>
-              <span class="time">1hr ago</span>
-            </div>
-            <div class="item-bottom">
-              <div class="item-bottom-wrap">
-                <div class="item-text">
-                  학생상담센터에서는 대전대 신입생 및 재학생의 개인적인 특성 및
-                  대학생활 전반적인 실태와 마음건강 프로그램 요구사항, 실태와...
+
+          <template v-if="noticeList != null && noticeList.length != 0">
+
+            <template v-for="data, index in noticeList" :key="index">
+
+              <div class="item">
+                <div class="item-top">
+                  <span class="date">{{data.noticeRegDt}}</span>
+                  <span class="time"></span>
                 </div>
-                <button class="more">more</button>
-              </div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="item-top">
-              <span class="date">2023-06-11</span>
-              <span class="time">2mo ago</span>
-            </div>
-            <div class="item-bottom">
-              <div class="item-bottom-wrap">
-                <div class="item-text">
-                  학생상담센터에서는 대전대 신입생 및 재학생의 개인적인 특성 및
-                  대학생활 전반적인 실태와 마음건강 프로그램 요구사항,
-                  마음건강...
+
+                <div class="item-bottom">
+                  <div class="item-bottom-wrap">
+                    <div class="item-text">
+                      {{data.noticeContent}}
+                    </div>
+                    <button class="more">more</button>
+                  </div>
                 </div>
-                <button class="more">more</button>
               </div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="item-top">
-              <span class="date">2023-06-11</span>
-              <span class="time">3mo ago</span>
-            </div>
-            <div class="item-bottom">
-              <div class="item-bottom-wrap">
-                <div class="item-text">
-                  학생상담센터에서는 대전대 신입생 및 재학생의 개인적인 특성 및
-                  대학생활 전반적인 실태와 마음건강 프로그램 요구사항,
-                  마음건강...
-                </div>
-                <button class="more">more</button>
-              </div>
-            </div>
-          </div>
+
+            </template>
+
+          </template>
+
         </div>
       </div>
     </div>
@@ -133,7 +111,7 @@
         //el: '#app',
         data() {
           return {
-
+            noticeList: JSON.parse([[${noticeListJson}]])
           }
         },
         methods: {
@@ -150,6 +128,8 @@
 
         },
         created() {
+
+          console.log("노티스 리스트 " + this.noticeList);
 
         },
         mounted() {

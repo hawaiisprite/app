@@ -166,4 +166,10 @@ public class AppDao {
 
         return sqlSession.selectList("app.getVideoPercentageList", appVo);
     }
+
+
+    public List<AppVo> getNoticeList(AppVo appVo) {
+
+        return sqlSession.selectList("app.getNoticeList", appVo);
+    }
 }

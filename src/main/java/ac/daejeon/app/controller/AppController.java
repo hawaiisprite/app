@@ -228,8 +228,10 @@ public class AppController {
 
     //메인
     @RequestMapping(method = {RequestMethod.GET}, path = "main")
-    public String main(HttpServletRequest httpServletRequest, Model model) {
+    public String main(HttpServletRequest httpServletRequest, Model model, Gson gson, AppVo appVo) {
 
+        List<AppVo> noticeList = appService.getNoticeList(appVo);
+        model.addAttribute("noticeListJson", gson.toJson(noticeList));
 
         return "app/main";
     }

@@ -23,7 +23,18 @@
                     <template v-for="data, index in counselingList" :key="index">
                         <li>
                             <span>{{data.counselingTitle}}</span>
-                            <span class="tag red">미신청</span>
+
+                            <template v-if="data.isOverCounseling">
+                                <span class="tag">마감</span>
+                            </template>
+
+                            <template v-if="data.isApplicantCounseling != 0">
+                                <span class="tag green">신청</span>
+                            </template>
+                            <template v-else>
+                                <span class="tag red">미신청</span>
+                            </template>
+
                         </li>
                     </template>
 
@@ -51,25 +62,28 @@
         data() {
             return {
                 counselingList: JSON.parse([[${counselingListJson}]]),
+                nowDate: [[${nowDate}]],
+
                 //years: this.generateYearRange(2023, 2025),
                 //nowYear: [[${nowYear}]]
             }
         },
         methods: {
 
+
+
+        },
+        computed: {
+
         },
         created() {
             /*alert("크리에이트123");
-
             console.log("콘솔로그123");
-
             console.log("비디오 리스트 " + this.videoList);
-
             alert("크리에이트 abcdefg " + this.abc);*/
-
         },
         mounted() {
-
+            //alert("나우데이트 " + this.nowDate);
         }
     }).mount('#app');
 

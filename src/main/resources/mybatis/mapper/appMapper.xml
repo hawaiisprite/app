@@ -544,7 +544,12 @@
             a.content as counselingContent,
             a.str_day as counselingStrDay,
             a.end_day as counselingEndDay,
-            ( SELECT COUNT(*) FROM counseling_apply WHERE counseling_idx = a.idx AND student_idx = #{studentIdx} ) as isApplicantCounseling
+            ( SELECT COUNT(*) FROM counseling_apply WHERE counseling_idx = a.idx AND student_idx = #{studentIdx} ) as isApplicantCounseling,
+            CASE
+                WHEN CURDATE() BETWEEN a.str_day AND a.end_day THEN true
+                ELSE false
+            END AS isOverCounseling
+
         FROM
             counseling a
         WHERE

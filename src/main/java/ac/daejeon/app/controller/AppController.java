@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -193,10 +195,18 @@ public class AppController {
         int studentIdx = (int) session.getAttribute("STUDENT_IDX");
         supportProgramVo.setStudentIdx(studentIdx);
 
+        LocalDateTime currentTime = LocalDateTime.now();
+        // 형식 지정
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // 현재 시간을 문자열로 변환
+        String formattedTime = currentTime.format(formatter);
+
+        //System.out.println("포맷 타임 " + formattedTime);
         List<SupportProgramVo> counselingList = appService.getCounselingList(supportProgramVo);
         model.addAttribute("counselingListJson", gson.toJson(counselingList));
-
-        System.out.println("카운셀링 리스트 " + counselingList);
+        model.addAttribute("nowDate", formattedTime);
+        //System.out.println("카운셀링 리스트 " + counselingList);
 
         return "app/counselingList";
     }

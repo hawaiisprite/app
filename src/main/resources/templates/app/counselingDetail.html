@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="fragments/head:: head"/>
+
+<body>
+<div class="app" id="app">
+
+  <th:block th:replace="fragments/header:: headerFragment"/>
+
+  <div class="content-body">
+    <div class="content-title">
+      <i class="icon-title-video"></i>
+      <h1>상담프로그램</h1>
+      <!--<div>가나다라마바사 {{videoInfo}}</div>-->
+    </div>
+
+    <div class="video-explain">
+      <div class="title">{{counselingInfo.counselingTitle}}</div>
+      <div class="sub-text">
+        {{counselingInfo.counselingContent}}
+      </div>
+
+      <div>시작기간 {{counselingInfo.counselingStrDay}} ~ 종료기간 {{counselingInfo.counselingEndDay}}</div>
+
+    </div>
+  </div>
+
+</div>
+
+<script th:inline="javascript">
+
+  let globalPlayer = "";
+
+  Vue.createApp({
+    //el: '#app',
+    data() {
+      return {
+        counselingInfo: [[${counselingInfo}]]
+      }
+    },
+    methods: {
+
+    },
+    created() {
+      //console.log("비디오 인포 " + this.videoInfo);
+    },
+    mounted() {
+
+    }
+  }).mount('#app');
+
+</script>
+
+</body>
+</html>

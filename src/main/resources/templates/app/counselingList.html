@@ -21,7 +21,7 @@
                 <template v-if="counselingList != null && counselingList.length != 0">
 
                     <template v-for="data, index in counselingList" :key="index">
-                        <li>
+                        <li @click="toDetailCounseling(data)">
                             <span>{{data.counselingTitle}}</span>
 
                             <template v-if="data.isOverCounseling">
@@ -70,7 +70,11 @@
         },
         methods: {
 
+            toDetailCounseling(data) {
 
+                location.href = "/app/counselingDetail/" + data.counselingIdx;
+
+            }
 
         },
         computed: {

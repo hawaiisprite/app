@@ -238,6 +238,24 @@ public class AppController {
     }
 
 
+
+    //상담 상세
+    @RequestMapping(method = {RequestMethod.GET}, path = "counselingDetail/{counselingIdx}")
+    public String counselingDetail(HttpServletRequest httpServletRequest, Model model, Gson gson, SupportProgramVo supportProgramVo) {
+
+        SupportProgramVo counselingInfo = appService.getCounselingList(supportProgramVo).get(0);
+
+        model.addAttribute("counselingInfo", counselingInfo);
+
+        //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
+        //System.out.println("비디오 리스트 " + videoListData);
+        //model.addAttribute("abc", "abcd다");\
+        //model.addAttribute("videoListJson", gson.toJson(videoListData));
+
+        return "app/counselingDetail";
+    }
+
+
     //공지사항 상세
     @RequestMapping(method = {RequestMethod.GET}, path = "noticeDetail/{noticeIdx}")
     public String noticeDetail(HttpServletRequest httpServletRequest, Model model, Gson gson, AppVo appVo) {

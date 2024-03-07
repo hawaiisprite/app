@@ -8,6 +8,7 @@ import ac.daejeon.app.common.Statics;
 import ac.daejeon.app.dao.AppDao;
 import ac.daejeon.app.vo.AppVo;
 import ac.daejeon.app.vo.LoginVo;
+import ac.daejeon.app.vo.SupportProgramVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -295,6 +296,12 @@ public class AppService {
     public List<AppVo> getNoticeListForMain(AppVo appVo) {
 
         return appDao.getNoticeListForMain(appVo);
+    }
+
+
+    public List<SupportProgramVo> getCounselingList(SupportProgramVo supportProgramVo) {
+
+        return appDao.getCounselingList(supportProgramVo);
     }
 
 

@@ -59,4 +59,34 @@ public class SupportProgramVo {
 
     private int standardSemester;
 
+
+
+    //상담 idx
+    private int counselingIdx;
+
+    //상담 신청했는지 확인
+    private int isApplicantCounseling;
+
+    //상담 제목
+    private String counselingTitle;
+
+    //상담사 이름
+    private String counselingManager;
+
+    //상담 인원
+    private int counselingCapacity;
+
+    //상담 시작일
+    private String counselingStrDay;
+
+    //상담 종료일
+    private String counselingEndDay;
+
+    //상담 내용
+    private String counselingContent;
+
+    //학생 인덱스
+    private int studentIdx;
+
+
 }

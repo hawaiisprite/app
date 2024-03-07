@@ -531,6 +531,32 @@
     </select>
 
 
+
+    <select id="getCounselingList" parameterType="supportProgramVo" resultType="supportProgramVo">
+        <!-- app.getCounselingList -->
+        SELECT
+            a.idx as counselingIdx,
+            a.year as standardYear,
+            a.semester as standardSemester,
+            a.title as counselingTitle,
+            a.manager as counselingManager,
+            a.capacity as counselingCapacity,
+            a.content as counselingContent,
+            a.str_day as counselingStrDay,
+            a.end_day as counselingEndDay,
+            ( SELECT COUNT(*) FROM counseling_apply WHERE counseling_idx = a.idx AND student_idx = #{studentIdx} ) as isApplicantCounseling
+        FROM
+            counseling a
+        WHERE
+            a.flag != 'deleted'
+        <if test="counselingIdx != null and counselingIdx != 0">
+            AND
+                a.idx = #{counselingIdx}
+        </if>
+
+    </select>
+
+
     <!--<select id="getPlayerInfo" parameterType="appVo" resultType="appVo">
         SELECT
             video_idx as videoIdx,

@@ -176,16 +176,29 @@ public class AppController {
     }
 
 
-    //편의시설 상세
     @RequestMapping(method = {RequestMethod.GET}, path = "supportProgramList")
     public String supportProgramList(HttpServletRequest httpServletRequest, Model model, Gson gson, SupportProgramVo supportProgramVo) {
 
         //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
-        //System.out.println("비디오 리스트 " + videoListData);
-        //model.addAttribute("abc", "abcd다");\
-        //model.addAttribute("videoListJson", gson.toJson(videoListData));
+
 
         return "app/supportProgramList";
+    }
+
+    //상담현황 가져오기
+    @RequestMapping(method = {RequestMethod.GET}, path = "counselingList")
+    public String counselingList(HttpServletRequest httpServletRequest, Model model, Gson gson, SupportProgramVo supportProgramVo) {
+
+        HttpSession session = httpServletRequest.getSession();
+        int studentIdx = (int) session.getAttribute("STUDENT_IDX");
+        supportProgramVo.setStudentIdx(studentIdx);
+
+        List<SupportProgramVo> counselingList = appService.getCounselingList(supportProgramVo);
+        model.addAttribute("counselingListJson", gson.toJson(counselingList));
+
+        System.out.println("카운셀링 리스트 " + counselingList);
+
+        return "app/counselingList";
     }
 
 

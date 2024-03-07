@@ -2,6 +2,7 @@ package ac.daejeon.app.dao;
 
 import ac.daejeon.app.vo.AppVo;
 import ac.daejeon.app.vo.LoginVo;
+import ac.daejeon.app.vo.SupportProgramVo;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -176,5 +177,10 @@ public class AppDao {
     public List<AppVo> getNoticeListForMain(AppVo appVo) {
 
         return sqlSession.selectList("app.getNoticeListForMain", appVo);
+    }
+
+    public List<SupportProgramVo> getCounselingList(SupportProgramVo supportProgramVo) {
+
+        return sqlSession.selectList("app.getCounselingList", supportProgramVo);
     }
 }

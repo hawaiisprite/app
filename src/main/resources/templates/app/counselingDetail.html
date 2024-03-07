@@ -19,12 +19,19 @@
     <div class="video-explain">
       <div class="title">{{counselingInfo.counselingTitle}}</div>
       <div class="sub-text">
-        {{counselingInfo.counselingContent}}
+          {{counselingInfo.counselingContent}}
       </div>
 
       <div>시작기간 {{counselingInfo.counselingStrDay}} ~ 종료기간 {{counselingInfo.counselingEndDay}}</div>
 
+      <template v-if="counselingInfo.overCounseling">
+          <div><b>마감</b></div>
+      </template>
+
     </div>
+
+
+
   </div>
 
 </div>

@@ -7,6 +7,15 @@ plugins {
 
 group = 'ac.daejeon'
 version = '0.0.1-SNAPSHOT'
+apply plugin: 'war'
+
+bootWar.enabled = false
+war.enabled = true
+
+
+war {
+	archiveName 'app.war'
+}
 
 java {
 	//sourceCompatibility = '11'

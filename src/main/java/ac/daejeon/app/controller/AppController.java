@@ -233,6 +233,24 @@ public class AppController {
 
 
 
+    //공지사항 리스트
+    @RequestMapping(method = {RequestMethod.GET}, path = "noticeList")
+    public String noticeList(HttpServletRequest httpServletRequest, Model model, Gson gson, AppVo appVo) {
+
+        List<AppVo> noticeList = appService.getNoticeList(appVo);
+        model.addAttribute("noticeListJson", gson.toJson(noticeList));
+
+        //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
+        //System.out.println("비디오 리스트 " + videoListData);
+        //model.addAttribute("abc", "abcd다");\
+        //model.addAttribute("videoListJson", gson.toJson(videoListData));
+
+        return "app/noticeList";
+    }
+
+
+
+
 
     //디자인 :: 긴급상황지원
     @RequestMapping(method = {RequestMethod.GET}, path = "designEmergencySupport")

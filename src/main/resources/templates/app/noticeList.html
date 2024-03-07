@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="fragments/head:: head"/>
+
+<body>
+<div class="app" id="app">
+
+  <th:block th:replace="fragments/header:: headerFragment"/>
+
+  <div class="content-body">
+    <div class="content-title">
+      <i class="icon-title-video"></i>
+      <h1>공지사항</h1>
+    </div>
+    <!--<div class="search-bar">
+        <div class="input-wrap">
+            <i class="icon-search"></i>
+            <input type="text" placeholder="교육명을 입력하세요.">
+        </div>
+    </div>-->
+
+    <template v-if="noticeList != null && noticeList.length != 0">
+
+      <div class="video-list-text">
+
+
+        <!--<div class="list-item">
+            <span>성폭력 예방교육</span>
+            <i class="icon-arrow"></i>
+        </div>
+        <div class="list-item">
+            <span>한국법령이행 교육</span>
+            <i class="icon-arrow"></i>
+        </div>
+        <div class="list-item">
+            <span>조기적응프로그램</span>
+            <i class="icon-arrow"></i>
+        </div>
+        <div class="list-item">
+            <span>진로/취업 교육</span>
+            <i class="icon-arrow"></i>
+        </div>-->
+        <template v-for="data, index in noticeList" :key="index">
+          <div class="list-item" @click="toNoticeDetail($event, data)">
+            <span>{{data.noticeTitle}}</span>
+            <i class="icon-arrow"></i>
+          </div>
+        </template>
+
+      </div>
+
+    </template>
+
+  </div>
+</div>
+
+<script th:inline="javascript">
+
+  Vue.createApp({
+    //el: '#app',
+    data() {
+      return {
+        noticeList: JSON.parse([[${noticeListJson}]]),
+        years: this.generateYearRange(2023, 2025),
+        nowYear: [[${nowYear}]]
+      }
+    },
+    methods: {
+
+      changeVideoList(e) {
+
+        //alert("확인 " + e.target.value);
+        const _ = axios.post('/appRest/getVideoPercentageList', null, {
+          params:{
+            standardYear: e.target.value,
+          }
+        }).then(res => {
+
+          if(res.data.result === "success") {
+
+            this.videoList = JSON.parse(res.data.data);
+
+          }
+
+        });
+
+      },
+      generateYearRange(start, end) {
+        const years = [];
+        for (let year = start; year <= end; year++) {
+          years.push(year);
+        }
+        return years;
+      },
+      toNoticeDetail(e, data) {
+
+        //window.open();
+        //window.open("/app/videoDetail/" + data.videoIdx, "_blank");
+
+        location.href = "/app/noticeDetail/" + data.noticeIdx;
+      }
+
+
+
+
+
+    },
+    created() {
+      /*alert("크리에이트123");
+
+      console.log("콘솔로그123");
+
+      console.log("비디오 리스트 " + this.videoList);
+
+      alert("크리에이트 abcdefg " + this.abc);*/
+
+    },
+    mounted() {
+      //alert("마운티드");
+    }
+  }).mount('#app');
+
+
+</script>
+
+</body>
+</html>

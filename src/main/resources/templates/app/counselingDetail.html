@@ -28,6 +28,18 @@
           <div><b>마감</b></div>
       </template>
 
+
+
+      <!-- 신청이 되어있으면 -->
+
+      <template v-if="counselingInfo.isApplicantCounseling != 0">
+          <div>신청이 완료되었습니다.</div>
+          <div @click="cancelApplicant"><b>신청취소</b></div>
+      </template>
+      <template v-else>
+          <div><b>신청하기</b></div>
+      </template>
+
     </div>
 
 
@@ -44,16 +56,46 @@
     //el: '#app',
     data() {
       return {
-        counselingInfo: [[${counselingInfo}]]
+        counselingInfo: [[${counselingInfo}]],
+        isApplicantCounseling: [[${counselingInfo.isApplicantCounseling}]],
+        isOverCounseling: [[${counselingInfo.isOverCounseling}]]
+
       }
     },
     methods: {
+
+        cancelApplicant() {
+
+            //alert("어플리캔트 카운셀링 " + this.isApplicantCounseling);
+            //alert("이즈 오버 카운셀링 " + this.isOverCounseling);
+
+            if(this.isOverCounseling !== 0) {
+                alert("이미 마감되어 취소할 수 없습니다.");
+            } else {
+
+                if(!confirm("신청을 취소하시겠습니까??")) {
+                    return;
+                }
+
+                alert("신청 취소를 진행하세요");
+
+            }
+
+            /*if(this.isApplicantCounseling) {
+                alert("확인확인요~~ " + this.isApplicantCounseling);
+            } else {
+                alert("신청된적 없습니다. " + this.isApplicantCounseling);
+            }*/
+
+        }
 
     },
     created() {
       //console.log("비디오 인포 " + this.videoInfo);
     },
     mounted() {
+
+        console.log("카운셀링 인포 " + JSON.stringify(this.counselingInfo));
 
     }
   }).mount('#app');

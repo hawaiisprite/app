@@ -243,6 +243,11 @@ public class AppController {
     @RequestMapping(method = {RequestMethod.GET}, path = "counselingDetail/{counselingIdx}")
     public String counselingDetail(HttpServletRequest httpServletRequest, Model model, Gson gson, SupportProgramVo supportProgramVo) {
 
+
+        HttpSession session = httpServletRequest.getSession();
+        int studentIdx = (int) session.getAttribute("STUDENT_IDX");
+        supportProgramVo.setStudentIdx(studentIdx);
+
         SupportProgramVo counselingInfo = appService.getCounselingList(supportProgramVo).get(0);
 
         model.addAttribute("counselingInfo", counselingInfo);

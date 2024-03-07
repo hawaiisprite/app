@@ -304,6 +304,12 @@ public class AppService {
         return appDao.getCounselingList(supportProgramVo);
     }
 
+    public int cancelCounseling(SupportProgramVo supportProgramVo) {
+
+
+        return appDao.cancelCounseling(supportProgramVo);
+    }
+
 
 
 /*    //관리자 로그인

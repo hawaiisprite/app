@@ -183,4 +183,9 @@ public class AppDao {
 
         return sqlSession.selectList("app.getCounselingList", supportProgramVo);
     }
+
+    public int cancelCounseling(SupportProgramVo supportProgramVo) {
+
+        return sqlSession.update("app.cancelCounseling", supportProgramVo);
+    }
 }

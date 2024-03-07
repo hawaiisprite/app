@@ -546,8 +546,8 @@
             a.end_day as counselingEndDay,
             ( SELECT COUNT(*) FROM counseling_apply WHERE counseling_idx = a.idx AND student_idx = #{studentIdx} ) as isApplicantCounseling,
             CASE
-                WHEN CURDATE() BETWEEN a.str_day AND a.end_day THEN true
-                ELSE false
+                WHEN CURDATE() BETWEEN a.str_day AND a.end_day THEN false
+                ELSE true
             END AS isOverCounseling
 
         FROM
@@ -560,6 +560,21 @@
         </if>
 
     </select>
+
+
+
+    <update id="cancelCounseling" parameterType="supportProgramVo">
+        <!-- app.cancelCounseling -->
+        UPDATE
+            counseling_apply
+        SET
+            flag = 'deleted',
+            mod_dt = now()
+        WHERE
+            counseling_idx = #{counselingIdx}
+        AND
+            student_idx = #{studentIdx}
+    </update>
 
 
     <!--<select id="getPlayerInfo" parameterType="appVo" resultType="appVo">

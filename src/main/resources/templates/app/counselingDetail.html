@@ -31,7 +31,6 @@
 
 
       <!-- 신청이 되어있으면 -->
-
       <template v-if="counselingInfo.isApplicantCounseling != 0">
           <div>신청이 완료되었습니다.</div>
           <div @click="cancelApplicant"><b>신청취소</b></div>
@@ -69,7 +68,7 @@
             //alert("어플리캔트 카운셀링 " + this.isApplicantCounseling);
             //alert("이즈 오버 카운셀링 " + this.isOverCounseling);
 
-            if(this.isOverCounseling !== 0) {
+            if(this.isOverCounseling == true) {
                 alert("이미 마감되어 취소할 수 없습니다.");
             } else {
 
@@ -77,7 +76,21 @@
                     return;
                 }
 
-                alert("신청 취소를 진행하세요");
+                //alert("신청 취소를 진행하세요 " + this.counselingInfo.counselingIdx);
+
+                axios.post('/appRest/cancelCounseling', null, {
+                    params:{
+                        counselingIdx: this.counselingInfo.counselingIdx,
+                    }
+                }).then(res => {
+
+                    if(res.data.result === "success") {
+                        alert("신청이 취소되었습니다.");
+                        location.href = "/app/counselingList";
+                    }
+
+                });
+
 
             }
 

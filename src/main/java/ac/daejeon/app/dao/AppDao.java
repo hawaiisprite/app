@@ -188,4 +188,10 @@ public class AppDao {
 
         return sqlSession.update("app.cancelCounseling", supportProgramVo);
     }
+
+    public int doCounseling(SupportProgramVo supportProgramVo) {
+
+
+        return sqlSession.insert("app.applicantCounseling", supportProgramVo);
+    }
 }

@@ -33,10 +33,10 @@
       <!-- 신청이 되어있으면 -->
       <template v-if="counselingInfo.isApplicantCounseling != 0">
           <div>신청이 완료되었습니다.</div>
-          <div @click="cancelApplicant"><b>신청취소</b></div>
+          <div @click="cancelApplicant" style="cursor: pointer"><b>신청취소</b></div>
       </template>
       <template v-else>
-          <div><b>신청하기</b></div>
+          <div @click="doApplicant" style="cursor: pointer"><b>신청하기</b></div>
       </template>
 
     </div>
@@ -62,37 +62,55 @@
       }
     },
     methods: {
+        doApplicant() {
 
+            if(this.isOverCounseling == true) {
+                alert("이미 마감되어 신청할 수 없습니다.");
+                return;
+            }
+
+            if(!confirm("신청 하시겠습니까??")) {
+                return;
+            }
+
+            axios.post('/appRest/doCounseling', null, {
+                params:{
+                    counselingIdx: this.counselingInfo.counselingIdx,
+                }
+            }).then(res => {
+                if(res.data.result === "success") {
+                    alert("신청되었습니다.");
+                    location.href = "/app/counselingList";
+                }
+            });
+
+        },
         cancelApplicant() {
 
             //alert("어플리캔트 카운셀링 " + this.isApplicantCounseling);
             //alert("이즈 오버 카운셀링 " + this.isOverCounseling);
 
             if(this.isOverCounseling == true) {
-                alert("이미 마감되어 취소할 수 없습니다.");
-            } else {
-
-                if(!confirm("신청을 취소하시겠습니까??")) {
-                    return;
-                }
-
-                //alert("신청 취소를 진행하세요 " + this.counselingInfo.counselingIdx);
-
-                axios.post('/appRest/cancelCounseling', null, {
-                    params:{
-                        counselingIdx: this.counselingInfo.counselingIdx,
-                    }
-                }).then(res => {
-
-                    if(res.data.result === "success") {
-                        alert("신청이 취소되었습니다.");
-                        location.href = "/app/counselingList";
-                    }
-
-                });
-
-
+                alert("이미 마감되어 신청을 취소할 수 없습니다.");
+                return;
             }
+
+            if(!confirm("신청을 취소하시겠습니까??")) {
+                return;
+            }
+
+            //alert("신청 취소를 진행하세요 " + this.counselingInfo.counselingIdx);
+
+            axios.post('/appRest/cancelCounseling', null, {
+                params:{
+                    counselingIdx: this.counselingInfo.counselingIdx,
+                }
+            }).then(res => {
+                if(res.data.result === "success") {
+                    alert("신청이 취소되었습니다.");
+                    location.href = "/app/counselingList";
+                }
+            });
 
             /*if(this.isApplicantCounseling) {
                 alert("확인확인요~~ " + this.isApplicantCounseling);

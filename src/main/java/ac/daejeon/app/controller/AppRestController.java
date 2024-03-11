@@ -195,7 +195,30 @@ public class AppRestController {
     }
 
 
-    //시청시간 보내기
+    //상담 하기
+    @RequestMapping(value = "doCounseling", method = {RequestMethod.POST})
+    public String doCounseling(HttpServletRequest httpServletRequest, JsonObject jsonObj, AppVo appVo, SupportProgramVo supportProgramVo) {
+
+        int studentIdx = (int) httpServletRequest.getSession().getAttribute("STUDENT_IDX");
+        supportProgramVo.setStudentIdx(studentIdx);
+
+        appService.doCounseling(supportProgramVo);
+
+        //appService.cancelCounseling(supportProgramVo);
+
+
+        //appService.sendViewingTime(appVo);
+        jsonObj.addProperty("result", "success");
+
+        //String resTxt = appService.checkAppJoinAuthCode(appVo);
+        //jsonObj.addProperty("result", resTxt);
+
+        return jsonObj.toString();
+    }
+
+
+
+    //상담 취소
     @RequestMapping(value = "cancelCounseling", method = {RequestMethod.POST})
     public String cancelCounseling(HttpServletRequest httpServletRequest, JsonObject jsonObj, AppVo appVo, SupportProgramVo supportProgramVo) {
 

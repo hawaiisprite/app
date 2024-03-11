@@ -544,7 +544,7 @@
             a.content as counselingContent,
             a.str_day as counselingStrDay,
             a.end_day as counselingEndDay,
-            ( SELECT COUNT(*) FROM counseling_apply WHERE counseling_idx = a.idx AND student_idx = #{studentIdx} ) as isApplicantCounseling,
+            ( SELECT COUNT(*) FROM counseling_apply WHERE counseling_idx = a.idx AND student_idx = #{studentIdx} AND flag != 'deleted' ) as isApplicantCounseling,
             CASE
                 WHEN CURDATE() BETWEEN a.str_day AND a.end_day THEN false
                 ELSE true
@@ -575,6 +575,22 @@
         AND
             student_idx = #{studentIdx}
     </update>
+
+    <insert id="applicantCounseling" parameterType="supportProgramVo">
+        INSERT INTO
+            counseling_apply (
+                counseling_idx,
+                student_idx,
+                reg_dt,
+                mod_dt
+            )
+        VALUES (
+            #{counselingIdx},
+            #{studentIdx},
+            now(),
+            now()
+        )
+    </insert>
 
 
     <!--<select id="getPlayerInfo" parameterType="appVo" resultType="appVo">

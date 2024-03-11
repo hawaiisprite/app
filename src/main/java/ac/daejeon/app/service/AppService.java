@@ -310,6 +310,12 @@ public class AppService {
         return appDao.cancelCounseling(supportProgramVo);
     }
 
+    public int doCounseling(SupportProgramVo supportProgramVo) {
+
+
+        return appDao.doCounseling(supportProgramVo);
+    }
+
 
 
 /*    //관리자 로그인

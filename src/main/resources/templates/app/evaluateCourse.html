@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="fragments/head:: head"/>
+
+<body>
+<div class="app" id="app">
+
+    <th:block th:replace="fragments/header:: headerFragment"/>
+
+    <div class="content-body">
+        <div class="content-title">
+            <i class="icon-title-video"></i>
+            <h1>강의평가</h1>
+            <!--<div>가나다라마바사 {{videoInfo}}</div>-->
+        </div>
+
+        <div class="video-explain">
+            <div class="title">111</div>
+            <div class="sub-text">
+                222
+            </div>
+
+            <div>시작기간  ~ 종료기간 </div>
+
+            <!--<template v-if="counselingInfo.overCounseling">
+                <div><b>마감</b></div>
+            </template>
+
+
+
+            &lt;!&ndash; 신청이 되어있으면 &ndash;&gt;
+            <template v-if="counselingInfo.isApplicantCounseling != 0">
+                <div>신청이 완료되었습니다.</div>
+                <div @click="cancelApplicant" style="cursor: pointer"><b>신청취소</b></div>
+            </template>
+            <template v-else>
+                <div @click="doApplicant" style="cursor: pointer"><b>신청하기</b></div>
+            </template>
+-->
+        </div>
+
+
+
+    </div>
+
+</div>
+
+<script th:inline="javascript">
+
+    let globalPlayer = "";
+
+    Vue.createApp({
+        //el: '#app',
+        data() {
+            return {
+
+
+            }
+        },
+        methods: {
+            doApplicant() {
+
+
+            },
+            cancelApplicant() {
+
+
+            }
+
+        },
+        created() {
+            //console.log("비디오 인포 " + this.videoInfo);
+        },
+        mounted() {
+            //console.log("카운셀링 인포 " + JSON.stringify(this.counselingInfo));
+        }
+    }).mount('#app');
+
+</script>
+
+</body>
+</html>

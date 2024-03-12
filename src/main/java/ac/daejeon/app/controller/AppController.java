@@ -1,10 +1,8 @@
 package ac.daejeon.app.controller;
 
-import ac.daejeon.app.service.AppService;
-import ac.daejeon.app.service.FCMNotificationService;
-import ac.daejeon.app.service.FacilityService;
-import ac.daejeon.app.service.SupportProgramService;
+import ac.daejeon.app.service.*;
 import ac.daejeon.app.vo.AppVo;
+import ac.daejeon.app.vo.ClassVo;
 import ac.daejeon.app.vo.FacilityVo;
 import ac.daejeon.app.vo.SupportProgramVo;
 import com.google.gson.Gson;
@@ -32,6 +30,8 @@ public class AppController {
     private final SupportProgramService supportProgramService;
 
     private final FacilityService facilityService;
+
+    private final ClassService classService;
 
 
 
@@ -210,6 +210,58 @@ public class AppController {
 
         return "app/counselingList";
     }
+
+
+
+
+    //편의시설 상세
+    @RequestMapping(method = {RequestMethod.GET}, path = "evaluateCourse")
+    public String evaluateCourse(HttpServletRequest httpServletRequest, Model model, Gson gson, SupportProgramVo supportProgramVo) {
+
+        //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
+        //System.out.println("비디오 리스트 " + videoListData);
+        //model.addAttribute("abc", "abcd다");\
+        //model.addAttribute("videoListJson", gson.toJson(videoListData));
+
+        return "app/evaluateCourse";
+    }
+
+
+
+    //학급 평가리스트
+    @RequestMapping(method = {RequestMethod.GET}, path = "evaluateClassList")
+    public String evaluateClassList(HttpServletRequest httpServletRequest, Model model, Gson gson, ClassVo classVo) {
+
+        System.out.println("평가 클래스 리스트");
+
+        //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
+        //System.out.println("비디오 리스트 " + videoListData);
+        //model.addAttribute("abc", "abcd다");\
+        //model.addAttribute("videoListJson", gson.toJson(videoListData));
+
+        return "app/evaluateClassList";
+    }
+
+
+    //학급 평가리스트
+    @RequestMapping(method = {RequestMethod.GET}, path = "evaluateClassDetail/{classIdx}")
+    public String evaluateClassDetail(HttpServletRequest httpServletRequest, Model model, Gson gson, ClassVo classVo) {
+
+        ClassVo evaluateClassInfo = classService.getEvaluateClassList(classVo).get(0);
+        System.out.println("평가 클래스 인포 " + evaluateClassInfo);
+
+
+        model.addAttribute("evaluateClassInfo", evaluateClassInfo);
+
+        //System.out.println("평가 클래스 리스트");
+        //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
+        //System.out.println("비디오 리스트 " + videoListData);
+        //model.addAttribute("abc", "abcd다");\
+        //model.addAttribute("videoListJson", gson.toJson(videoListData));
+
+        return "app/evaluateClassDetail";
+    }
+
 
 
     //편의시설 상세

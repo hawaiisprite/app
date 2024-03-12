@@ -143,12 +143,17 @@ public class AppVo {
     boolean isOrderByDescLimit1 = false;
 
 
+
     private int noticeIdx;
 
     private String noticeTitle;
     private String noticeContent;
 
     private String noticeRegDt;
+
+
+
+
 
 
 

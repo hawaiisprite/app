@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="fragments/head:: head"/>
+
+<body>
+<div class="app" id="app">
+
+    <th:block th:replace="fragments/header:: headerFragment"/>
+
+    <div class="content-body">
+        <div class="content-title">
+            <i class="icon-title-video"></i>
+            <h1>학급평가 상세</h1>
+            <!--<div>가나다라마바사 {{videoInfo}}</div>-->
+        </div>
+
+        <div>학급 : {{evaluateClassInfo.classTitle}}</div>
+
+        <div class="video-explain">
+            <div class="title"><!--{{noticeInfo.noticeTitle}}--></div>
+            <div class="sub-text">
+
+                <div>평가 문구를 작성해주세요.</div>
+
+                <textarea style="height:300px; width:500px" ref="content" :value="content" @input="inputEvent($event, 'content')"></textarea>
+
+                <br><br>
+
+                <button @click="doSubmit">제출</button>
+
+            </div>
+       </div>
+    </div>
+
+</div>
+
+<script th:inline="javascript">
+
+    let globalPlayer = "";
+
+    Vue.createApp({
+        //el: '#app',
+        data() {
+            return {
+                evaluateClassInfo: [[${evaluateClassInfo}]],
+                content: ""
+            }
+        },
+        methods: {
+
+            inputEvent(e, type) {
+
+                if(type === 'content') {
+                    this.content = e.target.value;
+                }
+
+            },
+            doSubmit() {
+                //alert("두 서브밋");
+                if(!this.content) {
+                    alert("평가문구를 작성해주세요.");
+
+                    this.$refs.content.focus();
+
+                    return;
+                }
+
+                if(!confirm("해당 학급에 대한 평가문구를 작성하시겠습니까?")) {
+                    return;
+                }
+
+                const _ = axios.post('/appRest/getEvaluateClassList', null, {
+                    params:{}
+                }).then(res => {
+                    if(res.data.result === "success") {
+                        this.evaluateClassList = JSON.parse(res.data.data);
+                    }
+                });
+
+
+            }
+
+        },
+        created() {
+            //console.log("비디오 인포 " + this.videoInfo);
+        },
+        mounted() {
+
+        }
+    }).mount('#app');
+
+</script>
+
+</body>
+</html>

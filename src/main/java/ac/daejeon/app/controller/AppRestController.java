@@ -3,12 +3,10 @@ package ac.daejeon.app.controller;
 import ac.daejeon.app.common.CommonCrypto;
 import ac.daejeon.app.common.CommonVo;
 import ac.daejeon.app.service.AppService;
+import ac.daejeon.app.service.ClassService;
 import ac.daejeon.app.service.ConfigService;
 import ac.daejeon.app.service.SupportProgramService;
-import ac.daejeon.app.vo.AppVo;
-import ac.daejeon.app.vo.ConfigVo;
-import ac.daejeon.app.vo.LoginVo;
-import ac.daejeon.app.vo.SupportProgramVo;
+import ac.daejeon.app.vo.*;
 import com.google.firebase.auth.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -38,6 +36,8 @@ public class AppRestController {
     private final AppService appService;
     private final SupportProgramService supportProgramService;
     private final ConfigService configService;
+
+    private final ClassService classService;
 
     private final CommonCrypto commonCrypto;
 
@@ -100,7 +100,7 @@ public class AppRestController {
 
 
     @RequestMapping(value = "doLogout", method = { RequestMethod.POST})
-    public String doLogout(HttpServletRequest httpServletRequest, JsonObject jsonObj, AppVo appVo, LoginVo loginVo) {
+    public String doLogout(HttpServletRequest httpServletRequest, JsonObject jsonObj,  AppVo appVo, LoginVo loginVo) {
 
         HttpSession session = httpServletRequest.getSession();
         session.removeAttribute("STUDENT_ID");
@@ -112,7 +112,21 @@ public class AppRestController {
         return jsonObj.toString();
 
 
-    };
+    }
+
+
+    @RequestMapping(value = "getEvaluateClassList", method = {RequestMethod.POST})
+    public String evaluateClassList(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, ClassVo classVo) throws Exception {
+
+        List<ClassVo> evaluateClassList = classService.getEvaluateClassList(classVo);
+
+        jsonObj.addProperty("data", gson.toJson(evaluateClassList));
+
+        jsonObj.addProperty("result", "success");
+
+        return jsonObj.toString();
+    }
+
 
 
     @RequestMapping(value = "checkEmailAndStudentId", method = {RequestMethod.GET, RequestMethod.POST})

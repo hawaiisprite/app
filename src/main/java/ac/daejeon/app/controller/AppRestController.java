@@ -115,6 +115,25 @@ public class AppRestController {
     }
 
 
+    @RequestMapping(value = "doEvaluateClass", method = {RequestMethod.POST})
+    public String doEvaluateClass(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, ClassVo classVo) throws Exception {
+
+        HttpSession session = httpServletRequest.getSession();
+        int studentIdx = (int) session.getAttribute("STUDENT_IDX");
+
+        classVo.setStudentIdx(studentIdx);
+        String resTxt = classService.doEvaluateClass(classVo);
+
+        jsonObj.addProperty("result", resTxt);
+
+        /*List<ClassVo> evaluateClassList = classService.getEvaluateClassList(classVo);
+        jsonObj.addProperty("data", gson.toJson(evaluateClassList));
+        jsonObj.addProperty("result", "success");*/
+
+        return jsonObj.toString();
+    }
+
+
     @RequestMapping(value = "getEvaluateClassList", method = {RequestMethod.POST})
     public String evaluateClassList(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, ClassVo classVo) throws Exception {
 

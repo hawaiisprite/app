@@ -22,4 +22,15 @@ public class ClassDao {
 
         return sqlSession.selectList("class.getEvaluateClassList", classVo);
     }
+
+    public int doEvaluateClass(ClassVo classVo) {
+
+        return sqlSession.insert("class.doEvaluateClass", classVo);
+    }
+
+    public int isExistEvaluateClass(ClassVo classVo) {
+
+
+        return sqlSession.selectOne("class.isExistEvaluateClass", classVo);
+    }
 }

@@ -21,4 +21,17 @@ public class ClassService {
 
         return classDao.getEvaluateClassList(classVo);
     }
+
+    public String doEvaluateClass(ClassVo classVo) {
+
+        int res = classDao.isExistEvaluateClass(classVo);
+
+        if(res != 0) {
+            return "exist";
+        } else {
+            classDao.doEvaluateClass(classVo);
+            return "success";
+        }
+
+    }
 }

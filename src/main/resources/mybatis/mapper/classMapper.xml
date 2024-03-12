@@ -23,6 +23,39 @@
     </select>
 
 
+    <insert id="doEvaluateClass" parameterType="classVo">
+        INSERT INTO
+            class_evaluate (
+                class_idx,
+                student_idx,
+                content,
+                reg_dt,
+                mod_dt
+            )
+        VALUES (
+            #{classIdx},
+            #{studentIdx},
+            #{evaluateContent},
+            now(),
+            now()
+        )
+    </insert>
+
+
+    <select id="isExistEvaluateClass" parameterType="classVo" resultType="int">
+
+        SELECT
+            COUNT(*)
+        FROM
+            class_evaluate
+        WHERE
+            class_idx = #{classIdx}
+        AND
+            student_idx = #{studentIdx}
+
+    </select>
+
+
 
 
 

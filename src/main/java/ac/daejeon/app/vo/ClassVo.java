@@ -6,9 +6,11 @@ import lombok.Data;
 @Data
 public class ClassVo {
 
-
     //학급 타이틀
     private int classIdx;
+
+    //학생 idx
+    private int studentIdx;
 
     //학급 타이틀
     private String classTitle;
@@ -22,7 +24,7 @@ public class ClassVo {
 
     private int evaluateClassCapacity;
 
-
+    private String evaluateContent;
 
 }
 

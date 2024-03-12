@@ -71,12 +71,21 @@
                     return;
                 }
 
-                const _ = axios.post('/appRest/getEvaluateClassList', null, {
-                    params:{}
-                }).then(res => {
-                    if(res.data.result === "success") {
-                        this.evaluateClassList = JSON.parse(res.data.data);
+                const _ = axios.post('/appRest/doEvaluateClass', null, {
+                    params:{
+
+                        evaluateContent: this.content,
+                        classIdx: this.evaluateClassInfo.classIdx
+
                     }
+                }).then(res => {
+
+                    if(res.data.result === "success") {
+                        alert("해당 학급평가가 등록되었습니다.");
+                    } else if(res.data.result === "exist") {
+                        alert("해당 학급평가는 이미 등록하셨습니다.");
+                    }
+
                 });
 
 

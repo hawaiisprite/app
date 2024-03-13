@@ -5,7 +5,7 @@
 <th:block th:replace="fragments/head:: head"/>
 
 <body>
-<div class="app">
+<div class="app" id="app">
 
     <th:block th:replace="fragments/header:: headerFragment"/>
 
@@ -16,7 +16,8 @@
         </div>
 
         <div class="sumnail-wrap">
-            <div class="sum-item">
+
+            <div class="sum-item" @click="toDetailPage($event, 'changePassport')">
                 <div class="sumnail-img">
                     <div class="img-wrap">
                         <img src="/css/images/passport-photo.png" alt="여권사진">
@@ -25,7 +26,8 @@
                 <div class="sub-title">여권사진</div>
                 <div class="date">2023.05.30</div>
             </div>
-            <div class="sum-item">
+
+            <div class="sum-item" @click="toChangePassword">
                 <div class="sumnail-img">
                     <div class="img-wrap">
                         <img
@@ -34,10 +36,10 @@
                         />
                     </div>
                 </div>
-                <div class="sub-title">재학증명서</div>
-                <div class="date">등록하기</div>
+                <div class="sub-title">비밀번호 변경</div>
+                <!--<div class="date">등록하기</div>-->
             </div>
-            <div class="sum-item">
+            <!--<div class="sum-item">
                 <div class="sumnail-img">
                     <div class="img-wrap">
                         <img
@@ -84,9 +86,41 @@
                 </div>
                 <div class="sub-title">재학증명서</div>
                 <div class="date">등록하기</div>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>
+
+<script th:inline="javascript">
+
+    Vue.createApp({
+        //el: '#app',
+        data() {
+            return {
+
+            }
+        },
+        methods: {
+
+            toDetailPage(e, url) {
+                //window.open("https://portal.dju.ac.kr/", "_blank");
+
+                location.href = "/app/" + url;
+            },
+            toChangePassword() {
+                window.open("https://portal.dju.ac.kr/", "_blank");
+            }
+
+        },
+        created() {
+
+        },
+        mounted() {
+
+        }
+    }).mount('#app');
+
+</script>
+
 </body>
 </html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="fragments/head:: head"/>
+
+<body>
+<div class="app" id="app">
+    <header class="header">
+        <div class="header-wrap">
+            <div class="logo">
+                <i class="icon-logo"></i>
+            </div>
+            <div class="btns">
+                <div class="btn-mypage">
+                    <i class="icon-mypage"></i>
+                </div>
+                <button class="btn-login">로그인</button>
+            </div>
+        </div>
+    </header>
+    <div class="content-body" style="padding-bottom: 0">
+        <div class="content-title">
+            <i class="icon-title-mydata"></i>
+            <h1>개인자료실</h1>
+        </div>
+
+        <div class="data-view">
+            <div class="img-wrap">
+                <img src="/css/images/passport-photo_sm.png" alt="여권사진">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="submit-box">
+    <div class="title-wrap">
+        <div class="small-sumnail">
+            <img src="/css/images/passport-photo.png" alt="여권사진">
+        </div>
+        <div class="title">여권사진</div>
+    </div>
+    <div class="submit-btn-wrapper">
+        <ul>
+            <li>학교로 전송하기<i class="icon-school-submit"></i></li>
+            <li>상담신청 운영 프로그램 안내<i class="icon-guide"></i></li>
+        </ul>
+    </div>
+</div>
+
+<script th:inline="javascript">
+
+    Vue.createApp({
+        //el: '#app',
+        data() {
+            return {
+                infoForPassport: [[${infoForPassport}]]
+            }
+        },
+        methods: {
+
+        },
+        created() {
+
+        },
+        mounted() {
+
+        }
+    }).mount('#app');
+
+</script>
+
+</body>
+</html>

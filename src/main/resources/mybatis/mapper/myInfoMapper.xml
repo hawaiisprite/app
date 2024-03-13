@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myInfo">
+
+
+    <select id="getInfoForPassport" parameterType="myInfoVo" resultType="myInfoVo">
+        <!--myInfo.getInfoForPassport-->
+
+        SELECT
+            b.uuid as personalInfoFileUuid,
+            b.ext as personalInfoFileExt,
+            b.orig_name as personalInfoFileOrigName,
+            b.year as personalInfoFileYear,
+            b.month as personalInfoFileMonth,
+            b.day as personalInfoFileDay
+        FROM
+            student a
+        LEFT JOIN
+            files b
+        ON
+            a.passport_file_idx = b.idx
+        WHERE
+            a.student_id = #{studentId}
+        AND
+            a.idx = #{studentIdx}
+
+    </select>
+
+</mapper>

@@ -151,6 +151,8 @@ public class AppVo {
 
     private String noticeRegDt;
 
+    //개인정보 타입
+    private String infoType;
 
 
 

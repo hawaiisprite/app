@@ -1,9 +1,6 @@
 package ac.daejeon.app.dao;
 
-import ac.daejeon.app.vo.AppVo;
-import ac.daejeon.app.vo.ApplicationVo;
-import ac.daejeon.app.vo.LoginVo;
-import ac.daejeon.app.vo.SupportProgramVo;
+import ac.daejeon.app.vo.*;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -205,5 +202,12 @@ public class AppDao {
     public int modifyApplication(ApplicationVo applicationVo) {
 
         return sqlSession.update("application.modifyApplication", applicationVo);
+    }
+
+
+    //겟인포 폴 패스포트
+    public MyInfoVo getInfoForPassport(MyInfoVo myInfoVo) {
+
+        return sqlSession.selectOne("myInfo.getInfoForPassport", myInfoVo);
     }
 }

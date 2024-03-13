@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -238,6 +239,27 @@ public class AppController {
         //model.addAttribute("videoListJson", gson.toJson(videoListData));
 
         return "app/myData";
+    }
+
+
+
+    //사진 변경
+    @RequestMapping(method = {RequestMethod.GET}, path = "changePassport")
+    public String changePassport(HttpServletRequest httpServletRequest, Model model, Gson gson, AppVo appVo, MyInfoVo myInfoVo) throws IOException {
+
+        //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
+
+        HttpSession session = httpServletRequest.getSession();
+        int studentIdx = (int) session.getAttribute("STUDENT_IDX");
+        String studentId = (String) session.getAttribute("STUDENT_ID");
+
+        myInfoVo.setStudentId(studentId);
+        myInfoVo.setStudentIdx(studentIdx);
+
+        MyInfoVo infoForPassport = appService.getInfoForPassport(myInfoVo);
+        model.addAttribute("infoForPassport", infoForPassport);
+
+        return "app/changePassport";
     }
 
 

@@ -23,24 +23,35 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     }
 
-
     private  String uploadImagesPath = "";
 
-    public WebMvcConfig(@Value("${custom.path.upload-images}") String uploadImagesPath) {
+    public WebMvcConfig(@Value("${custom.path.upload-file}") String uploadImagesPathVal) {
         //System.out.println("업로드 이미지 패스 " + uploadImagesPath);
-        this.uploadImagesPath = uploadImagesPath;
+        this.uploadImagesPath = uploadImagesPathVal;
     }
 
 
     @Override
-    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+    synchronized public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+
+        StringBuffer str = new StringBuffer();
+
+        str.append( "file:///").append( uploadImagesPath);
 
         registry.addResourceHandler("/download/**")
-                .addResourceLocations("file:///" + uploadImagesPath)
+                .addResourceLocations(str.toString())
+
                 // 접근 파일 캐싱 시간
                 .setCacheControl(CacheControl.maxAge(1, TimeUnit.MINUTES));
 
+        /*
+            registry.addResourceHandler("/**")
+                    .addResourceLocations("classpath:/static/");
 
+            registry.addResourceHandler("/js/**")
+                    .addResourceLocations("classpath:/js");
+        */
 
     }
+
 }

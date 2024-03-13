@@ -3,13 +3,10 @@ package ac.daejeon.app.service;
 import ac.daejeon.app.common.CommonDao;
 import ac.daejeon.app.common.CommonEmail;
 import ac.daejeon.app.common.CommonVo;
-import ac.daejeon.app.common.Statics;
 
+import ac.daejeon.app.common.Statics;
 import ac.daejeon.app.dao.AppDao;
-import ac.daejeon.app.vo.AppVo;
-import ac.daejeon.app.vo.ApplicationVo;
-import ac.daejeon.app.vo.LoginVo;
-import ac.daejeon.app.vo.SupportProgramVo;
+import ac.daejeon.app.vo.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -326,6 +323,33 @@ public class AppService {
     public int modifyApplication(ApplicationVo applicationVo) {
 
         return appDao.modifyApplication(applicationVo);
+    }
+
+    //겟인포 폴 패스포트
+    public MyInfoVo getInfoForPassport(MyInfoVo myInfoVo) throws IOException {
+
+        MyInfoVo infoForPassport = appDao.getInfoForPassport(myInfoVo);
+
+        //학생 사진
+        if(infoForPassport.getPersonalInfoFileUuid() != null) {
+
+            String year = Integer.toString(infoForPassport.getPersonalInfoFileYear());
+            String month = Integer.toString(infoForPassport.getPersonalInfoFileMonth());
+            String day = Integer.toString(infoForPassport.getPersonalInfoFileDay());
+            String uuid = infoForPassport.getPersonalInfoFileUuid();
+            String ext = infoForPassport.getPersonalInfoFileExt();
+
+            String fileBinary = Statics.unzipWithPassword(year, month, day, uuid, ext);
+
+            infoForPassport.setPersonalInfoFileBinary(fileBinary);
+
+            //studentHistoryDetail.setPersonalInfoFileBinary(fileBinary);
+
+        } else {
+
+        }
+
+        return infoForPassport;
     }
 
 

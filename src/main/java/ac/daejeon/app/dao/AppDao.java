@@ -1,6 +1,7 @@
 package ac.daejeon.app.dao;
 
 import ac.daejeon.app.vo.AppVo;
+import ac.daejeon.app.vo.ApplicationVo;
 import ac.daejeon.app.vo.LoginVo;
 import ac.daejeon.app.vo.SupportProgramVo;
 import lombok.RequiredArgsConstructor;
@@ -193,5 +194,11 @@ public class AppDao {
 
 
         return sqlSession.insert("app.applicantCounseling", supportProgramVo);
+    }
+
+    //신청서 제출
+    public int submitApplication(ApplicationVo applicationVo) {
+
+        return sqlSession.insert("application.submitApplication", applicationVo);
     }
 }

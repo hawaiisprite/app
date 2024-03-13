@@ -4,8 +4,31 @@
 <mapper namespace="application">
 
 
+    <insert id="submitApplication" parameterType="applicationVo">
+        <!--application.submitApplication-->
+
+        INSERT INTO
+            app_application (
+                type,
+                student_idx,
+                title,
+                content,
+                reg_dt,
+                mod_dt
+            )
+        VALUES (
+            #{applicationType},
+            #{studentIdx},
+            #{applicationTitle},
+            #{applicationContent}
+            now(),
+            now()
+        )
+    </insert>
+
+
     <select id="getApplicationDetailList" parameterType="applicationVo" resultType="applicationVo">
-        <!--application.getApplicationDetailList-->
+
         SELECT
             type as applicationType,
             student_idx as studentIdx,
@@ -21,6 +44,7 @@
             type = #{applicationType}
         AND
             student_idx = #{studentIdx}
+
     </select>
 
 </mapper>

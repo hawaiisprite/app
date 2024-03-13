@@ -23,6 +23,11 @@
 
                 <div>{{applicationTextType}}신청서 작성</div>
 
+                <input type="text" style="height:30px; width:500px; border: 1px solid gray" ref="title" :value="title" @input="inputEvent($event, 'title')"/>
+
+                <br>
+                <br>
+
                 <textarea style="height:300px; width:500px" ref="content" :value="content" @input="inputEvent($event, 'content')"></textarea>
 
                 <br><br>
@@ -45,7 +50,9 @@
             return {
 
                 applicationType: [[${applicationType}]],
-                applicationTextType: ""
+                applicationTextType: "",
+                title:"",
+                content:""
 
             }
         },
@@ -53,18 +60,25 @@
 
             inputEvent(e, type) {
 
-                if(type === 'content') {
+                if(type === 'title') {
+                    this.title = e.target.value;
+                } else if(type === 'content') {
                     this.content = e.target.value;
                 }
 
             },
             doSubmit() {
                 //alert("두 서브밋");
+
+                if(!this.title) {
+                    alert("신청할 제목을 작성해주세요.");
+                    this.$refs.title.focus();
+                    return;
+                }
+
                 if(!this.content) {
                     alert("신청할 내용을 작성해주세요.");
-
                     this.$refs.content.focus();
-
                     return;
                 }
 
@@ -72,22 +86,22 @@
                     return;
                 }
 
-                /*const _ = axios.post('/appRest/doEvaluateClass', null, {
+                const _ = axios.post('/appRest/submitApplication', null, {
                     params:{
 
-                        evaluateContent: this.content,
-                        classIdx: this.evaluateClassInfo.classIdx
+                        applicationType: this.applicationType,
+                        applicationTitle: this.title,
+                        applicationContent: this.content,
 
                     }
                 }).then(res => {
 
                         if(res.data.result === "success") {
-                            alert("해당 학급평가가 등록되었습니다.");
-                        } else if(res.data.result === "exist") {
-                            alert("해당 학급평가는 이미 등록하셨습니다.");
+                            alert(this.applicationTextType + " 신청서를 제출하였습니다.");
+                            location.href = "/app/applicationList/" + this.applicationType;
                         }
 
-                });*/
+                });
 
 
             }

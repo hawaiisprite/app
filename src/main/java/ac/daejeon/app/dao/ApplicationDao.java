@@ -17,6 +17,6 @@ public class ApplicationDao {
     //신청서 상세리스트
     public List<ApplicationVo> getApplicationDetailList(ApplicationVo applicationVo) {
 
-        return sqlSession.selectOne("application.getApplicationDetailList", applicationVo);
+        return sqlSession.selectList("application.getApplicationDetailList", applicationVo);
     }
 }

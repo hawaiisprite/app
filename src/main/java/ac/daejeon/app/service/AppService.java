@@ -7,6 +7,7 @@ import ac.daejeon.app.common.Statics;
 
 import ac.daejeon.app.dao.AppDao;
 import ac.daejeon.app.vo.AppVo;
+import ac.daejeon.app.vo.ApplicationVo;
 import ac.daejeon.app.vo.LoginVo;
 import ac.daejeon.app.vo.SupportProgramVo;
 import lombok.RequiredArgsConstructor;
@@ -314,6 +315,12 @@ public class AppService {
 
 
         return appDao.doCounseling(supportProgramVo);
+    }
+
+    //신청서 제출
+    public int submitApplication(ApplicationVo applicationVo) {
+
+        return appDao.submitApplication(applicationVo);
     }
 
 

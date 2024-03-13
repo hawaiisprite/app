@@ -734,6 +734,25 @@ public class AppRestController {
     }
 
 
+    @RequestMapping(value = "submitApplication", method = { RequestMethod.POST})
+    public String submitApplication(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, AppVo appVo, ApplicationVo applicationVo) throws FirebaseAuthException {
+
+        //List<SupportProgramVo> videoList = supportProgramService.getVideoList(supportProgramVo);
+
+        HttpSession session = httpServletRequest.getSession();
+
+        int studentIdx = (int) session.getAttribute("STUDENT_IDX");
+        applicationVo.setStudentIdx(studentIdx);
+
+        int res = appService.submitApplication(applicationVo);
+
+        //jsonObj.addProperty("data", gson.toJson(submitApplicationList));
+        jsonObj.addProperty("result", "success");
+
+        return jsonObj.toString();
+    }
+
+
 
 
 

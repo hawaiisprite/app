@@ -1,10 +1,7 @@
 package ac.daejeon.app.controller;
 
 import ac.daejeon.app.service.*;
-import ac.daejeon.app.vo.AppVo;
-import ac.daejeon.app.vo.ClassVo;
-import ac.daejeon.app.vo.FacilityVo;
-import ac.daejeon.app.vo.SupportProgramVo;
+import ac.daejeon.app.vo.*;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -165,6 +162,25 @@ public class AppController {
     }
 
 
+
+    //편의시설 상세
+    @RequestMapping(method = {RequestMethod.GET}, path = "applicationDetailList/{applicationType}")
+    public String applicationDetailList(HttpServletRequest httpServletRequest, Model model, Gson gson, ApplicationVo applicationVo) {
+
+        //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
+        //System.out.println("비디오 리스트 " + videoListData);
+        //model.addAttribute("abc", "abcd다");\
+        //model.addAttribute("videoListJson", gson.toJson(videoListData));
+
+
+        model.addAttribute("applicationType", applicationVo.getApplicationType());
+
+
+        return "app/applicationDetailList";
+    }
+
+
+
     //편의시설 상세
     @RequestMapping(method = {RequestMethod.GET}, path = "myData")
     public String myData(HttpServletRequest httpServletRequest, Model model, Gson gson, SupportProgramVo supportProgramVo) {
@@ -261,6 +277,7 @@ public class AppController {
 
         return "app/evaluateClassDetail";
     }
+
 
 
 

@@ -2,14 +2,12 @@ package ac.daejeon.app.controller;
 
 import ac.daejeon.app.common.CommonCrypto;
 import ac.daejeon.app.common.CommonVo;
-import ac.daejeon.app.service.AppService;
-import ac.daejeon.app.service.ClassService;
-import ac.daejeon.app.service.ConfigService;
-import ac.daejeon.app.service.SupportProgramService;
+import ac.daejeon.app.service.*;
 import ac.daejeon.app.vo.*;
 import com.google.firebase.auth.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import javafx.application.Application;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,6 +38,8 @@ public class AppRestController {
     private final ClassService classService;
 
     private final CommonCrypto commonCrypto;
+
+    private final ApplicationService applicationService;
 
 
     @RequestMapping(value = "doLogin", method = { RequestMethod.POST})
@@ -151,26 +151,17 @@ public class AppRestController {
     @RequestMapping(value = "checkEmailAndStudentId", method = {RequestMethod.GET, RequestMethod.POST})
     public String checkEmailAndStudentId(HttpServletRequest httpServletRequest, JsonObject jsonObj, AppVo appVo) throws Exception {
 
-        System.out.println("앱에서 통신되는지 확인 " + appVo);
-
+        //System.out.println("앱에서 통신되는지 확인 " + appVo);
         //appVo.getStudentEmail();
         //appService.checkAppJoinAuthCode(appVo);
-
-
         //String email = appVo.getStudentEmail();
         //String id = appVo.getStudentId();
-        String resTxt = appService.checkEmailAndStudentId(appVo);
 
+        String resTxt = appService.checkEmailAndStudentId(appVo);
 
         //String emailEncode = CommonCrypto.aesCBCEncode("가나다라한글테스트");
         //String emailDecode = CommonCrypto.aesCBCDecode(emailEncode);
-
-
-
         /*if(res == 1) {
-
-
-
         }*/
 
         jsonObj.addProperty("result", resTxt);
@@ -263,7 +254,6 @@ public class AppRestController {
 
         //appService.sendViewingTime(appVo);
         jsonObj.addProperty("result", "success");
-
         //String resTxt = appService.checkAppJoinAuthCode(appVo);
         //jsonObj.addProperty("result", resTxt);
 
@@ -694,6 +684,25 @@ public class AppRestController {
         jsonObj.addProperty("day", now.getDayOfMonth());
 
         return jsonObj.toString();
+    }
+
+
+
+    @RequestMapping(value = "getApplicationDetailList", method = { RequestMethod.POST})
+    public String getApplicationDetailList(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, ApplicationVo applicationVo) {
+
+        HttpSession session = httpServletRequest.getSession();
+        int studentIdx = (int) session.getAttribute("STUDENT_IDX");
+        applicationVo.setStudentIdx(studentIdx);
+
+        List<ApplicationVo> applicationDetailList = applicationService.getApplicationDetailList(applicationVo);
+
+        jsonObj.addProperty("data", gson.toJson(applicationDetailList));
+        jsonObj.addProperty("result", "success");
+
+        return jsonObj.toString();
+
+
     }
 
 

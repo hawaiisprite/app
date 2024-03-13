@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="fragments/head:: head"/>
+
+<body>
+<div class="app" id="app">
+
+    <th:block th:replace="fragments/header:: headerFragment"/>
+
+    <div class="content-body">
+        <div class="content-title">
+            <i class="icon-title-supply"></i>
+            <h1>{{applicationTextType}} 신청서 리스트</h1>
+
+            <input style="cursor: pointer" type="button" :value="applicationTextType + '신청서 작성'" @click="toWriteApplication">
+
+        </div>
+
+        <div class="content-list">
+            <ul>
+
+                <template v-if="applicationDetailList != null && applicationDetailList.length != 0">
+
+                    <template v-for="data, index in applicationDetailList" :key="index">
+                        <li @click="toDetailEvaluateClass($event, data)">
+                            <span>{{data.applicationTitle}}</span>
+
+                            <!--<template v-if="data.isOverCounseling">
+                                <span class="tag">마감</span>
+                            </template>
+
+                            <template v-if="data.isApplicantCounseling != 0">
+                                <span class="tag green">신청</span>
+                            </template>
+                            <template v-else>
+                                <span class="tag red">미신청</span>
+                            </template>-->
+
+                        </li>
+                    </template>
+
+                </template>
+
+
+                <!--<li>
+                    <span>경기 유치원 봉사활동 인원 참여 안내</span>
+                    <span class="tag green">신청완료</span>
+                </li>
+                <li>
+                    <span>한국 취업패키지 교육 훈련</span>
+                    <span class="tag">마감</span>
+                </li>-->
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+
+    Vue.createApp({
+        //el: '#app',
+        data() {
+            return {
+                applicationDetailList: [],
+
+                applicationType: [[${applicationType}]],
+
+                applicationTextType:""
+            }
+        },
+        methods: {
+            toWriteApplication() {
+                alert("어플리케이션 작성 " + this.applicationType);
+            }
+        },
+        created() {
+
+            if(this.applicationType === 'visa') {
+                this.applicationTextType = "비자연장";
+            } else if(this.applicationType === 'scholarship') {
+                this.applicationTextType = "장학급";
+            } else if(this.applicationType === 'dormitory') {
+                this.applicationTextType = "기숙사";
+            } else if(this.applicationType === 'outside') {
+                this.applicationTextType = "체류외활동";
+            }
+
+            const _ = axios.post('/appRest/getApplicationDetailList', null, {
+                params:{
+                    applicationType: this.applicationType
+                }
+            }).then(res => {
+
+                if(res.data.result === "success") {
+
+                    this.applicationDetailList = JSON.parse(res.data.data);
+
+                }
+
+            });
+
+        },
+        mounted() {
+
+        }
+    }).mount('#app');
+
+</script>
+
+</body>
+</html>

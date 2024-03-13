@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="application">
+
+
+    <select id="getApplicationDetailList" parameterType="applicationVo" resultType="applicationVo">
+        <!--application.getApplicationDetailList-->
+        SELECT
+            type as applicationType,
+            student_idx as studentIdx,
+            title as applicationTitle,
+            content as applicationContent,
+            reg_dt as applicationRegDt,
+            mod_dt as applicationModDt
+        FROM
+            app_application
+        WHERE
+            flag != 'deleted'
+        AND
+            type = #{applicationType}
+        AND
+            student_idx = #{studentIdx}
+    </select>
+
+</mapper>

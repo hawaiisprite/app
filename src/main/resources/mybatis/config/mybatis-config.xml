@@ -10,6 +10,8 @@
         <typeAlias type="ac.daejeon.app.vo.AppVo" alias="appVo"/>
         <typeAlias type="ac.daejeon.app.vo.ConfigVo" alias="configVo"/>
         <typeAlias type="ac.daejeon.app.vo.SupportProgramVo" alias="supportProgramVo"/>
+
+        <typeAlias type="ac.daejeon.app.vo.ApplicationVo" alias="applicationVo"/>
         <typeAlias type="ac.daejeon.app.vo.ApplicantVo" alias="applicantVo"/>
         <typeAlias type="ac.daejeon.app.vo.ApplyMemberVo" alias="applyMemberVo"/>
         <typeAlias type="ac.daejeon.app.common.CommonVo" alias="commonVo"/>

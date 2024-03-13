@@ -27,7 +27,9 @@
 
         <div class="data-view">
             <div class="img-wrap">
-                <img src="/css/images/passport-photo_sm.png" alt="여권사진">
+                <!--<img src="/css/images/passport-photo_sm.png" alt="여권사진">-->
+
+                <img :src="passportFileSrc" alt="여권사진">
             </div>
         </div>
     </div>
@@ -54,13 +56,27 @@
         //el: '#app',
         data() {
             return {
-                infoForPassport: [[${infoForPassport}]]
+                infoForPassport: [[${infoForPassport}]],
+                passportFileSrc: "/css/images/no-picture.png"
             }
         },
         methods: {
 
         },
         created() {
+
+            /*if(this.infoForPassport) {
+
+                const infoForPassport = this.infoForPassport;
+                this.passportFileName = infoForPassport.passportFileOrigName;
+                const passportFileBinary = documentFileInfo.passportFileBinary;
+
+                if(passportFileBinary) {
+                    this.passportFileSrc = "data:application/pdf;base64," + passportFileBinary;
+                }
+                //alert("인포포 패스포트");
+
+            }*/
 
         },
         mounted() {

@@ -4,7 +4,7 @@
 
 <th:block th:replace="fragments/head:: head"/>
 <body>
-<div class="app">
+<div class="app" id="app">
 
     <th:block th:replace="fragments/header:: headerFragment"/>
 
@@ -15,19 +15,19 @@
         </div>
 
         <div class="application-menu-list">
-            <div class="menu">
+            <div class="menu" @click="toDetailPage($event, 'visa')">
                 <div class="icon-visa"></div>
                 <span>비자연장</span>
             </div>
-            <div class="menu">
+            <div class="menu" @click="toDetailPage($event, 'scholarship')">
                 <div class="icon-scholarship"></div>
                 <span>장학금</span>
             </div>
-            <div class="menu">
+            <div class="menu" @click="toDetailPage($event, 'dormitory')">
                 <div class="icon-domitory"></div>
                 <span>기숙사</span>
             </div>
-            <div class="menu">
+            <div class="menu" @click="toDetailPage($event, 'outside')">
                 <div class="icon-activity"></div>
                 <span>체류외활동</span>
             </div>
@@ -42,5 +42,33 @@
         </div>
     </div>
 </div>
+
+<script th:inline="javascript">
+
+    Vue.createApp({
+        //el: '#app',
+        data() {
+            return {
+
+            }
+        },
+        methods: {
+            toDetailPage(e, type) {
+
+                location.href = "/app/applicationDetailList/" + type;
+
+            }
+        },
+        created() {
+
+        },
+        mounted() {
+
+        }
+    }).mount('#app');
+
+</script>
+
+
 </body>
 </html>

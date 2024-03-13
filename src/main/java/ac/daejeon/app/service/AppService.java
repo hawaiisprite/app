@@ -323,6 +323,11 @@ public class AppService {
         return appDao.submitApplication(applicationVo);
     }
 
+    public int modifyApplication(ApplicationVo applicationVo) {
+
+        return appDao.modifyApplication(applicationVo);
+    }
+
 
 
 /*    //관리자 로그인

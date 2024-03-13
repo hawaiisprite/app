@@ -30,6 +30,7 @@
     <select id="getApplicationDetailList" parameterType="applicationVo" resultType="applicationVo">
 
         SELECT
+            idx as applicationIdx,
             type as applicationType,
             student_idx as studentIdx,
             title as applicationTitle,
@@ -44,7 +45,32 @@
             type = #{applicationType}
         AND
             student_idx = #{studentIdx}
+        <if test="applicationIdx != null and applicationIdx != 0">
+            AND
+                idx = #{applicationIdx}
+        </if>
 
     </select>
+
+
+
+    <update id="modifyApplication" parameterType="applicationVo">
+        <!--application.modifyApplication-->
+
+        UPDATE
+            app_application
+        SET
+            title = #{applicationTitle},
+            content = #{applicationContent},
+            mod_dt = now()
+        WHERE
+            idx = #{applicationIdx}
+        AND
+            type = #{applicationType}
+        AND
+            student_idx = #{studentIdx}
+        AND
+            flag != 'deleted'
+    </update>
 
 </mapper>

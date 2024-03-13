@@ -24,8 +24,8 @@
                 <template v-if="applicationDetailList != null && applicationDetailList.length != 0">
 
                     <template v-for="data, index in applicationDetailList" :key="index">
-                        <li @click="toDetailEvaluateClass($event, data)">
-                            <span>{{data.applicationTitle}}</span>
+                        <li @click="toModifyApplication($event, data.applicationIdx)">
+                            <span>{{data.applicationTitle}} {{data.applicationRegDt}}</span>
 
                             <!--<template v-if="data.isOverCounseling">
                                 <span class="tag">마감</span>
@@ -66,17 +66,15 @@
             return {
                 applicationDetailList: [],
                 applicationType: [[${applicationType}]],
-
                 applicationTextType:""
             }
         },
         methods: {
+            toModifyApplication(e, applicationIdx) {
+                location.href = "/app/modifyApplication/" + this.applicationType + "/" + applicationIdx;
+            },
             toWriteApplication() {
-                alert("어플리케이션 작성 " + this.applicationType);
-
                 location.href = "/app/submitApplication/" + this.applicationType;
-
-
             }
         },
         created() {

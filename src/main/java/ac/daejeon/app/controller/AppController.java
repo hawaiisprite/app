@@ -30,6 +30,8 @@ public class AppController {
 
     private final ClassService classService;
 
+    private final ApplicationService applicationService;
+
 
 
     private final FCMNotificationService fcmNotificationService;
@@ -186,6 +188,7 @@ public class AppController {
     public String submitApplication(HttpServletRequest httpServletRequest, Model model, Gson gson, ApplicationVo applicationVo) {
 
 
+        model.addAttribute("type", "create");
         model.addAttribute("applicationType", applicationVo.getApplicationType());
 
         //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
@@ -193,7 +196,34 @@ public class AppController {
         //model.addAttribute("abc", "abcd다");\
         //model.addAttribute("videoListJson", gson.toJson(videoListData));
 
-        return "app/submitApplication";
+        return "app/submitOrModifyApplication";
+    }
+
+
+    @RequestMapping(method = {RequestMethod.GET}, path = "modifyApplication/{applicationType}/{applicationIdx}")
+    public String modifyApplication(HttpServletRequest httpServletRequest, Model model, Gson gson, ApplicationVo applicationVo) {
+
+        HttpSession session = httpServletRequest.getSession();
+        int studentIdx = (int) session.getAttribute("STUDENT_IDX");
+        applicationVo.setStudentIdx(studentIdx);
+
+
+        ApplicationVo applicationInfo = applicationService.getApplicationDetailList(applicationVo).get(0);
+
+        model.addAttribute("type", "modify");
+        model.addAttribute("applicationType", applicationVo.getApplicationType());
+
+
+        model.addAttribute("applicationInfo", applicationInfo);
+
+        model.addAttribute("applicationIdx", applicationVo.getApplicationIdx());
+
+        //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
+        //System.out.println("비디오 리스트 " + videoListData);
+        //model.addAttribute("abc", "abcd다");\
+        //model.addAttribute("videoListJson", gson.toJson(videoListData));
+
+        return "app/submitOrModifyApplication";
     }
 
 
@@ -281,7 +311,6 @@ public class AppController {
     public String evaluateClassDetail(HttpServletRequest httpServletRequest, Model model, Gson gson, ClassVo classVo) {
 
         ClassVo evaluateClassInfo = classService.getEvaluateClassList(classVo).get(0);
-        System.out.println("평가 클래스 인포 " + evaluateClassInfo);
 
 
         model.addAttribute("evaluateClassInfo", evaluateClassInfo);

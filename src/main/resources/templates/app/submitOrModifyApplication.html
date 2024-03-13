@@ -12,7 +12,13 @@
     <div class="content-body">
         <div class="content-title">
             <i class="icon-title-video"></i>
-            <h1>{{applicationTextType}} 신청서 제출</h1>
+            <template v-if="type == 'create'">
+                <h1>{{applicationTextType}} 신청서 제출</h1>
+            </template>
+            <template v-else-if="type == 'modify'">
+                <h1>{{applicationTextType}} 신청서 수정</h1>
+            </template>
+
             <!--<div>가나다라마바사 {{videoInfo}}</div>-->
         </div>
 
@@ -32,7 +38,12 @@
 
                 <br><br>
 
-                <button @click="doSubmit">제출</button>
+                <template v-if="type == 'create'">
+                    <button @click="doSubmit">제출</button>
+                </template>
+                <template v-else-if="type == 'modify'">
+                    <button @click="doModify">수정</button>
+                </template>
 
             </div>
         </div>
@@ -49,10 +60,16 @@
         data() {
             return {
 
+                type: [[${type}]],
                 applicationType: [[${applicationType}]],
                 applicationTextType: "",
+                applicationInfo: [[${applicationInfo}]],
+
+                nowApplicationIdx: [[${applicationIdx}]],
+
                 title:"",
-                content:""
+                content:"",
+
 
             }
         },
@@ -98,11 +115,67 @@
 
                         if(res.data.result === "success") {
                             alert(this.applicationTextType + " 신청서를 제출하였습니다.");
-                            location.href = "/app/applicationList/" + this.applicationType;
+                            location.href = "/app/applicationDetailList/" + this.applicationType;
                         }
 
                 });
 
+
+            },
+            doModify() {
+
+                if(!this.title) {
+                    alert("신청할 제목을 작성해주세요.");
+                    this.$refs.title.focus();
+                    return;
+                }
+
+                if(!this.content) {
+                    alert("신청할 내용을 작성해주세요.");
+                    this.$refs.content.focus();
+                    return;
+                }
+
+                if(!confirm(this.applicationTextType + " 신청서를 수정 하시겠습니까?")) {
+                    return;
+                }
+
+
+                const _ = axios.post('/appRest/modifyApplication', null, {
+                    params:{
+
+                        applicationIdx: this.nowApplicationIdx,
+                        applicationType: this.applicationType,
+                        applicationTitle: this.title,
+                        applicationContent: this.content,
+
+                    }
+                }).then(res => {
+
+                    if(res.data.result === "success") {
+                        alert(this.applicationTextType + " 신청서를 수정하였습니다.");
+                        location.href = "/app/applicationDetailList/" + this.applicationType;
+                    }
+
+                });
+
+
+                /*const _ = axios.post('/appRest/submitApplication', null, {
+                    params:{
+
+                        applicationType: this.applicationType,
+                        applicationTitle: this.title,
+                        applicationContent: this.content,
+
+                    }
+                }).then(res => {
+
+                    if(res.data.result === "success") {
+                        alert(this.applicationTextType + " 신청서를 제출하였습니다.");
+                        location.href = "/app/applicationList/" + this.applicationType;
+                    }
+
+                });*/
 
             }
 
@@ -128,6 +201,15 @@
                     this.applicationDetailList = JSON.parse(res.data.data);
                 }
             });
+
+
+
+            if(this.applicationInfo) {
+
+                const applicationInfo = this.applicationInfo;
+                this.title = applicationInfo.applicationTitle;
+                this.content = applicationInfo.applicationContent;
+            }
 
         },
         mounted() {

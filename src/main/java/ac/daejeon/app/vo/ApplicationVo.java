@@ -8,6 +8,8 @@ public class ApplicationVo {
     //학생 idx
     private int studentIdx;
 
+    private int applicationIdx;
+
     private String applicationType;
 
     private String applicationTitle;

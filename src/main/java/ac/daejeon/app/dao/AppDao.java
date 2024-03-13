@@ -201,4 +201,9 @@ public class AppDao {
 
         return sqlSession.insert("application.submitApplication", applicationVo);
     }
+
+    public int modifyApplication(ApplicationVo applicationVo) {
+
+        return sqlSession.update("application.modifyApplication", applicationVo);
+    }
 }

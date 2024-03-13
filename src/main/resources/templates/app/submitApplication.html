@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="fragments/head:: head"/>
+
+<body>
+<div class="app" id="app">
+
+    <th:block th:replace="fragments/header:: headerFragment"/>
+
+    <div class="content-body">
+        <div class="content-title">
+            <i class="icon-title-video"></i>
+            <h1>{{applicationTextType}} 신청서 제출</h1>
+            <!--<div>가나다라마바사 {{videoInfo}}</div>-->
+        </div>
+
+
+        <div class="video-explain">
+            <div class="title"><!--{{noticeInfo.noticeTitle}}--></div>
+            <div class="sub-text">
+
+                <div>{{applicationTextType}}신청서 작성</div>
+
+                <textarea style="height:300px; width:500px" ref="content" :value="content" @input="inputEvent($event, 'content')"></textarea>
+
+                <br><br>
+
+                <button @click="doSubmit">제출</button>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script th:inline="javascript">
+
+    let globalPlayer = "";
+
+    Vue.createApp({
+        //el: '#app',
+        data() {
+            return {
+
+                applicationType: [[${applicationType}]],
+                applicationTextType: ""
+
+            }
+        },
+        methods: {
+
+            inputEvent(e, type) {
+
+                if(type === 'content') {
+                    this.content = e.target.value;
+                }
+
+            },
+            doSubmit() {
+                //alert("두 서브밋");
+                if(!this.content) {
+                    alert("신청할 내용을 작성해주세요.");
+
+                    this.$refs.content.focus();
+
+                    return;
+                }
+
+                if(!confirm(this.applicationTextType + " 신청서를 제출 하시겠습니까?")) {
+                    return;
+                }
+
+                /*const _ = axios.post('/appRest/doEvaluateClass', null, {
+                    params:{
+
+                        evaluateContent: this.content,
+                        classIdx: this.evaluateClassInfo.classIdx
+
+                    }
+                }).then(res => {
+
+                        if(res.data.result === "success") {
+                            alert("해당 학급평가가 등록되었습니다.");
+                        } else if(res.data.result === "exist") {
+                            alert("해당 학급평가는 이미 등록하셨습니다.");
+                        }
+
+                });*/
+
+
+            }
+
+        },
+        created() {
+
+            if(this.applicationType === 'visa') {
+                this.applicationTextType = "비자연장";
+            } else if(this.applicationType === 'scholarship') {
+                this.applicationTextType = "장학급";
+            } else if(this.applicationType === 'dormitory') {
+                this.applicationTextType = "기숙사";
+            } else if(this.applicationType === 'outside') {
+                this.applicationTextType = "체류외활동";
+            }
+
+            const _ = axios.post('/appRest/getApplicationDetailList', null, {
+                params:{
+                    applicationType: this.applicationType
+                }
+            }).then(res => {
+                if(res.data.result === "success") {
+                    this.applicationDetailList = JSON.parse(res.data.data);
+                }
+            });
+
+        },
+        mounted() {
+
+        }
+    }).mount('#app');
+
+</script>
+
+</body>
+</html>

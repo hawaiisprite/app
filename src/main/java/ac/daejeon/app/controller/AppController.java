@@ -181,6 +181,23 @@ public class AppController {
 
 
 
+    //어플리케이션 타입
+    @RequestMapping(method = {RequestMethod.GET}, path = "submitApplication/{applicationType}")
+    public String submitApplication(HttpServletRequest httpServletRequest, Model model, Gson gson, ApplicationVo applicationVo) {
+
+
+        model.addAttribute("applicationType", applicationVo.getApplicationType());
+
+        //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
+        //System.out.println("비디오 리스트 " + videoListData);
+        //model.addAttribute("abc", "abcd다");\
+        //model.addAttribute("videoListJson", gson.toJson(videoListData));
+
+        return "app/submitApplication";
+    }
+
+
+
     //편의시설 상세
     @RequestMapping(method = {RequestMethod.GET}, path = "myData")
     public String myData(HttpServletRequest httpServletRequest, Model model, Gson gson, SupportProgramVo supportProgramVo) {

@@ -65,7 +65,6 @@
         data() {
             return {
                 applicationDetailList: [],
-
                 applicationType: [[${applicationType}]],
 
                 applicationTextType:""
@@ -74,6 +73,10 @@
         methods: {
             toWriteApplication() {
                 alert("어플리케이션 작성 " + this.applicationType);
+
+                location.href = "/app/submitApplication/" + this.applicationType;
+
+
             }
         },
         created() {

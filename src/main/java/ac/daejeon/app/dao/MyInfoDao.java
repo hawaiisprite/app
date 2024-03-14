@@ -21,4 +21,9 @@ public class MyInfoDao {
 
         return sqlSession.insert("myInfo.submitProfilePhotoFile", myInfoVo);
     }
+
+    public int submitForeignerFile(MyInfoVo myInfoVo) {
+
+        return sqlSession.insert("myInfo.submitForeignerFile", myInfoVo);
+    }
 }

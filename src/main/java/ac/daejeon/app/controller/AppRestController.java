@@ -803,6 +803,36 @@ public class AppRestController {
     }
 
 
+    @RequestMapping(value = "submitForeignerFile", method = { RequestMethod.POST})
+    public String submitForeignerFile(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, AppVo appVo, MyInfoVo myInfoVo) throws FirebaseAuthException, IOException {
+
+        //List<SupportProgramVo> videoList = supportProgramService.getVideoList(supportProgramVo);
+        HttpSession session = httpServletRequest.getSession();
+        String studentId = session.getAttribute("STUDENT_ID").toString();
+        int studentIdx = (int) session.getAttribute("STUDENT_IDX");
+
+
+        myInfoVo.setStudentId(studentId);
+        myInfoVo.setStudentIdx(studentIdx);
+
+
+        int res = myInfoService.submitForeignerFile(myInfoVo);
+
+        //applicationVo.setStudentIdx(studentIdx);
+        //int res = appService.modifyApplication(applicationVo);
+
+        //jsonObj.addProperty("data", gson.toJson(submitApplicationList));
+
+        if(res != 0) {
+            jsonObj.addProperty("result", "success");
+        } else {
+            jsonObj.addProperty("result", "failed");
+        }
+
+        return jsonObj.toString();
+    }
+
+
 
 
     @RequestMapping(value = "submitProfilePhotoFile", method = { RequestMethod.POST})

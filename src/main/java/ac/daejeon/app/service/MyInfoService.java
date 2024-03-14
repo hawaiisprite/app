@@ -114,4 +114,49 @@ public class MyInfoService {
         return 0;
 
     }
+
+    public int submitForeignerFile(MyInfoVo myInfoVo) throws IOException {
+
+        MultipartFile foreignerRegistrationFile = myInfoVo.getForeignerRegistrationFile();
+
+        //여권 사본 pdf 파일 저장
+        if(foreignerRegistrationFile != null) {
+            ZonedDateTime today = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
+            String year = Integer.toString(today.getYear());
+            String month = Integer.toString(today.getMonth().getValue());
+            String day = Integer.toString(today.getDayOfMonth());
+
+            String fileOrigName = foreignerRegistrationFile.getOriginalFilename();
+            String fileExt = FilenameUtils.getExtension(fileOrigName);
+            String fileUuid = UUID.randomUUID().toString().replace("-", "");
+
+            boolean isSaved = Statics.zipWithPassword(fileUuid, fileExt, foreignerRegistrationFile);
+
+            if(isSaved == true) {
+                commonVo.setFileUuid(fileUuid);
+                commonVo.setFileExt(fileExt);
+                commonVo.setFileOrigName(fileOrigName);
+                commonVo.setFileYear(Integer.parseInt(year));
+                commonVo.setFileMonth(Integer.parseInt(month));
+                commonVo.setFileDay(Integer.parseInt(day));
+
+                commonDao.saveFileInfo(commonVo);
+
+                int insertedFilesIdx = commonVo.getFilesIdx();
+
+                if(insertedFilesIdx != 0) {
+                    myInfoVo.setForeignerRegistrationFileIdx(insertedFilesIdx);
+                    return myInfoDao.submitForeignerFile(myInfoVo);
+                } else {
+                    return 0;
+                }
+
+            } else {
+                return 0;
+            }
+        }
+
+        return 0;
+
+    }
 }

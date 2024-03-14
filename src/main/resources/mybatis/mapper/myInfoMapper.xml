@@ -107,4 +107,18 @@
     </update>
 
 
+    <update id="submitForeignerFile" parameterType="myInfoVo" >
+        <!-- myInfo.submitForeignerFile -->
+        UPDATE
+            student
+        SET
+            foreigner_registration_file_idx = #{foreignerRegistrationFileIdx}
+        WHERE
+            idx = #{studentIdx}
+        AND
+            student_id = #{studentId}
+
+    </update>
+
+
 </mapper>

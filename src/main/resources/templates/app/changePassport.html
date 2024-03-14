@@ -28,27 +28,41 @@
         <div class="data-view">
             <div class="img-wrap">
                 <!--<img src="/css/images/passport-photo_sm.png" alt="여권사진">-->
+                <!--<img :src="passportFileSrc" alt="여권사진" style="width: 230px; height:350px">-->
+                <div>{{passportFileName}}</div>
 
-                <img :src="passportFileSrc" alt="여권사진">
             </div>
+
+            <template v-if="passportFile">
+                <div style="text-decoration: underline; color:blue">pdf 확인</div>
+            </template>
         </div>
     </div>
+
+    <div class="submit-box">
+        <div class="title-wrap">
+            <div class="small-sumnail">
+                <!--<img :src="passportFileSrc" alt="여권사진">-->
+
+            </div>
+
+
+            <input type="file" ref="passportPhoto" id="passportPhoto" @change="changeEvent($event, 'passportPhoto')" style="display: none">
+
+            <div class="title">여권사진</div> <div  onclick="document.getElementById('passportPhoto').click()">파일선택</div>
+
+        </div>
+        <div class="submit-btn-wrapper">
+            <ul>
+                <li @click="submitToUniversity">학교로 전송하기<i class="icon-school-submit"></i></li>
+                <li>상담신청 운영 프로그램 안내<i class="icon-guide"></i></li>
+            </ul>
+        </div>
+    </div>
+
 </div>
 
-<div class="submit-box">
-    <div class="title-wrap">
-        <div class="small-sumnail">
-            <img src="/css/images/passport-photo.png" alt="여권사진">
-        </div>
-        <div class="title">여권사진</div>
-    </div>
-    <div class="submit-btn-wrapper">
-        <ul>
-            <li>학교로 전송하기<i class="icon-school-submit"></i></li>
-            <li>상담신청 운영 프로그램 안내<i class="icon-guide"></i></li>
-        </ul>
-    </div>
-</div>
+
 
 <script th:inline="javascript">
 
@@ -57,10 +71,97 @@
         data() {
             return {
                 infoForPassport: [[${infoForPassport}]],
-                passportFileSrc: "/css/images/no-picture.png"
+                passportFileSrc: "/css/images/no-picture.png",
+                passportFileName: "업로드 된 pdf 파일이 없습니다.",
+                passportFile: "",
+                isChangePassportFile: false
+
             }
         },
         methods: {
+
+            submitToUniversity() {
+
+                if(!this.isChangePassportFile) {
+                    alert("파일이 새로 업로드 되지 않았습니다.");
+                    return;
+                }
+
+                if(!confirm("학교로 전송하시겠습니까?")) {
+                    return;
+                }
+
+                const formData = new FormData();
+
+                if(this.passportFile) {
+                    formData.append('passportFile', this.passportFile);
+                }
+
+                const _ = axios.post('/appRest/submitPassportFile', formData, {
+                    params:{
+                        isChangePassportFile: this.isChangePassportFile,
+                    }
+                }).then(res => {
+
+                    if(res.data.result === "success") {
+                        alert("사진이 변경되었습니다.");
+                        //location.href = "/student/studentManagementList";
+                    }
+
+                });
+
+
+
+            },
+            chooseFile() {
+
+            },
+            changeEvent(e, type) {
+
+                if(type === 'passportPhoto') {
+
+                    const passportPhotoFile = this.$refs.passportPhoto.files[0];
+                    const passportPhotoFileSize = passportPhotoFile.size;
+
+                    if(passportPhotoFileSize > 2000000) {
+                        alert("사진의 파일 사이즈는 2mb를 넘을 수 업습니다.");
+                        return;
+                    }
+
+                    const fileLen = passportPhotoFile.name.length;
+                    const lastDot = passportPhotoFile.name.lastIndexOf('.');
+                    const fileExt = passportPhotoFile.name.substring(lastDot + 1, fileLen).toLowerCase();
+
+
+                    /*if(!/(png|jpg|jpeg)/.test(fileExt)) {
+                        alert('사진의 파일은 png, jpg, jpeg 만 가능합니다.');
+                        return;
+                    }*/
+
+
+                    if(!/(pdf)/.test(fileExt)) {
+                        alert('여권 사진의 파일은 pdf 만 가능합니다.');
+                        return;
+                    }
+
+                    this.passportFile = passportPhotoFile.name;
+                    this.passportPhotoFile = passportPhotoFile;
+
+                    if (this.passportFile) {
+                        const reader = new FileReader();
+                        const vueThis = this;
+                        reader.readAsDataURL(this.passportFile);
+                        reader.onload = function(e) {
+                            vueThis.passportFileSrc = e.target.result;
+                            vueThis.isChangePassportFile = true;
+                        };
+                    } else {
+                        this.passportFileSrc = "/css/images/no-picture.png";
+                    }
+
+                }
+
+            },
 
         },
         created() {

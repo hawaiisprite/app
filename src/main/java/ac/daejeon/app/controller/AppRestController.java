@@ -672,8 +672,6 @@ public class AppRestController {
         supportProgramVo.setApplicationType("counseling");
         int attended = appService.getTodayAttendance(appVo);
 
-        System.out.println("출석여부를 확인하겠습니다 " + attended);
-
         jsonObj.addProperty("attended", attended);
         jsonObj.addProperty("result", "success");
 
@@ -771,13 +769,27 @@ public class AppRestController {
     }
 
 
+    @RequestMapping(value = "submitPassportFile", method = { RequestMethod.POST})
+    public String submitPassportFile(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, AppVo appVo, MyInfoVo myInfoVo) throws FirebaseAuthException {
 
+        //List<SupportProgramVo> videoList = supportProgramService.getVideoList(supportProgramVo);
+        HttpSession session = httpServletRequest.getSession();
+        int studentIdx = (int) session.getAttribute("STUDENT_IDX");
+
+
+        //applicationVo.setStudentIdx(studentIdx);
+        //int res = appService.modifyApplication(applicationVo);
+
+        //jsonObj.addProperty("data", gson.toJson(submitApplicationList));
+        jsonObj.addProperty("result", "success");
+
+        return jsonObj.toString();
+    }
 
 
 
     @RequestMapping(value = "getConvenienceFacilityList", method = {RequestMethod.POST})
     public String getConvenienceFacilityList(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, AppVo appVo, ConfigVo configVo) {
-
 
         configVo.setWhereType(true);
         List<ConfigVo> convenienceFacilityList = configService.getConvenienceFacilityList(configVo);

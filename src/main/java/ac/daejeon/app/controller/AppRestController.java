@@ -41,6 +41,10 @@ public class AppRestController {
 
     private final ApplicationService applicationService;
 
+    private final MyInfoService myInfoService;
+
+
+
 
     @RequestMapping(value = "doLogin", method = { RequestMethod.POST})
     public String doLogin(HttpServletRequest httpServletRequest, JsonObject jsonObj, AppVo appVo, LoginVo loginVo) {
@@ -770,18 +774,30 @@ public class AppRestController {
 
 
     @RequestMapping(value = "submitPassportFile", method = { RequestMethod.POST})
-    public String submitPassportFile(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, AppVo appVo, MyInfoVo myInfoVo) throws FirebaseAuthException {
+    public String submitPassportFile(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, AppVo appVo, MyInfoVo myInfoVo) throws FirebaseAuthException, IOException {
 
         //List<SupportProgramVo> videoList = supportProgramService.getVideoList(supportProgramVo);
         HttpSession session = httpServletRequest.getSession();
+        String studentId = session.getAttribute("STUDENT_ID").toString();
         int studentIdx = (int) session.getAttribute("STUDENT_IDX");
 
+
+        myInfoVo.setStudentId(studentId);
+        myInfoVo.setStudentIdx(studentIdx);
+
+
+        int res = myInfoService.submitPassportFile(myInfoVo);
 
         //applicationVo.setStudentIdx(studentIdx);
         //int res = appService.modifyApplication(applicationVo);
 
         //jsonObj.addProperty("data", gson.toJson(submitApplicationList));
-        jsonObj.addProperty("result", "success");
+
+        if(res != 0) {
+            jsonObj.addProperty("result", "success");
+        } else {
+            jsonObj.addProperty("result", "failed");
+        }
 
         return jsonObj.toString();
     }

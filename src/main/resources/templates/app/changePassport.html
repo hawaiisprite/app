@@ -22,7 +22,7 @@
     <div class="content-body" style="padding-bottom: 0">
         <div class="content-title">
             <i class="icon-title-mydata"></i>
-            <h1>개인자료실</h1>
+            <h1>여권사진</h1>
         </div>
 
         <div class="data-view">
@@ -33,9 +33,10 @@
 
             </div>
 
-            <template v-if="passportFile">
-                <div style="text-decoration: underline; color:blue">pdf 확인</div>
+            <template v-if="passportFileSrc != ''">
+                <div style="text-decoration: underline; color:blue" @click="fileDownload(passportFileSrc, passportFileName)">해당 pdf 다운로드</div>
             </template>
+
         </div>
     </div>
 
@@ -47,15 +48,14 @@
             </div>
 
 
-            <input type="file" ref="passportPhoto" id="passportPhoto" @change="changeEvent($event, 'passportPhoto')" style="display: none">
+            <input type="file" ref="passportFile" id="passportFile" @change="changeEvent($event, 'passportFile')" style="display: none">
 
-            <div class="title">여권사진</div> <div  onclick="document.getElementById('passportPhoto').click()">파일선택</div>
+            <div class="title">여권사진</div> <div  onclick="document.getElementById('passportFile').click()">파일선택</div>
 
         </div>
         <div class="submit-btn-wrapper">
             <ul>
                 <li @click="submitToUniversity">학교로 전송하기<i class="icon-school-submit"></i></li>
-                <li>상담신청 운영 프로그램 안내<i class="icon-guide"></i></li>
             </ul>
         </div>
     </div>
@@ -71,7 +71,7 @@
         data() {
             return {
                 infoForPassport: [[${infoForPassport}]],
-                passportFileSrc: "/css/images/no-picture.png",
+                passportFileSrc: "",
                 passportFileName: "업로드 된 pdf 파일이 없습니다.",
                 passportFile: "",
                 isChangePassportFile: false
@@ -79,11 +79,28 @@
             }
         },
         methods: {
+            fileDownload(base64data, fileName) {
+                if(!base64data || !fileName) {
+                    alert("다운로드 할 수 있는 파일이 없습니다.");
+                    return;
+                }
 
+                const link = document.createElement('a');
+                link.href = base64data;
+                link.download = fileName;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link)
+            },
+            openPdfPopup() {
+
+
+
+            },
             submitToUniversity() {
 
                 if(!this.isChangePassportFile) {
-                    alert("파일이 새로 업로드 되지 않았습니다.");
+                    alert("새로운 파일이 업로드 되지 않았습니다.");
                     return;
                 }
 
@@ -104,7 +121,10 @@
                 }).then(res => {
 
                     if(res.data.result === "success") {
-                        alert("사진이 변경되었습니다.");
+                        alert("새로운 파일이 전송되었습니다.");
+                        //location.href = "/student/studentManagementList";
+                    } else if(res.data.result === "failed") {
+                        alert("새로운 파일이 전송에 실패하였습니다.");
                         //location.href = "/student/studentManagementList";
                     }
 
@@ -118,19 +138,19 @@
             },
             changeEvent(e, type) {
 
-                if(type === 'passportPhoto') {
+                if(type === 'passportFile') {
 
-                    const passportPhotoFile = this.$refs.passportPhoto.files[0];
-                    const passportPhotoFileSize = passportPhotoFile.size;
+                    const passportFile = this.$refs.passportFile.files[0];
+                    const passportFileSize = passportFile.size;
 
-                    if(passportPhotoFileSize > 2000000) {
+                    if(passportFileSize > 2000000) {
                         alert("사진의 파일 사이즈는 2mb를 넘을 수 업습니다.");
                         return;
                     }
 
-                    const fileLen = passportPhotoFile.name.length;
-                    const lastDot = passportPhotoFile.name.lastIndexOf('.');
-                    const fileExt = passportPhotoFile.name.substring(lastDot + 1, fileLen).toLowerCase();
+                    const fileLen = passportFile.name.length;
+                    const lastDot = passportFile.name.lastIndexOf('.');
+                    const fileExt = passportFile.name.substring(lastDot + 1, fileLen).toLowerCase();
 
 
                     /*if(!/(png|jpg|jpeg)/.test(fileExt)) {
@@ -144,8 +164,8 @@
                         return;
                     }
 
-                    this.passportFile = passportPhotoFile.name;
-                    this.passportPhotoFile = passportPhotoFile;
+                    this.passportFileName = passportFile.name;
+                    this.passportFile = passportFile;
 
                     if (this.passportFile) {
                         const reader = new FileReader();
@@ -166,18 +186,23 @@
         },
         created() {
 
-            /*if(this.infoForPassport) {
+            if(this.infoForPassport) {
 
                 const infoForPassport = this.infoForPassport;
                 this.passportFileName = infoForPassport.passportFileOrigName;
-                const passportFileBinary = documentFileInfo.passportFileBinary;
+                const passportFileBinary = infoForPassport.passportFileBinary;
+
 
                 if(passportFileBinary) {
                     this.passportFileSrc = "data:application/pdf;base64," + passportFileBinary;
+                    this.passportFile = "data:application/pdf;base64," + passportFileBinary;
+                } else {
+
                 }
+
                 //alert("인포포 패스포트");
 
-            }*/
+            }
 
         },
         mounted() {

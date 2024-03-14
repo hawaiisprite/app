@@ -8,12 +8,12 @@
         <!--myInfo.getInfoForPassport-->
 
         SELECT
-            b.uuid as personalInfoFileUuid,
-            b.ext as personalInfoFileExt,
-            b.orig_name as personalInfoFileOrigName,
-            b.year as personalInfoFileYear,
-            b.month as personalInfoFileMonth,
-            b.day as personalInfoFileDay
+            b.uuid as passportFileUuid,
+            b.ext as passportFileExt,
+            b.orig_name as passportFileOrigName,
+            b.year as passportFileYear,
+            b.month as passportFileMonth,
+            b.day as passportFileDay
         FROM
             student a
         LEFT JOIN
@@ -26,5 +26,19 @@
             a.idx = #{studentIdx}
 
     </select>
+
+
+    <update id="submitPassportFile" parameterType="myInfoVo" >
+
+        UPDATE
+            student
+        SET
+            passport_file_idx = #{passportFileIdx}
+        WHERE
+            idx = #{studentIdx}
+        AND
+            student_id = #{studentId}
+
+    </update>
 
 </mapper>

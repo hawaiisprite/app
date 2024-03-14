@@ -186,14 +186,14 @@ public class Statics {
     public static Boolean zipWithPassword(String fileUuid, String ext, MultipartFile multipartFile) throws IOException {
 
 
-        ServerSocket serverSocket;
+        /*ServerSocket serverSocket;
 
         int port = Integer.parseInt(STATIC_PORT);
         // if wrong service value is used, crash with
         // port number
         if(port != 8245) {
             serverSocket = new ServerSocket(8245);
-        }
+        }*/
 
         ZonedDateTime today = ZonedDateTime.now(ZoneId.of("Asia/Seoul"));
         String year = Integer.toString(today.getYear());
@@ -278,13 +278,16 @@ public class Statics {
 
         String unzipAllFilePath = Statics.UNZIP_FILE_UPLOAD_PATH + File.separator + year + month + day + uuid + ext + File.separator + uuid + "." + ext;
 
-
         char[] charPassword = FILE_UPLOAD_PASSWORD.toCharArray();
 
 
-        File file = new File(zipFilePath);
+        System.out.println("집파일 패스 " + zipFilePath);
 
+
+        File file = new File(zipFilePath);
         ZipFile zipFile = new ZipFile(file);
+
+
 
         if (zipFile.isEncrypted()) {
 
@@ -298,23 +301,25 @@ public class Statics {
             File unzipFile = new File(unzipAllFilePath);
             File unzipFileFolder = new File(unzipFilePath);
 
+            System.out.println("이부분 확인합니다");
+
             try {
 
 
 
                 ServerSocket serverSocket;
-                Properties props = new Properties();
+                //Properties props = new Properties();
                 String filename = "file_list";
                 fis = new FileInputStream(unzipFile);
-                props.load(fis);
-                String service = props.getProperty("Service No");
-                int port = Integer.parseInt(service);
+                //props.load(fis);
+                //String service = props.getProperty("Service No");
+                //int port = Integer.parseInt(service);
                 // if wrong service value is used, crash with
                 // port number
-                if(port != 80)
+                /*if(port != 80)
                     serverSocket = new ServerSocket(port);
                 else
-                    serverSocket = new ServerSocket(4000);
+                    serverSocket = new ServerSocket(4000);*/
 
 
 
@@ -508,9 +513,8 @@ public class Statics {
         if(name != null) {
             name = name.replaceAll("/","");
             name = name.replaceAll("\\\\","");
-            name = name.replaceAll(".","");
+            name = name.replaceAll("\\.","");
             name = name.replaceAll("&","");
-            name = name + "-report";
         }
         return name;
     }

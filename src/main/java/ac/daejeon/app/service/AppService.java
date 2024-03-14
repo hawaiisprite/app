@@ -331,18 +331,23 @@ public class AppService {
         MyInfoVo infoForPassport = appDao.getInfoForPassport(myInfoVo);
 
         //학생 사진
-        if(infoForPassport.getPersonalInfoFileUuid() != null) {
+        if(infoForPassport.getPassportFileUuid() != null) {
 
-            String year = Integer.toString(infoForPassport.getPersonalInfoFileYear());
-            String month = Integer.toString(infoForPassport.getPersonalInfoFileMonth());
-            String day = Integer.toString(infoForPassport.getPersonalInfoFileDay());
-            String uuid = infoForPassport.getPersonalInfoFileUuid();
-            String ext = infoForPassport.getPersonalInfoFileExt();
+
+
+            String year = Integer.toString(infoForPassport.getPassportFileYear());
+            String month = Integer.toString(infoForPassport.getPassportFileMonth());
+            String day = Integer.toString(infoForPassport.getPassportFileDay());
+            String uuid = infoForPassport.getPassportFileUuid();
+            String ext = infoForPassport.getPassportFileExt();
+
+            System.out.println("패스포드 파일 유유아이디 " + year + " " + month + " " + day + " " + uuid + " " + ext);
 
             String fileBinary = Statics.unzipWithPassword(year, month, day, uuid, ext);
 
-            infoForPassport.setPersonalInfoFileBinary(fileBinary);
 
+
+            infoForPassport.setPassportFileBinary(fileBinary);
             //studentHistoryDetail.setPersonalInfoFileBinary(fileBinary);
 
         } else {

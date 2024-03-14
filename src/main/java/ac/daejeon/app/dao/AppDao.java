@@ -215,4 +215,9 @@ public class AppDao {
 
         return sqlSession.selectOne("myInfo.getInfoForProfile", myInfoVo);
     }
+
+    public MyInfoVo getInfoForForeigner(MyInfoVo myInfoVo) {
+
+        return sqlSession.selectOne("myInfo.getInfoForForeigner", myInfoVo);
+    }
 }

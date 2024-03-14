@@ -242,8 +242,27 @@ public class AppController {
     }
 
 
-
     //사진 변경
+    @RequestMapping(method = {RequestMethod.GET}, path = "changeProfile")
+    public String changeProfile(HttpServletRequest httpServletRequest, Model model, Gson gson, AppVo appVo, MyInfoVo myInfoVo) throws IOException {
+
+        //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
+
+        HttpSession session = httpServletRequest.getSession();
+        int studentIdx = (int) session.getAttribute("STUDENT_IDX");
+        String studentId = (String) session.getAttribute("STUDENT_ID");
+
+        myInfoVo.setStudentId(studentId);
+        myInfoVo.setStudentIdx(studentIdx);
+
+        MyInfoVo infoForProfile = appService.getInfoForProfile(myInfoVo);
+        model.addAttribute("infoForProfile", infoForProfile);
+
+        return "app/changeProfile";
+    }
+
+
+    //여권 변경
     @RequestMapping(method = {RequestMethod.GET}, path = "changePassport")
     public String changePassport(HttpServletRequest httpServletRequest, Model model, Gson gson, AppVo appVo, MyInfoVo myInfoVo) throws IOException {
 
@@ -263,9 +282,9 @@ public class AppController {
     }
 
 
-    //사진 변경
-    @RequestMapping(method = {RequestMethod.GET}, path = "changeProfile")
-    public String changeProfile(HttpServletRequest httpServletRequest, Model model, Gson gson, AppVo appVo, MyInfoVo myInfoVo) throws IOException {
+    //외국인등록증 변경
+    @RequestMapping(method = {RequestMethod.GET}, path = "changeForeigner")
+    public String changeForeigner(HttpServletRequest httpServletRequest, Model model, Gson gson, AppVo appVo, MyInfoVo myInfoVo) throws IOException {
 
         //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
 
@@ -276,11 +295,14 @@ public class AppController {
         myInfoVo.setStudentId(studentId);
         myInfoVo.setStudentIdx(studentIdx);
 
-        MyInfoVo infoForProfile = appService.getInfoForProfile(myInfoVo);
-        model.addAttribute("infoForProfile", infoForProfile);
+        MyInfoVo infoForForeigner = appService.getInfoForForeigner(myInfoVo);
+        model.addAttribute("infoForForeigner", infoForForeigner);
 
-        return "app/changeProfile";
+        return "app/changeForeigner";
     }
+
+
+
 
 
     @RequestMapping(method = {RequestMethod.GET}, path = "supportProgramList")

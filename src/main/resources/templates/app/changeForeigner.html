@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="fragments/head:: head"/>
+
+<body>
+<div class="app" id="app">
+
+    <th:block th:replace="fragments/header:: headerFragment"/>
+
+    <div class="content-body" style="padding-bottom: 0">
+        <div class="content-title">
+            <i class="icon-title-mydata"></i>
+            <h1>외국인등록증</h1>
+        </div>
+
+        <div class="data-view">
+            <div class="img-wrap">
+                <!--<img src="/css/images/passport-photo_sm.png" alt="여권사진">-->
+                <!--<img :src="passportFileSrc" alt="여권사진" style="width: 230px; height:350px">-->
+                <div>{{foreignerFileName}}</div>
+
+            </div>
+
+            <template v-if="foreignerFileSrc != ''">
+                <div style="text-decoration: underline; color:blue" @click="fileDownload(foreignerFileSrc, foreignerFileName)">해당 pdf 다운로드</div>
+            </template>
+
+        </div>
+    </div>
+
+    <div class="submit-box">
+        <div class="title-wrap">
+            <div class="small-sumnail">
+                <!--<img :src="passportFileSrc" alt="여권사진">-->
+
+            </div>
+
+
+            <input type="file" ref="foreignerFile" id="foreignerFile" @change="changeEvent($event, 'foreignerFile')" style="display: none">
+
+            <div class="title">외국인등록증</div> <div  onclick="document.getElementById('foreignerFile').click()">파일선택</div>
+
+        </div>
+        <div class="submit-btn-wrapper">
+            <ul>
+                <li @click="submitToUniversity">학교로 전송하기<i class="icon-school-submit"></i></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+
+
+<script th:inline="javascript">
+
+    Vue.createApp({
+        //el: '#app',
+        data() {
+            return {
+                infoForForeigner: [[${infoForForeigner}]],
+                foreignerFileSrc: "",
+                foreignerFileName: "업로드 된 pdf 파일이 없습니다.",
+                foreignerFile: "",
+                isChangeForeignerFile: false
+
+            }
+        },
+        methods: {
+            fileDownload(base64data, fileName) {
+                if(!base64data || !fileName) {
+                    alert("다운로드 할 수 있는 파일이 없습니다.");
+                    return;
+                }
+
+                const link = document.createElement('a');
+                link.href = base64data;
+                link.download = fileName;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link)
+            },
+            openPdfPopup() {
+
+
+
+            },
+            submitToUniversity() {
+
+                if(!this.isChangeForeignerFile) {
+                    alert("새로운 파일이 업로드 되지 않았습니다.");
+                    return;
+                }
+
+                if(!confirm("학교로 전송하시겠습니까?")) {
+                    return;
+                }
+
+                const formData = new FormData();
+
+                if(this.foreignerFile) {
+                    formData.append('foreignerRegistrationFile', this.foreignerFile);
+                }
+
+                const _ = axios.post('/appRest/submitForeignerFile', formData, {
+                    params:{
+                        isChangeForeignerRegistrationFile: this.isChangeForeignerFile,
+                    }
+                }).then(res => {
+
+                    if(res.data.result === "success") {
+                        alert("새로운 파일이 전송되었습니다.");
+                        //location.href = "/student/studentManagementList";
+                    } else if(res.data.result === "failed") {
+                        alert("새로운 파일이 전송에 실패하였습니다.");
+                        //location.href = "/student/studentManagementList";
+                    }
+
+                });
+
+
+            },
+            chooseFile() {
+
+            },
+            changeEvent(e, type) {
+
+                if(type === 'foreignerFile') {
+
+                    const foreignerFile = this.$refs.foreignerFile.files[0];
+                    const foreignerFileSize = foreignerFile.size;
+
+                    if(foreignerFileSize > 2000000) {
+                        alert("파일 사이즈는 2mb를 넘을 수 업습니다.");
+                        return;
+                    }
+
+                    const fileLen = foreignerFile.name.length;
+                    const lastDot = foreignerFile.name.lastIndexOf('.');
+                    const fileExt = foreignerFile.name.substring(lastDot + 1, fileLen).toLowerCase();
+
+
+                    /*if(!/(png|jpg|jpeg)/.test(fileExt)) {
+                        alert('사진의 파일은 png, jpg, jpeg 만 가능합니다.');
+                        return;
+                    }*/
+
+
+                    if(!/(pdf)/.test(fileExt)) {
+                        alert('외국인등록증 파일은 pdf 만 가능합니다.');
+                        return;
+                    }
+
+                    this.foreignerFilename = foreignerFile.name;
+                    this.foreignerFile = foreignerFile;
+
+                    if (this.foreignerFile) {
+                        const reader = new FileReader();
+                        const vueThis = this;
+                        reader.readAsDataURL(this.foreignerFile);
+                        reader.onload = function(e) {
+                            vueThis.foreignerFileSrc = e.target.result;
+                            vueThis.isChangeForeignerFile = true;
+                        };
+                    } else {
+                        this.passportFileSrc = "/css/images/no-picture.png";
+                    }
+
+                }
+
+            },
+
+        },
+        created() {
+
+            if(this.infoForForeigner) {
+
+                const infoForForeigner = this.infoForForeigner;
+                this.foreignerFile = infoForForeigner.foreignerRegistrationFileOrigName;
+                const foreignerFileBinary = infoForForeigner.foreignerRegistrationFileBinary;
+
+
+                if(foreignerFileBinary) {
+                    this.foreignerFileSrc = "data:application/pdf;base64," + foreignerFileBinary;
+                    this.foreignerFile = "data:application/pdf;base64," + foreignerFileBinary;
+                } else {
+
+                }
+
+                //alert("인포포 패스포트");
+
+            }
+
+        },
+        mounted() {
+
+        }
+    }).mount('#app');
+
+</script>
+
+</body>
+</html>

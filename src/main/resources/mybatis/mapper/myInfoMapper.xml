@@ -28,20 +28,6 @@
     </select>
 
 
-    <update id="submitPassportFile" parameterType="myInfoVo" >
-        <!-- myInfo.submitPassportFile -->
-        UPDATE
-            student
-        SET
-            passport_file_idx = #{passportFileIdx}
-        WHERE
-            idx = #{studentIdx}
-        AND
-            student_id = #{studentId}
-
-    </update>
-
-
     <select id="getInfoForProfile" parameterType="myInfoVo" resultType="myInfoVo">
         <!--myInfo.getInfoForProfile-->
 
@@ -64,6 +50,47 @@
             a.idx = #{studentIdx}
 
     </select>
+
+
+    <select id="getInfoForForeigner" parameterType="myInfoVo" resultType="myInfoVo">
+        <!--myInfo.getInfoForForeigner-->
+
+        SELECT
+            b.uuid as foreignerRegistrationFileUuid,
+            b.ext as foreignerRegistrationFileExt,
+            b.orig_name as foreignerRegistrationFileOrigName,
+            b.year as foreignerRegistrationFileYear,
+            b.month as foreignerRegistrationFileMonth,
+            b.day as foreignerRegistrationFileDay
+        FROM
+            student a
+        LEFT JOIN
+            files b
+        ON
+            a.foreigner_registration_file_idx = b.idx
+        WHERE
+            a.student_id = #{studentId}
+        AND
+            a.idx = #{studentIdx}
+
+    </select>
+
+
+    <update id="submitPassportFile" parameterType="myInfoVo" >
+        <!-- myInfo.submitPassportFile -->
+        UPDATE
+            student
+        SET
+            passport_file_idx = #{passportFileIdx}
+        WHERE
+            idx = #{studentIdx}
+        AND
+            student_id = #{studentId}
+
+    </update>
+
+
+
 
 
     <update id="submitProfilePhotoFile" parameterType="myInfoVo" >

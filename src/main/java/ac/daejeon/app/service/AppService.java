@@ -330,7 +330,7 @@ public class AppService {
 
         MyInfoVo infoForPassport = appDao.getInfoForPassport(myInfoVo);
 
-        if(infoForPassport.getPassportFileUuid() != null) {
+        if(infoForPassport != null && infoForPassport.getPassportFileUuid() != null) {
 
             String year = Integer.toString(infoForPassport.getPassportFileYear());
             String month = Integer.toString(infoForPassport.getPassportFileMonth());
@@ -338,10 +338,8 @@ public class AppService {
             String uuid = infoForPassport.getPassportFileUuid();
             String ext = infoForPassport.getPassportFileExt();
 
-            System.out.println("패스포드 파일 유유아이디 " + year + " " + month + " " + day + " " + uuid + " " + ext);
-
+            //System.out.println("패스포드 파일 유유아이디 " + year + " " + month + " " + day + " " + uuid + " " + ext);
             String fileBinary = Statics.unzipWithPassword(year, month, day, uuid, ext);
-
 
 
             infoForPassport.setPassportFileBinary(fileBinary);
@@ -359,7 +357,7 @@ public class AppService {
 
         MyInfoVo infoForProfile = appDao.getInfoForProfile(myInfoVo);
 
-        if(infoForProfile.getPersonalInfoFileUuid() != null) {
+        if(infoForProfile != null && infoForProfile.getPersonalInfoFileUuid() != null) {
 
             String year = Integer.toString(infoForProfile.getPersonalInfoFileYear());
             String month = Integer.toString(infoForProfile.getPersonalInfoFileMonth());
@@ -377,6 +375,32 @@ public class AppService {
         }
 
         return infoForProfile;
+
+    }
+
+    //외국인등록증
+    public MyInfoVo getInfoForForeigner(MyInfoVo myInfoVo) throws IOException {
+
+        MyInfoVo infoForForeigner = appDao.getInfoForForeigner(myInfoVo);
+
+        if(infoForForeigner != null && infoForForeigner.getForeignerRegistrationFileUuid() != null) {
+
+            String year = Integer.toString(infoForForeigner.getForeignerRegistrationFileYear());
+            String month = Integer.toString(infoForForeigner.getForeignerRegistrationFileMonth());
+            String day = Integer.toString(infoForForeigner.getForeignerRegistrationFileDay());
+            String uuid = infoForForeigner.getForeignerRegistrationFileUuid();
+            String ext = infoForForeigner.getForeignerRegistrationFileExt();
+
+            String fileBinary = Statics.unzipWithPassword(year, month, day, uuid, ext);
+
+            infoForForeigner.setForeignerRegistrationFileBinary(fileBinary);
+            //studentHistoryDetail.setPersonalInfoFileBinary(fileBinary);
+
+        } else {
+
+        }
+
+        return infoForForeigner;
 
     }
 

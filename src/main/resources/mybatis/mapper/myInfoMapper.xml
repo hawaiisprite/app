@@ -29,7 +29,7 @@
 
 
     <update id="submitPassportFile" parameterType="myInfoVo" >
-
+        <!-- myInfo.submitPassportFile -->
         UPDATE
             student
         SET
@@ -40,5 +40,44 @@
             student_id = #{studentId}
 
     </update>
+
+
+    <select id="getInfoForProfile" parameterType="myInfoVo" resultType="myInfoVo">
+        <!--myInfo.getInfoForProfile-->
+
+        SELECT
+            b.uuid as personalInfoFileUuid,
+            b.ext as personalInfoFileExt,
+            b.orig_name as personalInfoFileOrigName,
+            b.year as personalInfoFileYear,
+            b.month as personalInfoFileMonth,
+            b.day as personalInfoFileDay
+        FROM
+            student a
+        LEFT JOIN
+            files b
+        ON
+            a.personal_info_file_idx = b.idx
+        WHERE
+            a.student_id = #{studentId}
+        AND
+            a.idx = #{studentIdx}
+
+    </select>
+
+
+    <update id="submitProfilePhotoFile" parameterType="myInfoVo" >
+        <!-- myInfo.submitProfilePhotoFile -->
+        UPDATE
+            student
+        SET
+            personal_info_file_idx = #{personalInfoFileIdx}
+        WHERE
+            idx = #{studentIdx}
+        AND
+            student_id = #{studentId}
+
+    </update>
+
 
 </mapper>

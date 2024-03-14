@@ -210,4 +210,9 @@ public class AppDao {
 
         return sqlSession.selectOne("myInfo.getInfoForPassport", myInfoVo);
     }
+
+    public MyInfoVo getInfoForProfile(MyInfoVo myInfoVo) {
+
+        return sqlSession.selectOne("myInfo.getInfoForProfile", myInfoVo);
+    }
 }

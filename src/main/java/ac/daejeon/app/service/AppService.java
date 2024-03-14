@@ -325,15 +325,12 @@ public class AppService {
         return appDao.modifyApplication(applicationVo);
     }
 
-    //겟인포 폴 패스포트
+    //여권정보
     public MyInfoVo getInfoForPassport(MyInfoVo myInfoVo) throws IOException {
 
         MyInfoVo infoForPassport = appDao.getInfoForPassport(myInfoVo);
 
-        //학생 사진
         if(infoForPassport.getPassportFileUuid() != null) {
-
-
 
             String year = Integer.toString(infoForPassport.getPassportFileYear());
             String month = Integer.toString(infoForPassport.getPassportFileMonth());
@@ -355,6 +352,32 @@ public class AppService {
         }
 
         return infoForPassport;
+    }
+
+    //내프로필정보
+    public MyInfoVo getInfoForProfile(MyInfoVo myInfoVo) throws IOException {
+
+        MyInfoVo infoForProfile = appDao.getInfoForProfile(myInfoVo);
+
+        if(infoForProfile.getPersonalInfoFileUuid() != null) {
+
+            String year = Integer.toString(infoForProfile.getPersonalInfoFileYear());
+            String month = Integer.toString(infoForProfile.getPersonalInfoFileMonth());
+            String day = Integer.toString(infoForProfile.getPersonalInfoFileDay());
+            String uuid = infoForProfile.getPersonalInfoFileUuid();
+            String ext = infoForProfile.getPersonalInfoFileExt();
+
+            String fileBinary = Statics.unzipWithPassword(year, month, day, uuid, ext);
+
+            infoForProfile.setPersonalInfoFileBinary(fileBinary);
+            //studentHistoryDetail.setPersonalInfoFileBinary(fileBinary);
+
+        } else {
+
+        }
+
+        return infoForProfile;
+
     }
 
 

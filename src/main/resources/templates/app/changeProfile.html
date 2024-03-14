@@ -12,20 +12,20 @@
     <div class="content-body" style="padding-bottom: 0">
         <div class="content-title">
             <i class="icon-title-mydata"></i>
-            <h1>여권사진</h1>
+            <h1>내프로필</h1>
         </div>
 
         <div class="data-view">
             <div class="img-wrap">
                 <!--<img src="/css/images/passport-photo_sm.png" alt="여권사진">-->
-                <!--<img :src="passportFileSrc" alt="여권사진" style="width: 230px; height:350px">-->
-                <div>{{passportFileName}}</div>
+                <img :src="profilePhotoFileSrc" alt="프로필사진" style="width: 230px; height:350px">
+                <!--<div>{{passportFileName}}</div>-->
 
             </div>
 
-            <template v-if="passportFileSrc != ''">
+            <!--<template v-if="passportFileSrc != ''">
                 <div style="text-decoration: underline; color:blue" @click="fileDownload(passportFileSrc, passportFileName)">해당 pdf 다운로드</div>
-            </template>
+            </template>-->
 
         </div>
     </div>
@@ -38,9 +38,9 @@
             </div>
 
 
-            <input type="file" ref="passportFile" id="passportFile" @change="changeEvent($event, 'passportFile')" style="display: none">
+            <input type="file" ref="profilePhotoFile" id="profilePhotoFile" @change="changeEvent($event, 'profilePhotoFile')" style="display: none">
 
-            <div class="title">여권사진</div> <div  onclick="document.getElementById('passportFile').click()">파일선택</div>
+            <div class="title">프로필</div> <div  onclick="document.getElementById('profilePhotoFile').click()">파일선택</div>
 
         </div>
         <div class="submit-btn-wrapper">
@@ -60,11 +60,11 @@
         //el: '#app',
         data() {
             return {
-                infoForPassport: [[${infoForPassport}]],
-                passportFileSrc: "",
-                passportFileName: "업로드 된 pdf 파일이 없습니다.",
-                passportFile: "",
-                isChangePassportFile: false
+                infoForProfile: [[${infoForProfile}]],
+                profilePhotoFileSrc: "/css/images/pic_grey_none-txt.png",
+                profilePhotoFileName: "업로드 된 pdf 파일이 없습니다.",
+                profilePhotoFile: "",
+                isChangeProfilePhotoFile: false
 
             }
         },
@@ -89,7 +89,7 @@
             },
             submitToUniversity() {
 
-                if(!this.isChangePassportFile) {
+                if(!this.isChangeProfilePhotoFile) {
                     alert("새로운 파일이 업로드 되지 않았습니다.");
                     return;
                 }
@@ -100,13 +100,13 @@
 
                 const formData = new FormData();
 
-                if(this.passportFile) {
-                    formData.append('passportFile', this.passportFile);
+                if(this.profilePhotoFile) {
+                    formData.append('personalInfoFile', this.profilePhotoFile);
                 }
 
-                const _ = axios.post('/appRest/submitPassportFile', formData, {
+                const _ = axios.post('/appRest/submitProfilePhotoFile', formData, {
                     params:{
-                        isChangePassportFile: this.isChangePassportFile,
+                        isChangePersonalInfoFile: this.isChangeProfilePhotoFile,
                     }
                 }).then(res => {
 
@@ -121,25 +121,26 @@
                 });
 
 
+
             },
             chooseFile() {
 
             },
             changeEvent(e, type) {
 
-                if(type === 'passportFile') {
+                if(type === 'profilePhotoFile') {
 
-                    const passportFile = this.$refs.passportFile.files[0];
-                    const passportFileSize = passportFile.size;
+                    const profilePhotoFile = this.$refs.profilePhotoFile.files[0];
+                    const profilePhotoFileSize = profilePhotoFile.size;
 
-                    if(passportFileSize > 2000000) {
+                    if(profilePhotoFileSize > 2000000) {
                         alert("파일 사이즈는 2mb를 넘을 수 업습니다.");
                         return;
                     }
 
-                    const fileLen = passportFile.name.length;
-                    const lastDot = passportFile.name.lastIndexOf('.');
-                    const fileExt = passportFile.name.substring(lastDot + 1, fileLen).toLowerCase();
+                    const fileLen = profilePhotoFile.name.length;
+                    const lastDot = profilePhotoFile.name.lastIndexOf('.');
+                    const fileExt = profilePhotoFile.name.substring(lastDot + 1, fileLen).toLowerCase();
 
 
                     /*if(!/(png|jpg|jpeg)/.test(fileExt)) {
@@ -147,22 +148,23 @@
                         return;
                     }*/
 
-
-                    if(!/(pdf)/.test(fileExt)) {
-                        alert('여권 사진의 파일은 pdf 만 가능합니다.');
+                    if(!/(png|jpg|jpeg)/.test(fileExt)) {
+                        alert('프로필 파일은 png, jpg, jpeg 만 가능합니다.');
                         return;
                     }
 
-                    this.passportFileName = passportFile.name;
-                    this.passportFile = passportFile;
+                    this.profilePhotoFileName = profilePhotoFile.name;
+                    this.profilePhotoFile = profilePhotoFile;
 
-                    if (this.passportFile) {
+
+                    if (this.profilePhotoFile) {
                         const reader = new FileReader();
                         const vueThis = this;
-                        reader.readAsDataURL(this.passportFile);
+                        reader.readAsDataURL(this.profilePhotoFile);
                         reader.onload = function(e) {
-                            vueThis.passportFileSrc = e.target.result;
-                            vueThis.isChangePassportFile = true;
+
+                            vueThis.profilePhotoFileSrc = e.target.result;
+                            vueThis.isChangeProfilePhotoFile = true;
                         };
                     } else {
                         this.passportFileSrc = "/css/images/no-picture.png";
@@ -175,21 +177,18 @@
         },
         created() {
 
-            if(this.infoForPassport) {
+            if(this.infoForProfile) {
 
-                const infoForPassport = this.infoForPassport;
-                this.passportFileName = infoForPassport.passportFileOrigName;
-                const passportFileBinary = infoForPassport.passportFileBinary;
+                const infoForProfile = this.infoForProfile;
+                this.profilePhotoFileName = infoForProfile.personalInfoFileOrigName;
+                const profilePhotoFile = infoForProfile.personalInfoFileBinary;
 
 
-                if(passportFileBinary) {
-                    this.passportFileSrc = "data:application/pdf;base64," + passportFileBinary;
-                    this.passportFile = "data:application/pdf;base64," + passportFileBinary;
+                if(profilePhotoFile) {
+                    this.profilePhotoFileSrc = "data:image/jpeg;base64," + profilePhotoFile;
                 } else {
 
                 }
-
-                //alert("인포포 패스포트");
 
             }
 

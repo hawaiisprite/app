@@ -16,4 +16,9 @@ public class MyInfoDao {
 
         return sqlSession.insert("myInfo.submitPassportFile", myInfoVo);
     }
+
+    public int submitProfilePhotoFile(MyInfoVo myInfoVo) {
+
+        return sqlSession.insert("myInfo.submitProfilePhotoFile", myInfoVo);
+    }
 }

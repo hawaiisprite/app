@@ -263,6 +263,26 @@ public class AppController {
     }
 
 
+    //사진 변경
+    @RequestMapping(method = {RequestMethod.GET}, path = "changeProfile")
+    public String changeProfile(HttpServletRequest httpServletRequest, Model model, Gson gson, AppVo appVo, MyInfoVo myInfoVo) throws IOException {
+
+        //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
+
+        HttpSession session = httpServletRequest.getSession();
+        int studentIdx = (int) session.getAttribute("STUDENT_IDX");
+        String studentId = (String) session.getAttribute("STUDENT_ID");
+
+        myInfoVo.setStudentId(studentId);
+        myInfoVo.setStudentIdx(studentIdx);
+
+        MyInfoVo infoForProfile = appService.getInfoForProfile(myInfoVo);
+        model.addAttribute("infoForProfile", infoForProfile);
+
+        return "app/changeProfile";
+    }
+
+
     @RequestMapping(method = {RequestMethod.GET}, path = "supportProgramList")
     public String supportProgramList(HttpServletRequest httpServletRequest, Model model, Gson gson, SupportProgramVo supportProgramVo) {
 

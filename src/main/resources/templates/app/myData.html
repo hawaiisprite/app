@@ -20,50 +20,45 @@
             <div class="sum-item" @click="toDetailPage($event, 'changePassport')">
                 <div class="sumnail-img">
                     <div class="img-wrap">
-                        <img src="/css/images/passport-photo.png" alt="여권사진">
+                        <!--<img src="/css/images/passport-photo.png" alt="여권사진">-->
+                        <img src="/css/images/no-picture.png" alt="자료가 등록되지 않았습니다."/>
                     </div>
                 </div>
                 <div class="sub-title">여권사진</div>
-                <div class="date">2023.05.30</div>
+                <!--<div class="date">2023.05.30</div>-->
             </div>
 
             <div class="sum-item" @click="toChangePassword">
                 <div class="sumnail-img">
                     <div class="img-wrap">
-                        <img
-                                src="/css/images/no-picture.png"
-                                alt="자료가 등록되지 않았습니다."
-                        />
+                        <img src="/css/images/no-picture.png" alt="자료가 등록되지 않았습니다."/>
                     </div>
                 </div>
                 <div class="sub-title">비밀번호 변경</div>
                 <!--<div class="date">등록하기</div>-->
             </div>
-            <!--<div class="sum-item">
+
+            <div class="sum-item" @click="toDetailPage($event, 'changeProfile')">
                 <div class="sumnail-img">
                     <div class="img-wrap">
-                        <img
-                                src="/css/images/no-picture.png"
-                                alt="자료가 등록되지 않았습니다."
-                        />
+                        <img src="/css/images/no-picture.png" alt="자료가 등록되지 않았습니다."/>
                     </div>
                 </div>
-                <div class="sub-title">비자사본</div>
-                <div class="date">등록하기</div>
+                <div class="sub-title">내프로필</div>
+                <!--<div class="date">등록하기</div>-->
             </div>
+
             <div class="sum-item">
                 <div class="sumnail-img">
                     <div class="img-wrap">
-                        <img
-                                src="/css/images/no-picture.png"
-                                alt="자료가 등록되지 않았습니다."
-                        />
+                        <img src="/css/images/no-picture.png" alt="자료가 등록되지 않았습니다."/>
                     </div>
                 </div>
                 <div class="sub-title">외국인등록증</div>
-                <div class="date">등록하기</div>
+                <!--<div class="date">등록하기</div>-->
             </div>
-            <div class="sum-item">
+
+            <!--<div class="sum-item">
                 <div class="sumnail-img">
                     <div class="img-wrap">
                         <img
@@ -104,7 +99,6 @@
 
             toDetailPage(e, url) {
                 //window.open("https://portal.dju.ac.kr/", "_blank");
-
                 location.href = "/app/" + url;
             },
             toChangePassword() {

@@ -30,6 +30,8 @@ public class ClassVo {
 
     private int standardSemester;
 
+    private int isEvaluatedClass;
+
 }
 
 

@@ -6,30 +6,28 @@
 
     <select id="getEvaluateClassList" parameterType="classVo" resultType="classVo">
         <!-- class.getEvaluateClassList -->
+
         SELECT
-            idx as classIdx,
-            title as classTitle,
-            year as classYear,
-            semester as classSemester,
-            capacity as classCapacity
+            a.idx as classIdx,
+            a.title as classTitle,
+            a.year as classYear,
+            a.semester as classSemester,
+            a.capacity as classCapacity,
+            (SELECT COUNT(*) FROM class_evaluate WHERE class_idx = a.idx AND student_idx = #{studentIdx}) as isEvaluatedClass
         FROM
-            class
+            class a
         WHERE
             1=1
         <if test="classIdx != null and classIdx != 0">
             AND
-                idx = #{classIdx}
+                a.idx = #{classIdx}
         </if>
         <if test="standardYear != null and standardSemester != null and standardYear != 0 and standardSemester != 0 ">
             AND
-                year = #{standardYear}
+                a.year = #{standardYear}
             AND
-                semester = #{standardSemester}
+                a.semester = #{standardSemester}
         </if>
-
-
-
-
 
     </select>
 

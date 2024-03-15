@@ -41,18 +41,17 @@
 
                     <template v-for="data, index in evaluateClassList" :key="index">
                         <li @click="toDetailEvaluateClass($event, data)">
-                            <span>{{data.classTitle}}</span>
+                            <span>{{data.classTitle}} </span>
 
                             <!--<template v-if="data.isOverCounseling">
                                 <span class="tag">마감</span>
-                            </template>
-
-                            <template v-if="data.isApplicantCounseling != 0">
-                                <span class="tag green">신청</span>
+                            </template>-->
+                            <template v-if="data.isEvaluatedClass != 0">
+                                <span class="tag grey">평가완료</span>
                             </template>
                             <template v-else>
-                                <span class="tag red">미신청</span>
-                            </template>-->
+                                <span class="tag green">평가하기</span>
+                            </template>
 
                         </li>
                     </template>
@@ -103,6 +102,11 @@
 
             },
             toDetailEvaluateClass(e, data) {
+
+                if(data.isEvaluatedClass !== 0) {
+                    alert("이미 평가를 완료하였습니다.");
+                    return;
+                }
 
                 location.href = "/app/evaluateClassDetail/" + data.classIdx;
 

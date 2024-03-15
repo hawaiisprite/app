@@ -159,6 +159,10 @@ public class AppRestController {
     @RequestMapping(value = "getEvaluateClassList", method = {RequestMethod.POST})
     public String evaluateClassList(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, ClassVo classVo) throws Exception {
 
+        HttpSession session = httpServletRequest.getSession();
+        int studentIdx = (int) session.getAttribute("STUDENT_IDX");
+        classVo.setStudentIdx(studentIdx);
+
         List<ClassVo> evaluateClassList = classService.getEvaluateClassList(classVo);
 
         jsonObj.addProperty("data", gson.toJson(evaluateClassList));

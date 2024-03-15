@@ -5,7 +5,7 @@
 
 
     <select id="getEvaluateClassList" parameterType="classVo" resultType="classVo">
-        <!-- universityInfo.getEvaluateClassList -->
+        <!-- class.getEvaluateClassList -->
         SELECT
             idx as classIdx,
             title as classTitle,
@@ -20,6 +20,17 @@
             AND
                 idx = #{classIdx}
         </if>
+        <if test="standardYear != null and standardSemester != null and standardYear != 0 and standardSemester != 0 ">
+            AND
+                year = #{standardYear}
+            AND
+                semester = #{standardSemester}
+        </if>
+
+
+
+
+
     </select>
 
 

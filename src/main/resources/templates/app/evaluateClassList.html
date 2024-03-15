@@ -15,6 +15,25 @@
             <h1>학급평가 리스트</h1>
         </div>
 
+        <div class="list-selects-wrap">
+            <div class="select-wrap">
+                <label>
+                    <select name="byYear" id="byYear" @change="changeEvent($event, 'standardYear')">
+                        <option v-for="year in years" :key="year" :value="year" :selected="year == standardYear">{{ year }}</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="select-wrap">
+                <label>
+                    <select name="semester" id="semester" @change="changeEvent($event, 'standardSemester')">
+                        <option v-for="semester in 4" :key="semester" :value="semester" :selected="semester == standardSemester">{{semester}} 학기</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+
+
         <div class="content-list">
             <ul>
 
@@ -61,29 +80,62 @@
         //el: '#app',
         data() {
             return {
-                evaluateClassList: []
+                evaluateClassList: [],
+
+                years: this.generateYearRange(2023, 2025),
+
+                standardYear: [[${standardYearSemester.standardYear}]],
+                standardSemester: [[${standardYearSemester.standardSemester}]],
+
             }
         },
         methods: {
 
+            changeEvent(e, type) {
+
+                if(type === 'standardYear') {
+                    this.standardYear = e.target.value;
+                    this.getEvaluateList();
+                } else if(type === 'standardSemester') {
+                    this.standardSemester = e.target.value;
+                    this.getEvaluateList();
+                }
+
+            },
             toDetailEvaluateClass(e, data) {
 
                 location.href = "/app/evaluateClassDetail/" + data.classIdx;
 
-            }
+            },
+            generateYearRange(start, end) {
+                const years = [];
+                for (let year = start; year <= end; year++) {
+                    years.push(year);
+                }
+                return years;
+            },
+            getEvaluateList() {
+
+                const _ = axios.post('/appRest/getEvaluateClassList', null, {
+                    params:{
+                        standardYear: this.standardYear,
+                        standardSemester: this.standardSemester
+                    }
+                }).then(res => {
+
+                    if(res.data.result === "success") {
+                        this.evaluateClassList = JSON.parse(res.data.data);
+                    }
+
+                });
+
+            },
+
 
         },
         created() {
 
-            const _ = axios.post('/appRest/getEvaluateClassList', null, {
-                params:{}
-            }).then(res => {
-
-                if(res.data.result === "success") {
-                    this.evaluateClassList = JSON.parse(res.data.data);
-                }
-
-            });
+            this.getEvaluateList();
 
         },
         mounted() {

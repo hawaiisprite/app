@@ -355,6 +355,9 @@ public class AppController {
     public String evaluateClassList(HttpServletRequest httpServletRequest, Model model, Gson gson, ClassVo classVo) {
 
 
+        AppVo standardYearSemester = appService.getStandardYearSemester();
+        model.addAttribute("standardYearSemester", standardYearSemester);
+
         //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
         //System.out.println("비디오 리스트 " + videoListData);
         //model.addAttribute("abc", "abcd다");\

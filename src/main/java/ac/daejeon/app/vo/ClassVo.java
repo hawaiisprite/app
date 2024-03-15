@@ -26,6 +26,10 @@ public class ClassVo {
 
     private String evaluateContent;
 
+    private int standardYear;
+
+    private int standardSemester;
+
 }
 
 

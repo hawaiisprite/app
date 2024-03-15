@@ -13,7 +13,7 @@
                     <i class="icon-logo"></i>
                 </div>
                 <div class="btns">
-                    <div class="btn-mypage">
+                    <div th:if="${studentId != null and studentIdx != null and studentEmail != null}" class="btn-mypage" id="myInfo">
                         <i class="icon-mypage"></i>
                     </div>
 
@@ -67,9 +67,18 @@
 
                             });
 
-
-
                             //location.href = "/app/login";
+                        });
+                    }
+
+
+
+                    const myInfoBtn = document.getElementById('myInfo');
+                    if (myInfoBtn) {
+                        myInfoBtn.addEventListener('click', function() {
+
+                            location.href = "/app/myData";
+
                         });
                     }
 

@@ -22,21 +22,15 @@ public class AppInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)  {
 
-
-
-
         HttpSession session = request.getSession();
         String requestURI = request.getRequestURI();
 
-
-        System.out.println("앱 인터셉터 " + requestURI);
         //관리자 부분
         String studentId = (String) session.getAttribute("STUDENT_ID");
 
-        System.out.println("studentId" + studentId);
-
         //로그인 된 학생만
-        CharSequence[] onlyLoginMemberAccessList =  {"/videoList", "/videoDetail", "/campusList", "/facilities", "/myData", "/supportProgramList", "/emergencyList", "/applicationList"};
+        CharSequence[] onlyLoginMemberAccessList =  {"/videoList", "/videoDetail", "/campusList", "/facilities", "/myData", "/changePassport",  "/changeProfile", "/changeForeigner",
+                "/supportProgramList", "/counselingList", "/counselingDetail", "/emergencyList", "/applicationList", "/applicationDetailList", "/noticeList", "/noticeDetail", "/evaluateClassList", "/evaluateClassDetail"};
         boolean isOnlyLoginMemberAccessList = StringUtils.containsAny(requestURI, onlyLoginMemberAccessList);
 
         if(isOnlyLoginMemberAccessList) {

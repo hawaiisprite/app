@@ -322,17 +322,12 @@ public class AppController {
         int studentIdx = (int) session.getAttribute("STUDENT_IDX");
         supportProgramVo.setStudentIdx(studentIdx);
 
-        LocalDateTime currentTime = LocalDateTime.now();
-        // 형식 지정
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        AppVo standardYearSemester = appService.getStandardYearSemester();
+        //List<SupportProgramVo> counselingList = appService.getCounselingList(supportProgramVo);
 
-        // 현재 시간을 문자열로 변환
-        String formattedTime = currentTime.format(formatter);
+        model.addAttribute("standardYearSemester", standardYearSemester);
 
-        //System.out.println("포맷 타임 " + formattedTime);
-        List<SupportProgramVo> counselingList = appService.getCounselingList(supportProgramVo);
-        model.addAttribute("counselingListJson", gson.toJson(counselingList));
-        model.addAttribute("nowDate", formattedTime);
+        //model.addAttribute("counselingListJson", gson.toJson(counselingList));
         //System.out.println("카운셀링 리스트 " + counselingList);
 
         return "app/counselingList";
@@ -359,7 +354,6 @@ public class AppController {
     @RequestMapping(method = {RequestMethod.GET}, path = "evaluateClassList")
     public String evaluateClassList(HttpServletRequest httpServletRequest, Model model, Gson gson, ClassVo classVo) {
 
-        System.out.println("평가 클래스 리스트");
 
         //List<SupportProgramVo> videoListData = supportProgramService.getVideoList(supportProgramVo);
         //System.out.println("비디오 리스트 " + videoListData);

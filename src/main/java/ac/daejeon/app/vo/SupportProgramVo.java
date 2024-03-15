@@ -88,6 +88,9 @@ public class SupportProgramVo {
     //학생 인덱스
     private int studentIdx;
 
+    //학생 아이디
+    private String studentId;
+
     //상담 내용
     private boolean isOverCounseling;
 

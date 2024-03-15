@@ -138,6 +138,24 @@ public class AppRestController {
     }
 
 
+    @RequestMapping(value = "getCounselingList", method = {RequestMethod.POST})
+    public String getCounselingList(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, SupportProgramVo supportProgramVo) throws Exception {
+
+
+        HttpSession session = httpServletRequest.getSession();
+        int studentIdx = (int) session.getAttribute("STUDENT_IDX");
+        supportProgramVo.setStudentIdx(studentIdx);
+
+        List<SupportProgramVo> counselingList = appService.getCounselingList(supportProgramVo);
+
+        jsonObj.addProperty("data", gson.toJson(counselingList));
+        jsonObj.addProperty("result", "success");
+
+        return jsonObj.toString();
+
+    }
+
+
     @RequestMapping(value = "getEvaluateClassList", method = {RequestMethod.POST})
     public String evaluateClassList(HttpServletRequest httpServletRequest, JsonObject jsonObj, Gson gson, ClassVo classVo) throws Exception {
 

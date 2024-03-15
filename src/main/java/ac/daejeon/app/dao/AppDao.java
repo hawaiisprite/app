@@ -220,4 +220,8 @@ public class AppDao {
 
         return sqlSession.selectOne("myInfo.getInfoForForeigner", myInfoVo);
     }
+
+    public AppVo getStandardYearSemester() {
+        return sqlSession.selectOne("app.getStandardYearSemester", null);
+    }
 }

@@ -404,6 +404,10 @@ public class AppService {
 
     }
 
+    public AppVo getStandardYearSemester() {
+        return appDao.getStandardYearSemester();
+    }
+
 
 
 /*    //관리자 로그인

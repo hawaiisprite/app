@@ -532,6 +532,21 @@
 
 
 
+    <select id="getStandardYearSemester" resultType="appVo">
+        <!-- config.getStandardYearSemester -->
+        SELECT
+            year as standardYear,
+            semester as standardSemester
+        FROM
+            config_standard_year_semester
+        WHERE
+            flag != 'deleted'
+        LIMIT
+            1
+    </select>
+
+
+
     <select id="getCounselingList" parameterType="supportProgramVo" resultType="supportProgramVo">
         <!-- app.getCounselingList -->
         SELECT
@@ -554,6 +569,12 @@
             counseling a
         WHERE
             a.flag != 'deleted'
+        <if test="standardYear != null and standardSemester != null and standardYear != 0 and standardSemester != 0 ">
+            AND
+                a.year = #{standardYear}
+            AND
+                a.semester = #{standardSemester}
+        </if>
         <if test="counselingIdx != null and counselingIdx != 0">
             AND
                 a.idx = #{counselingIdx}

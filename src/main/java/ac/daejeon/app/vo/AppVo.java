@@ -136,7 +136,7 @@ public class AppVo {
     private int month;
     private int day;
 
-    private int standardYear;
+
 
 
     //마지막 하나만 들고오기
@@ -153,6 +153,12 @@ public class AppVo {
 
     //개인정보 타입
     private String infoType;
+
+    //전체 페이지에 보여줄 현재 연도 기준
+    private int standardYear;
+
+    //전체 페이지에 보여줄 현재 학기 기준
+    private int standardSemester;
 
 
 

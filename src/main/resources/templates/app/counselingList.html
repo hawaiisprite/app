@@ -15,6 +15,24 @@
             <h1>상담 프로그램</h1>
         </div>
 
+        <div class="list-selects-wrap">
+            <div class="select-wrap">
+                <label>
+                    <select name="byYear" id="byYear" @change="changeEvent($event, 'standardYear')">
+                        <option v-for="year in years" :key="year" :value="year" :selected="year == standardYear">{{ year }}</option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="select-wrap">
+                <label>
+                    <select name="semester" id="semester" @change="changeEvent($event, 'standardSemester')">
+                        <option v-for="semester in 4" :key="semester" :value="semester" :selected="semester == standardSemester">{{semester}} 학기</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+
         <div class="content-list">
             <ul>
 
@@ -62,7 +80,13 @@
         data() {
             return {
                 counselingList: JSON.parse([[${counselingListJson}]]),
-                nowDate: [[${nowDate}]],
+                years: this.generateYearRange(2023, 2025),
+
+                standardYear: [[${standardYearSemester.standardYear}]],
+                standardSemester: [[${standardYearSemester.standardSemester}]],
+
+                //standardYear: [[${standardYearSemester.standardYear}]],
+                //standardSemester: [[${standardYearSemester.standardSemester}]],
 
                 //years: this.generateYearRange(2023, 2025),
                 //nowYear: [[${nowYear}]]
@@ -70,6 +94,41 @@
         },
         methods: {
 
+            changeEvent(e, type) {
+
+                if(type === 'standardYear') {
+                    this.standardYear = e.target.value;
+                    this.getCounselingList();
+                } else if(type === 'standardSemester') {
+                    this.standardSemester = e.target.value;
+                    this.getCounselingList();
+                }
+
+            },
+            getCounselingList() {
+
+                const _ = axios.post('/appRest/getCounselingList', null, {
+                    params:{
+                        standardYear: this.standardYear,
+                        standardSemester: this.standardSemester
+                    }
+                }).then(res => {
+
+                    if(res.data.result === "success") {
+                        this.counselingList = JSON.parse(res.data.data);
+                    }
+
+                });
+
+            },
+
+            generateYearRange(start, end) {
+                const years = [];
+                for (let year = start; year <= end; year++) {
+                    years.push(year);
+                }
+                return years;
+            },
             toDetailCounseling(data) {
 
                 location.href = "/app/counselingDetail/" + data.counselingIdx;
@@ -82,6 +141,9 @@
 
         },
         created() {
+
+            this.getCounselingList();
+
             /*alert("크리에이트123");
             console.log("콘솔로그123");
             console.log("비디오 리스트 " + this.videoList);
